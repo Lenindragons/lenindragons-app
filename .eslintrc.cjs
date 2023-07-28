@@ -34,5 +34,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react/function-component-definition': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    'react/jsx-no-constructed-context-values': 'off',
   },
 }
