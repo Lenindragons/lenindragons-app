@@ -33,5 +33,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/react-in-jsx-scope': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'react/function-component-definition': 'off',
   },
 }
