@@ -3,18 +3,39 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import GlobalStyle from './styles/global'
 import { useDefaultTheme } from './context/DefaultThemeContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import PrivateRoutes from './routes/PrivateRoute'
 
 const Home = () => {
-  return <>Home</>
+  const { logout } = useAuth()
+
+  return (
+    <>
+      Home{' '}
+      <button type="button" onClick={logout}>
+        sair
+      </button>
+    </>
+  )
 }
 
 const Login = () => {
-  const { signInGoogle } = useAuth()
+  const { signInGoogle, user, logout } = useAuth()
   return (
     <>
       <h1>Login</h1>
+      {user && (
+        <>
+          <p>{user.name}</p>
+          <img src={user.image} alt={user.name} />
+          <p>{user.email}</p>
+        </>
+      )}
       <button type="button" onClick={signInGoogle}>
         Logar com google
+      </button>
+
+      <button type="button" onClick={logout}>
+        Sair
       </button>
     </>
   )
@@ -25,15 +46,17 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <GlobalStyle />
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
+          <GlobalStyle />
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Home />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/home" element={<Home />} />
+            </Route>
           </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </ThemeProvider>
   )
 }

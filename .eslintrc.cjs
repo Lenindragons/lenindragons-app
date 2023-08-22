@@ -36,5 +36,6 @@ module.exports = {
     'react/function-component-definition': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-no-constructed-context-values': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 }

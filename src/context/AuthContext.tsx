@@ -3,6 +3,7 @@ import {
   UserInfo,
   getAuth,
   signInWithPopup,
+  signOut,
 } from 'firebase/auth'
 import {
   ReactNode,
@@ -11,6 +12,7 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { app } from '../services/firebaseConfig'
 
 const provider = new GoogleAuthProvider()
@@ -28,8 +30,9 @@ type User = {
 }
 
 const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<User>({ name: '', email: '', image: '' })
-  const [, setCredential] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoadingStatus] = useState(true)
+  const navigate = useNavigate()
 
   const auth = getAuth(app)
 
@@ -44,26 +47,39 @@ const AuthProvider = ({ children }: Props) => {
   }
 
   useEffect(() => {
-    auth.onAuthStateChanged((userInfo) => {
+    const unsubscribe = auth.onAuthStateChanged((userInfo) => {
       if (userInfo) {
         setUser(getUserInfo(userInfo))
+        setLoadingStatus(false)
+        navigate('/home')
       }
     })
-  }, [auth])
+
+    return unsubscribe
+  }, [auth, navigate])
+
+  const logout = async () => {
+    await signOut(auth)
+    navigate('/')
+  }
 
   const signInGoogle = () => {
     signInWithPopup(auth, provider)
       .then((res) => {
-        setCredential(GoogleAuthProvider.credentialFromResult(res))
+        const credential = GoogleAuthProvider.credentialFromResult(res)
+        const token = credential?.accessToken || ''
         setUser(getUserInfo(res.user))
+        sessionStorage.setItem('@AuthFirebase:token', token)
+        sessionStorage.setItem('@AuthFirebase:user', JSON.stringify(user))
       })
       .catch((err) => {
-        console.log(GoogleAuthProvider.credentialFromError(err))
+        const { email, message, code } = err
+        const credential = GoogleAuthProvider.credentialFromError(err)
       })
   }
 
   return (
-    <AuthContext.Provider value={{ user, signInGoogle }}>
+    <AuthContext.Provider value={{ user, signInGoogle, loading, logout }}>
       {children}
     </AuthContext.Provider>
   )
