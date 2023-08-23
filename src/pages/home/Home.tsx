@@ -1,6 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import styled, { useTheme } from 'styled-components'
-import { useForm, Controller } from 'react-hook-form'
+import {
+  useForm,
+  Controller,
+  UseFormRegisterReturn,
+  RegisterOptions,
+  FieldValues,
+  FieldErrors,
+} from 'react-hook-form'
 import { DateRange } from 'react-date-range'
 import { useAuth } from '../../context/AuthContext'
 import 'react-date-range/dist/styles.css'
@@ -90,6 +97,27 @@ const Box = styled.section`
   }
 `
 
+type InputProps = {
+  type: string
+  name: string
+  label: string
+  register: (
+    attribute: string,
+    options?: RegisterOptions<FieldValues, string> | undefined
+  ) => UseFormRegisterReturn<string>
+  errors: FieldErrors<FieldValues>
+}
+
+const Input = ({ register, errors, type, name, label }: InputProps) => {
+  return (
+    <div>
+      <label>{label}</label>
+      <input type={type} id={name} {...register(name, { required: true })} />
+      {errors.nome && <span>Este campo é obrigatório</span>}
+    </div>
+  )
+}
+
 export const Home = () => {
   const { logout, user } = useAuth()
   const theme = useTheme()
@@ -116,24 +144,22 @@ export const Home = () => {
         <h2>Criar Evento</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label>Nome do Evento:</label>
-            <input
-              type="text"
-              id="nome"
-              {...register('nome', { required: true })}
-            />
-            {errors.nome && <span>Este campo é obrigatório</span>}
-          </div>
-          <div>
-            <label>URL da Imagem:</label>
-            <input
-              type="text"
-              id="imagem"
-              {...register('imagem', { required: true })}
-            />
-            {errors.imagem && <span>Este campo é obrigatório</span>}
-          </div>
+          <Input
+            type="text"
+            name="name"
+            register={register}
+            label="Nome do Evento"
+            errors={errors}
+          />
+
+          <Input
+            type="text"
+            name="image"
+            register={register}
+            label="URL da Imagem"
+            errors={errors}
+          />
+
           <div>
             <label>Descrição:</label>
             <textarea
@@ -142,24 +168,6 @@ export const Home = () => {
             />
             {errors.descricao && <span>Este campo é obrigatório</span>}
           </div>
-          {/* <div>
-            <label>Data de Início:</label>
-            <input
-              type="datetime-local"
-              id="dataInicio"
-              {...register('dataInicio', { required: true })}
-            />
-            {errors.dataInicio && <span>Este campo é obrigatório</span>}
-          </div>
-          <div>
-            <label htmlFor="dataFim">Data de Término:</label>
-            <input
-              type="datetime-local"
-              id="dataFim"
-              {...register('dataFim', { required: true })}
-            />
-            {errors.dataFim && <span>Este campo é obrigatório</span>}
-          </div> */}
 
           <div>
             <label>Data de Início e Término:</label>
