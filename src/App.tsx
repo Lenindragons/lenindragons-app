@@ -4,6 +4,7 @@ import GlobalStyle from './styles/global'
 import { useDefaultTheme } from './context/DefaultThemeContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
+import ErrorProvider from './context/ErrorContext'
 
 const Home = () => {
   const { logout } = useAuth()
@@ -45,18 +46,20 @@ export const App = () => {
   const { theme } = useDefaultTheme()
 
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <AuthProvider>
-          <GlobalStyle />
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route element={<PrivateRoutes />}>
-              <Route path="/home" element={<Home />} />
-            </Route>
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
-    </ThemeProvider>
+    <ErrorProvider>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <AuthProvider>
+            <GlobalStyle />
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route element={<PrivateRoutes />}>
+                <Route path="/home" element={<Home />} />
+              </Route>
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </ThemeProvider>
+    </ErrorProvider>
   )
 }

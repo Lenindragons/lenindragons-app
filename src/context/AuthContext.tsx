@@ -5,23 +5,15 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth'
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { app } from '../services/firebaseConfig'
+import { ContextProps } from './ContextProps'
+import { useErrorHandling } from './ErrorContext'
 
 const provider = new GoogleAuthProvider()
 
 const AuthContext = createContext({})
-
-type Props = {
-  children: ReactNode
-}
 
 type User = {
   name: string | null
@@ -29,10 +21,11 @@ type User = {
   image: string | null
 }
 
-const AuthProvider = ({ children }: Props) => {
+const AuthProvider = ({ children }: ContextProps) => {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoadingStatus] = useState(true)
   const navigate = useNavigate()
+  const { alertError } = useErrorHandling()
 
   const auth = getAuth(app)
 
@@ -60,21 +53,18 @@ const AuthProvider = ({ children }: Props) => {
 
   const logout = async () => {
     await signOut(auth)
+    setUser(null)
     navigate('/')
   }
 
   const signInGoogle = () => {
     signInWithPopup(auth, provider)
       .then((res) => {
-        const credential = GoogleAuthProvider.credentialFromResult(res)
-        const token = credential?.accessToken || ''
         setUser(getUserInfo(res.user))
-        sessionStorage.setItem('@AuthFirebase:token', token)
-        sessionStorage.setItem('@AuthFirebase:user', JSON.stringify(user))
       })
       .catch((err) => {
         const { email, message, code } = err
-        const credential = GoogleAuthProvider.credentialFromError(err)
+        alertError(`[${code}:${email}]: ${message}`)
       })
   }
 
