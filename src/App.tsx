@@ -5,19 +5,7 @@ import { useDefaultTheme } from './context/DefaultThemeContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
 import ErrorProvider from './context/ErrorContext'
-
-const Home = () => {
-  const { logout } = useAuth()
-
-  return (
-    <>
-      Home{' '}
-      <button type="button" onClick={logout}>
-        sair
-      </button>
-    </>
-  )
-}
+import { Home } from './pages/home/Home'
 
 const Login = () => {
   const { signInGoogle, user, logout } = useAuth()
