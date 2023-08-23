@@ -1,7 +1,6 @@
 import { InputProps } from './types'
 
 const Input = ({ register, errors, type, name, label }: InputProps) => {
-  console.log(errors)
   return (
     <div>
       <label>{label}</label>
