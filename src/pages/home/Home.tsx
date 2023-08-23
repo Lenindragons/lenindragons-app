@@ -1,17 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import styled, { useTheme } from 'styled-components'
-import {
-  useForm,
-  Controller,
-  UseFormRegisterReturn,
-  RegisterOptions,
-  FieldValues,
-  FieldErrors,
-} from 'react-hook-form'
-import { DateRange } from 'react-date-range'
+import styled from 'styled-components'
 import { useAuth } from '../../context/AuthContext'
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
+import CreateEventForm from '../../components/forms/event/CreateEventForm'
 
 const Header = styled.header`
   display: flex;
@@ -97,40 +87,8 @@ const Box = styled.section`
   }
 `
 
-type InputProps = {
-  type: string
-  name: string
-  label: string
-  register: (
-    attribute: string,
-    options?: RegisterOptions<FieldValues, string> | undefined
-  ) => UseFormRegisterReturn<string>
-  errors: FieldErrors<FieldValues>
-}
-
-const Input = ({ register, errors, type, name, label }: InputProps) => {
-  return (
-    <div>
-      <label>{label}</label>
-      <input type={type} id={name} {...register(name, { required: true })} />
-      {errors.nome && <span>Este campo é obrigatório</span>}
-    </div>
-  )
-}
-
 export const Home = () => {
   const { logout, user } = useAuth()
-  const theme = useTheme()
-  const {
-    handleSubmit,
-    register,
-    control,
-    formState: { errors },
-  } = useForm()
-
-  const onSubmit = async (data: any): Promise<any> => {
-    console.log({ data })
-  }
 
   return (
     <>
@@ -142,53 +100,7 @@ export const Home = () => {
       </Header>
       <Box>
         <h2>Criar Evento</h2>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            type="text"
-            name="name"
-            register={register}
-            label="Nome do Evento"
-            errors={errors}
-          />
-
-          <Input
-            type="text"
-            name="image"
-            register={register}
-            label="URL da Imagem"
-            errors={errors}
-          />
-
-          <div>
-            <label>Descrição:</label>
-            <textarea
-              id="descricao"
-              {...register('descricao', { required: true })}
-            />
-            {errors.descricao && <span>Este campo é obrigatório</span>}
-          </div>
-
-          <div>
-            <label>Data de Início e Término:</label>
-            <Controller
-              name="dates"
-              control={control}
-              defaultValue={[
-                { startDate: new Date(), endDate: null, key: 'selection' },
-              ]}
-              render={({ field }) => (
-                <DateRange
-                  onChange={(item) => field.onChange([item.selection])}
-                  moveRangeOnFirstSelection={false}
-                  rangeColors={[theme.colors.primary]}
-                  ranges={field.value}
-                />
-              )}
-            />
-          </div>
-          <button type="submit">Cadastrar Evento</button>
-        </form>
+        <CreateEventForm />
       </Box>
     </>
   )

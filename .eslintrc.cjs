@@ -37,5 +37,6 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-no-constructed-context-values': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
   },
 }
