@@ -3,6 +3,7 @@ import Input from '../../commons/input/Input'
 import TextArea from '../../commons/textarea/TextArea'
 import DateRange from '../../commons/date-range/Daterage'
 import Button from '../../commons/button/Button'
+import { createEvent } from '../../../services/events'
 
 const CreateEventForm = () => {
   const {
@@ -13,7 +14,7 @@ const CreateEventForm = () => {
   } = useForm()
 
   const onSubmit = async (data: any): Promise<any> => {
-    console.log({ data })
+    createEvent(data)
   }
 
   return (

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "date-fns": "^2.30.0",
     "firebase": "^10.1.0",
     "react": "^18.2.0",
     "react-awesome-button": "^7.0.5",

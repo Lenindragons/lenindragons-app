@@ -2,6 +2,7 @@
 import styled from 'styled-components'
 import { useAuth } from '../../context/AuthContext'
 import CreateEventForm from '../../components/forms/event/CreateEventForm'
+import { Events } from '../../components/event-list/Events'
 
 const Header = styled.header`
   display: flex;
@@ -70,6 +71,12 @@ const Box = styled.section`
   }
 `
 
+const HomeContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+`
+
 export const Home = () => {
   const { logout, user } = useAuth()
 
@@ -81,10 +88,17 @@ export const Home = () => {
           Deslogar
         </button>
       </Header>
-      <Box>
-        <h2>Criar Evento</h2>
-        <CreateEventForm />
-      </Box>
+      <HomeContainer>
+        <Box>
+          <h2>Criar Evento</h2>
+          <CreateEventForm />
+        </Box>
+
+        <Box>
+          <h2>Listagem de Eventos</h2>
+          <Events />
+        </Box>
+      </HomeContainer>
     </>
   )
 }
