@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import Input from '../../commons/input/Input'
 import TextArea from '../../commons/textarea/TextArea'
 import DateRange from '../../commons/date-range/Daterage'
+import Button from '../../commons/button/Button'
 
 const CreateEventForm = () => {
   const {
@@ -42,7 +43,7 @@ const CreateEventForm = () => {
 
       <DateRange label="Data de Inicio e Fim:" name="dates" control={control} />
 
-      <button type="submit">Cadastrar Evento</button>
+      <Button onClick={(e: any) => e.submit()}>Cadastrar Evento</Button>
     </form>
   )
 }

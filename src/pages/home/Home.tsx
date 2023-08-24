@@ -68,23 +68,6 @@ const Box = styled.section`
     border-radius: 4px;
     padding: 10px;
   }
-
-  /* Estilos para o botão de envio */
-  button[type='submit'] {
-    grid-column: span 2; /* Ocupa duas colunas */
-    background-color: ${(props) => props.theme.colors.primary};
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  button[type='submit']:hover {
-    background-color: ${(props) => props.theme.colors.primary};
-  }
 `
 
 export const Home = () => {
