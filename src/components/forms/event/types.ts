@@ -6,7 +6,7 @@ export type Date = {
 
 export type Event = {
   name: string
-  image: string
+  image: File
   description: string
   dates: Array<Date>
 }

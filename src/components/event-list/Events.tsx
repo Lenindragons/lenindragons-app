@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/no-array-index-key */
 import { useEffect, useState } from 'react'
 import { getEvents } from '../../services/events'
 import { getDate } from '../../helpers/format-date'
@@ -38,8 +36,8 @@ export const Events = () => {
 
   return (
     <ul>
-      {events.map((event: any, key: number) => (
-        <Event key={key} item={event} />
+      {events.map((event: any) => (
+        <Event key={event.id} item={event} />
       ))}
     </ul>
   )

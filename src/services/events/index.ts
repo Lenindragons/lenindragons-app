@@ -9,6 +9,7 @@ import {
 } from '@firebase/firestore'
 import { Event } from '../../components/forms/event/types'
 import { db } from '../firebaseConfig'
+import saveImageGetURL from '../images'
 
 const getEventCollection = () => {
   return collection(db, 'events')
@@ -19,7 +20,7 @@ export const createEvent = async (data: Event): Promise<void> => {
     const content = {
       name: data.name,
       description: data.description,
-      image: data.image,
+      image: await saveImageGetURL(data.image),
       date: {
         start: data.dates[0].startDate,
         end: data.dates[0].endDate,

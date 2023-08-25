@@ -4,6 +4,7 @@ import TextArea from '../../commons/textarea/TextArea'
 import DateRange from '../../commons/date-range/Daterage'
 import Button from '../../commons/button/Button'
 import { createEvent } from '../../../services/events'
+import ImageInput from '../../commons/image-input/ImageInput'
 
 const CreateEventForm = () => {
   const {
@@ -27,13 +28,7 @@ const CreateEventForm = () => {
         errors={errors}
       />
 
-      <Input
-        type="text"
-        name="image"
-        register={register}
-        label="URL da Imagem"
-        errors={errors}
-      />
+      <ImageInput name="image" control={control} />
 
       <TextArea
         label="Descrição:"
@@ -44,7 +39,7 @@ const CreateEventForm = () => {
 
       <DateRange label="Data de Inicio e Fim:" name="dates" control={control} />
 
-      <Button onClick={(e: any) => e.submit()}>Cadastrar Evento</Button>
+      <Button>Cadastrar Evento</Button>
     </form>
   )
 }
