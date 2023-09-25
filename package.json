@@ -11,6 +11,10 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.6",
+    "@mui/material": "^5.14.6",
+    "@mui/styled-engine": "^5.14.6",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "date-fns": "^2.30.0",
     "firebase": "^10.1.0",

@@ -49,6 +49,7 @@ export const getEvents = (callback: any) => {
     })
   } catch (err) {
     console.error(err)
+    callback([])
     return null
   }
 }

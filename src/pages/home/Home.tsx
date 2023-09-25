@@ -1,104 +1,57 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/require-default-props */
 import styled from 'styled-components'
-import { useAuth } from '../../context/AuthContext'
-import CreateEventForm from '../../components/forms/event/CreateEventForm'
-import { Events } from '../../components/event-list/Events'
+import { Footer } from './components/footer/Footer'
+import { Header } from './components/header/Heaer'
+import { EventList } from './components/main/EventList'
 
-const Header = styled.header`
-  display: flex;
-  padding: 10px;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 5px solid;
-  button {
-    padding: 10px;
-    font-size: 15px;
-  }
-`
+const MainContainer = styled.main`
+  width: 100%;
+  max-width: 68em;
+  margin: 0 auto;
+  padding: 0 2.5em;
+  font-family: Roboto, sans-serif;
 
-const Box = styled.section`
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  margin: 16px;
-
-  h2 {
-    font-size: 18px;
-    margin-bottom: 8px;
+  header {
+    margin: 50px 0;
+    font-style: italic;
   }
 
-  div {
-    font-size: 14px;
-    color: #333;
+  header h1 {
+    font-style: normal;
+    font-weight: 700;
   }
 
-  /* Estilos para o formulário */
-  form {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Divide o formulário em duas colunas */
-    gap: 20px; /* Espaço entre os elementos */
-
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f2f2f2;
-    border-radius: 8px;
+  header h1,
+  header p {
+    margin-bottom: 16px;
+    text-align: justify;
+    color: #585858;
   }
 
-  /* Estilos para os campos de entrada */
-  input[type='text'],
-  textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+  & > h2 {
+    margin-bottom: 16px;
+    font-style: normal;
+    font-weight: 700;
   }
-
-  /* Estilos para os rótulos */
-  label {
-    font-weight: bold;
-  }
-
-  /* Estilos para o seletor de datas */
-  .react-date-range {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-  }
-`
-
-const HomeContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
 `
 
 export const Home = () => {
-  const { logout, user } = useAuth()
-
   return (
     <>
-      <Header>
-        <h1>Seja bem vinda, {user.name}</h1>
-        <button type="button" onClick={logout}>
-          Deslogar
-        </button>
-      </Header>
-      <HomeContainer>
-        <Box>
-          <h2>Criar Evento</h2>
-          <CreateEventForm />
-        </Box>
-
-        <Box>
-          <h2>Listagem de Eventos</h2>
-          <Events />
-        </Box>
-      </HomeContainer>
+      <Header />
+      <MainContainer>
+        <header>
+          <h1>Lenindragons</h1>
+          <p>
+            Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit
+            amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis
+            venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem
+            ipsum dolor sit amet nullam dolore.
+          </p>
+        </header>
+        <EventList />
+      </MainContainer>
+      <Footer />
     </>
   )
 }

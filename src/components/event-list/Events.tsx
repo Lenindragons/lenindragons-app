@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { styled } from 'styled-components'
 import { getEvents } from '../../services/events'
 import { getDate } from '../../helpers/format-date'
 
@@ -27,6 +28,18 @@ const Event = ({ item }: any) => {
   )
 }
 
+const EventContainer = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 16px;
+  gap: 20px;
+
+  li img {
+    max-width: 100%;
+    max-height: 450px;
+  }
+`
+
 export const Events = () => {
   const [events, setEvents] = useState<any>([])
 
@@ -35,10 +48,10 @@ export const Events = () => {
   }, [])
 
   return (
-    <ul>
+    <EventContainer>
       {events.map((event: any) => (
         <Event key={event.id} item={event} />
       ))}
-    </ul>
+    </EventContainer>
   )
 }
