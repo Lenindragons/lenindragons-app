@@ -2,33 +2,12 @@ import { ThemeProvider } from 'styled-components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import GlobalStyle from './styles/global'
 import { useDefaultTheme } from './context/DefaultThemeContext'
-import { AuthProvider, useAuth } from './context/AuthContext'
+import { AuthProvider } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
 import ErrorProvider from './context/ErrorContext'
+import { Dashboard } from './pages/dashboard/Dashboard'
 import { Home } from './pages/home/Home'
-
-const Login = () => {
-  const { signInGoogle, user, logout } = useAuth()
-  return (
-    <>
-      <h1>Login</h1>
-      {user && (
-        <>
-          <p>{user.name}</p>
-          <img src={user.image} alt={user.name} />
-          <p>{user.email}</p>
-        </>
-      )}
-      <button type="button" onClick={signInGoogle}>
-        Logar com google
-      </button>
-
-      <button type="button" onClick={logout}>
-        Sair
-      </button>
-    </>
-  )
-}
+import { EventProvider } from './context/EventContext'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -38,13 +17,15 @@ export const App = () => {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <AuthProvider>
-            <GlobalStyle />
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route element={<PrivateRoutes />}>
-                <Route path="/home" element={<Home />} />
-              </Route>
-            </Routes>
+            <EventProvider>
+              <GlobalStyle />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route element={<PrivateRoutes />}>
+                  <Route path="/home" element={<Dashboard />} />
+                </Route>
+              </Routes>
+            </EventProvider>
           </AuthProvider>
         </BrowserRouter>
       </ThemeProvider>
