@@ -1,22 +1,8 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import styled from 'styled-components'
-import { useAuth } from '../../context/AuthContext'
-import CreateEventForm from '../../components/forms/event/CreateEventForm'
 import { Events } from '../../components/event-list/Events'
+import CreateEventForm from '../../components/forms/event/CreateEventForm'
 
-const Header = styled.header`
-  display: flex;
-  padding: 10px;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 5px solid;
-  button {
-    padding: 10px;
-    font-size: 15px;
-  }
-`
-
-const Box = styled.section`
+export const Box = styled.section`
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -71,34 +57,18 @@ const Box = styled.section`
   }
 `
 
-const HomeContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-`
-
-export const Dashboard = () => {
-  const { logout, user } = useAuth()
-
+export const EventPage = () => {
   return (
     <>
-      <Header>
-        <h1>Seja bem vinda, {user.name}</h1>
-        <button type="button" onClick={logout}>
-          Deslogar
-        </button>
-      </Header>
-      <HomeContainer>
-        <Box>
-          <h2>Criar Evento</h2>
-          <CreateEventForm />
-        </Box>
+      <Box>
+        <h2>Criar Evento</h2>
+        <CreateEventForm />
+      </Box>
 
-        <Box>
-          <h2>Listagem de Eventos</h2>
-          <Events />
-        </Box>
-      </HomeContainer>
+      <Box>
+        <h2>Listagem de Eventos</h2>
+        <Events />
+      </Box>
     </>
   )
 }

@@ -44,11 +44,10 @@ const AuthProvider = ({ children }: ContextProps) => {
       if (userInfo) {
         setUser(getUserInfo(userInfo))
         setLoadingStatus(false)
-        navigate('/home')
       }
     })
 
-    return unsubscribe
+    return () => unsubscribe()
   }, [auth, navigate])
 
   const logout = async () => {
@@ -62,6 +61,7 @@ const AuthProvider = ({ children }: ContextProps) => {
       .then((res) => {
         setUser(getUserInfo(res.user))
       })
+      .then(() => navigate('/home'))
       .catch((err) => {
         const { email, message, code } = err
         alertError(`[${code}:${email}]: ${message}`)

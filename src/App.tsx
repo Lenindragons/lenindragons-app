@@ -5,9 +5,10 @@ import { useDefaultTheme } from './context/DefaultThemeContext'
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
 import ErrorProvider from './context/ErrorContext'
-import { Dashboard } from './pages/dashboard/Dashboard'
-import { Home } from './pages/home/Home'
+import { MainPage } from './pages/main/Main'
+import { HomePage } from './pages/home/Home'
 import { EventProvider } from './context/EventContext'
+import { EventPage } from './pages/events/Events'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -20,9 +21,10 @@ export const App = () => {
             <EventProvider>
               <GlobalStyle />
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<MainPage />} />
                 <Route element={<PrivateRoutes />}>
-                  <Route path="/home" element={<Dashboard />} />
+                  <Route path="/home" element={<HomePage />} />
+                  <Route path="/event" element={<EventPage />} />
                 </Route>
               </Routes>
             </EventProvider>
