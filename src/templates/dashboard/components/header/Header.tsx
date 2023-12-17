@@ -8,6 +8,7 @@ const Container = styled.header`
   justify-content: space-between;
   align-items: center;
   color: #fff;
+  max-height: 124px;
 
   button {
     padding: 10px;

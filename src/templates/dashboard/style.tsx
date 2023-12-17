@@ -9,19 +9,29 @@ export const HomeContainer = styled.div`
   -webkit-box-shadow: inset 21px 23px 28px -29px rgba(0, 0, 0, 0.43);
   -moz-box-shadow: inset 21px 23px 28px -29px rgba(0, 0, 0, 0.43);
   box-shadow: inset 21px 23px 28px -29px rgba(0, 0, 0, 0.43);
+  min-height: 100vh;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
-  border-radius: 25px 0 0 0;
+  border-radius: 5px 0 0 0;
+
+  main {
+    padding: 5px;
+  }
 `
 
 export const DashboardContainer = styled.div`
   display: grid;
   grid-template-columns: 250px 1fr 1fr;
+  grid-template-rows: 1fr;
   background: url(${bg});
+  min-height: 100vh;
 
-  grid-template-areas: 'sidebar header header' 'sidebar main main';
+  grid-template-areas:
+    'sidebar header header'
+    'sidebar main main'
+    'sidebar main main';
 `
 
 export const SideBar = styled.aside`

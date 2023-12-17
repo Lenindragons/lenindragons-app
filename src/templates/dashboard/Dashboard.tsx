@@ -21,7 +21,9 @@ export const Dashboard = ({ children }: any) => {
         <SideMenu />
       </SideBar>
 
-      <HomeContainer>{children}</HomeContainer>
+      <HomeContainer>
+        <main>{children}</main>
+      </HomeContainer>
     </DashboardContainer>
   )
 }

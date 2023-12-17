@@ -10,6 +10,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import StarBorder from '@mui/icons-material/StarBorder'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export const SideMenu = () => {
   const [open, setOpen] = useState(true)
@@ -33,13 +34,17 @@ export const SideMenu = () => {
         <ListItemIcon>
           <SendIcon />
         </ListItemIcon>
-        <ListItemText primary="Sent mail" />
+        <ListItemText>
+          <Link to="/event">Eventos</Link>
+        </ListItemText>
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>
           <DraftsIcon />
         </ListItemIcon>
-        <ListItemText primary="Drafts" />
+        <ListItemText>
+          <Link to="/home">Profile</Link>
+        </ListItemText>
       </ListItemButton>
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
