@@ -2,33 +2,13 @@ import { ThemeProvider } from 'styled-components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import GlobalStyle from './styles/global'
 import { useDefaultTheme } from './context/DefaultThemeContext'
-import { AuthProvider, useAuth } from './context/AuthContext'
+import { AuthProvider } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
 import ErrorProvider from './context/ErrorContext'
-import { Home } from './pages/home/Home'
-
-const Login = () => {
-  const { signInGoogle, user, logout } = useAuth()
-  return (
-    <>
-      <h1>Login</h1>
-      {user && (
-        <>
-          <p>{user.name}</p>
-          <img src={user.image} alt={user.name} />
-          <p>{user.email}</p>
-        </>
-      )}
-      <button type="button" onClick={signInGoogle}>
-        Logar com google
-      </button>
-
-      <button type="button" onClick={logout}>
-        Sair
-      </button>
-    </>
-  )
-}
+import { MainPage } from './pages/main/Main'
+import { HomePage } from './pages/home/Home'
+import { EventProvider } from './context/EventContext'
+import { EventPage } from './pages/events/Events'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -38,13 +18,16 @@ export const App = () => {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <AuthProvider>
-            <GlobalStyle />
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route element={<PrivateRoutes />}>
-                <Route path="/home" element={<Home />} />
-              </Route>
-            </Routes>
+            <EventProvider>
+              <GlobalStyle />
+              <Routes>
+                <Route path="/" element={<MainPage />} />
+                <Route element={<PrivateRoutes />}>
+                  <Route path="/home" element={<HomePage />} />
+                  <Route path="/event" element={<EventPage />} />
+                </Route>
+              </Routes>
+            </EventProvider>
           </AuthProvider>
         </BrowserRouter>
       </ThemeProvider>

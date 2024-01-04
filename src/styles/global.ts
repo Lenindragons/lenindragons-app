@@ -4,7 +4,12 @@ export default createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box !important;
+  }
+
+  body, html {
+    height: 100%;
+    margin: 0;
   }
 
   body {
@@ -12,5 +17,6 @@ export default createGlobalStyle`
     font-size: 14px;
     color: ${(props) => props.theme.colors.text};
     font-family: sans-serif;
+    min-height: 100%;
   }
 `
