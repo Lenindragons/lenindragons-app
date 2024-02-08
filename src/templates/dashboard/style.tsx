@@ -3,7 +3,6 @@ import bg from '../../assets/bg-lenindragons.webp'
 
 export const HomeContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   grid-area: main;
   background-color: #fff;
   -webkit-box-shadow: inset 21px 23px 28px -29px rgba(0, 0, 0, 0.43);

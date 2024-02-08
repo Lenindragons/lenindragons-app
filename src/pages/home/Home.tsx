@@ -1,7 +1,15 @@
+import { useEffect } from 'react'
+import { usePage } from '../../context/PageContext'
+
 export const HomePage = () => {
+  const { setTitle } = usePage()
+
+  useEffect(() => {
+    setTitle('Seu Perfil')
+  }, [setTitle])
+
   return (
     <div>
-      <h1>Profile</h1>
       <p>Profile page content</p>
     </div>
   )

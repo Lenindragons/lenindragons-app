@@ -1,6 +1,9 @@
 import styled from 'styled-components'
-import { Events } from '../../components/event-list/Events'
+import { useEffect } from 'react'
 import CreateEventForm from '../../components/forms/event/CreateEventForm'
+import { usePage } from '../../context/PageContext'
+import { EventList } from '../../components/list/list'
+import { Modal } from '../../components/commons/modal/Modal'
 
 export const Box = styled.section`
   background-color: #fff;
@@ -25,8 +28,6 @@ export const Box = styled.section`
     display: grid;
     grid-template-columns: 1fr 1fr; /* Divide o formulário em duas colunas */
     gap: 20px; /* Espaço entre os elementos */
-
-    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f2f2f2;
@@ -57,18 +58,46 @@ export const Box = styled.section`
   }
 `
 
-export const EventPage = () => {
-  return (
-    <>
-      <Box>
-        <h2>Criar Evento</h2>
-        <CreateEventForm />
-      </Box>
+const Header = styled.header`
+  padding: 15px;
+`
 
-      <Box>
-        <h2>Listagem de Eventos</h2>
-        <Events />
-      </Box>
-    </>
+export const EventPage = () => {
+  // const [open, setOpen] = useState(false)
+  const { setTitle } = usePage()
+  // const { items } = useEvents()
+
+  useEffect(() => {
+    setTitle('Eventos')
+  }, [setTitle])
+
+  return (
+    <Box>
+      <Header>
+        {/* <Button
+          startIcon={<Icon component={Add} />}
+          variant="outlined"
+          onClick={() => setOpen(true)}
+        >
+          Criar Evento
+        </Button>
+
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box>
+            <h2>Criar Evento</h2>
+            <CreateEventForm />
+          </Box>
+        </Modal> */}
+        <Modal label="Criar Evento">
+          <CreateEventForm />
+        </Modal>
+      </Header>
+      <EventList />
+    </Box>
   )
 }

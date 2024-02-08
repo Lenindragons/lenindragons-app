@@ -22,8 +22,6 @@ export const SideMenu = () => {
   return (
     <List
       sx={{
-        width: '100%',
-        maxWidth: 360,
         bgcolor: 'transparent',
         color: '#fff',
       }}

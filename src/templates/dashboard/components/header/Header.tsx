@@ -1,5 +1,6 @@
 import { styled } from 'styled-components'
 import { Profile } from '../profile/Profile'
+import { usePage } from '../../../../context/PageContext'
 
 const Container = styled.header`
   display: flex;
@@ -17,9 +18,11 @@ const Container = styled.header`
 `
 
 const Header = () => {
+  const { title } = usePage()
+
   return (
     <Container>
-      <h1>Titulo da Pagina</h1>
+      <h1>{title}</h1>
       <Profile />
     </Container>
   )
