@@ -1,12 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-type SliderImage = {
-  length: number
-}
-
 type SliderProps = {
-  images: SliderImage[]
+  images: string[]
 }
 
 const ImageSliderContainer = styled.div`
