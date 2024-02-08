@@ -58,12 +58,12 @@ const DeleteButton = styled.button`
 export const EventList = () => {
   const { events, removeEvent, editEvent } = useEvents()
 
-  const handleEdit = (id: string) => {
-    editEvent(id)
+  const handleEdit = (id: string, newEventData: Event) => {
+    editEvent(id, newEventData)
   }
 
-  const handleDelete = async (id: string, newEventData: Event) => {
-    removeEvent(id, newEventData)
+  const handleDelete = async (id: string) => {
+    removeEvent(id)
   }
 
   const getStatus = (date: Timestamp) => {
