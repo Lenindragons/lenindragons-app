@@ -2,7 +2,6 @@ import { styled } from 'styled-components'
 import { Timestamp } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
 import { useEvents } from '../../context/EventContext'
-import { deleteEvents } from '../../services/events'
 
 const EventItem = styled.li`
   margin-bottom: 10px;
@@ -57,37 +56,14 @@ const DeleteButton = styled.button`
 `
 
 export const EventList = () => {
-  // const [events, setEvents] = useState([]);
-  const { events, removeEvent } = useEvents()
-
-  // useEffect(() => {
-  //   const firebaseConfig = {
-  //     // Configure com seus próprios dados do Firebase
-  //   };
-
-  //   firebase.initializeApp(firebaseConfig);
-
-  //   const db = firebase.firestore();
-  //   const unsubscribe = db.collection('events').onSnapshot((snapshot) => {
-  //     const updatedEvents = snapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     }));
-  //     setEvents(updatedEvents);
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
+  const { events, removeEvent, editEvent } = useEvents()
 
   const handleEdit = (id: string) => {
-    return id
-    // // Implemente a lógica de edição aqui
-    // console.log(`Editar evento com ID ${id}`);
+    editEvent(id)
   }
 
-  const handleDelete = async (id: string) => {
-    deleteEvents(id)
-    removeEvent(id)
+  const handleDelete = async (id: string, newEventData: Event) => {
+    removeEvent(id, newEventData)
   }
 
   const getStatus = (date: Timestamp) => {

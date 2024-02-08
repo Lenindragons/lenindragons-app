@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { GridSelectionModel } from '@material-ui/data-grid'
 import { ContextProps } from './ContextProps'
-import { getEvents } from '../services/events'
+import { getEvents, deleteEvent, updateEvent } from '../services/events'
 import { Event } from '../components/forms/event/types'
 
 const EventContext = createContext({})
@@ -15,7 +15,12 @@ export const EventProvider = ({ children }: ContextProps) => {
   }
 
   const removeEvent = async (id: string) => {
+    deleteEvent(id)
     setItems(items.filter((item) => item !== id))
+  }
+
+  const editEvent = (id: string, newEventData: Event) => {
+    updateEvent(id, newEventData)
   }
 
   useEffect(() => {
@@ -24,7 +29,13 @@ export const EventProvider = ({ children }: ContextProps) => {
 
   return (
     <EventContext.Provider
-      value={{ events, items, onSelectionModelChange, removeEvent }}
+      value={{
+        events,
+        items,
+        onSelectionModelChange,
+        removeEvent,
+        editEvent,
+      }}
     >
       {children}
     </EventContext.Provider>

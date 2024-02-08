@@ -8,6 +8,7 @@ import {
   onSnapshot,
   doc,
   deleteDoc,
+  updateDoc,
 } from '@firebase/firestore'
 import { Event } from '../../components/forms/event/types'
 import { db } from '../firebaseConfig'
@@ -62,18 +63,22 @@ export const getEvents = async (callback: any) => {
   }
 }
 
-export const deleteEvents = async (id: string) => {
+export const deleteEvent = async (id: string) => {
   try {
     const eventDoc = doc(db, 'events', id)
     await deleteDoc(eventDoc)
   } catch (err) {
     console.error(err)
   }
-  return id
 }
 
-export const updateEvents = (id: string) => {
-  return id
+export const updateEvent = (id: string, newEventData: Event) => {
+  try {
+    const eventDoc = doc(db, 'events', id)
+    updateDoc(eventDoc, newEventData)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export const getEventById = (id: string, callback: any) => {
