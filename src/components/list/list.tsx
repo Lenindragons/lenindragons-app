@@ -94,7 +94,7 @@ export const EventList = () => {
             <p>{event.startDate}</p>
             <p>{getStatus(event.created)}</p>
             <div>
-              <EditButton onClick={() => handleEdit(event.id)}>
+              <EditButton onClick={() => handleEdit(event.id, {} as Event)}>
                 Editar
               </EditButton>
               <DeleteButton onClick={() => handleDelete(event.id)}>
