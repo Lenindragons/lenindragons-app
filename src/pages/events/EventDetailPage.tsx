@@ -8,7 +8,7 @@ const EventDetailPage = () => {
   const [event, setEvent] = useState({
     name: '',
     description: '',
-    date: { start: null, end: null },
+    dates: [{ startDate: null, endDate: null }],
     image: '',
   })
 
@@ -25,8 +25,14 @@ const EventDetailPage = () => {
       <p>Event ID: {id}</p>
       <p>Event Name: {event?.name}</p>
       <p>Event Description: {event?.description}</p>
-      <p>Event Date Start: {event.date.start && getDate(event?.date?.start)}</p>
-      <p>Event Date End: {event.date.end && getDate(event?.date?.end)}</p>
+      <p>
+        Event Date Start:
+        {event.dates[0]?.startDate && getDate(event?.dates[0]?.startDate)}
+      </p>
+      <p>
+        Event Date End:
+        {event.dates[0]?.endDate && getDate(event?.dates[0]?.endDate)}
+      </p>
     </div>
   )
 }

@@ -1,13 +1,38 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-return-assign */
+import { Button } from '@mui/material'
 import { useState, useRef, ChangeEvent } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import styled from 'styled-components'
 
 interface ImageInputProps {
   onImageSelected: (file: any) => void
+  image?: string | null
 }
 
-const ImageInputComponent = ({ onImageSelected }: ImageInputProps) => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+const FileContainer = styled.div`
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+
+  &:hover {
+    border-color: #000;
+  }
+`
+
+const ImageInputComponent = ({
+  onImageSelected,
+  image = null,
+}: ImageInputProps) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(image)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +46,7 @@ const ImageInputComponent = ({ onImageSelected }: ImageInputProps) => {
   }
 
   return (
-    <div>
+    <FileContainer>
       <input
         type="file"
         accept="image/*"
@@ -29,19 +54,22 @@ const ImageInputComponent = ({ onImageSelected }: ImageInputProps) => {
         style={{ display: 'none' }}
         ref={(input) => (inputRef.current = input)}
       />
-      <button type="button" onClick={() => inputRef.current?.click()}>
-        Selecionar Imagem
-      </button>
-      {selectedImage && (
-        <div>
+      <div>
+        {selectedImage ? (
           <img
             src={selectedImage}
             alt="Imagem Selecionada"
             style={{ maxWidth: '100px' }}
           />
-        </div>
-      )}
-    </div>
+        ) : (
+          <>Imagem para a Capa</>
+        )}
+      </div>
+
+      <Button variant="outlined" onClick={() => inputRef.current?.click()}>
+        Selecionar Imagem
+      </Button>
+    </FileContainer>
   )
 }
 
@@ -55,6 +83,7 @@ const ImageInput = ({ control, name }: any) => {
       render={(field) => {
         return (
           <ImageInputComponent
+            image={field.field.value || null}
             onImageSelected={async (file) => {
               field.field.onChange(file)
               setValue('image', file)

@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { GridSelectionModel } from '@material-ui/data-grid'
 import { ContextProps } from './ContextProps'
 import { getEvents, deleteEvent, updateEvent } from '../services/events'
-import { Event } from '../components/forms/event/types'
+import { Event } from '../types/Event'
 
 const EventContext = createContext({})
 

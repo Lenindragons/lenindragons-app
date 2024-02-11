@@ -2,6 +2,9 @@ import { styled } from 'styled-components'
 import { Timestamp } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
 import { useEvents } from '../../context/EventContext'
+import { Modal } from '../commons/modal/Modal'
+import { EventForm } from '../../pages/events/forms/event/EventForm'
+import { getDate } from '../../helpers/format-date'
 
 const EventItem = styled.li`
   margin-bottom: 10px;
@@ -26,12 +29,12 @@ const EventData = styled.div`
   justify-content: space-between;
 
   p:last-child,
-  div:last-child {
+  > div:last-child {
     flex: 1;
     text-align: center;
   }
 
-  div:last-child {
+  > div:last-child {
     display: flex;
     justify-content: space-around;
   }
@@ -91,12 +94,20 @@ export const EventList = () => {
             <Link to={`/event/${event.id}`}>
               <strong>{event.name}</strong>
             </Link>
-            <p>{event.startDate}</p>
+            <p>{getDate(event.dates[0].startDate)}</p>
             <p>{getStatus(event.created)}</p>
             <div>
               <EditButton onClick={() => handleEdit(event.id, {} as Event)}>
                 Editar
               </EditButton>
+
+              <Modal label="Editar Evento">
+                <EventForm
+                  callback={(data) => editEvent(event.id, data)}
+                  data={event}
+                />
+              </Modal>
+
               <DeleteButton onClick={() => handleDelete(event.id)}>
                 Excluir
               </DeleteButton>

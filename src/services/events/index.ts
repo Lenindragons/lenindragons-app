@@ -10,10 +10,9 @@ import {
   deleteDoc,
   updateDoc,
 } from '@firebase/firestore'
-import { Event } from '../../components/forms/event/types'
+import { Event } from '../../types/Event'
 import { db } from '../firebaseConfig'
 import saveImageGetURL from '../images'
-import { getDate } from '../../helpers/format-date'
 
 const getEventCollection = () => {
   return collection(db, 'events')
@@ -25,10 +24,7 @@ export const createEvent = async (data: Event): Promise<void> => {
       name: data.name,
       description: data.description,
       image: await saveImageGetURL(data.image),
-      date: {
-        start: data.dates[0].startDate,
-        end: data.dates[0].endDate,
-      },
+      dates: data.dates,
     }
     await addDoc(getEventCollection(), {
       ...content,
@@ -49,8 +45,6 @@ export const getEvents = async (callback: any) => {
           const data = document.data()
           return {
             id: document.id,
-            startDate: getDate(data.date.start),
-            endDate: getDate(data.date.end),
             ...data,
           }
         })
