@@ -10,6 +10,7 @@ export type Icon = {
 }
 
 export type Event = {
+  id: string
   name: string
   icon: Icon
   description: string

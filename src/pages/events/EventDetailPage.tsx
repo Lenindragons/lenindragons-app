@@ -17,6 +17,8 @@ import { getDate } from '../../helpers/format-date'
 import { Modal } from '../../components/commons/modal/Modal'
 import { ChallengeForm } from './forms/event/ChallengeForm'
 import DynamicForm from '../../components/dynamic-form'
+import { createChallenge } from '../../services/challenge'
+import ChallengeList from './components/challenge-list/ChallengeList'
 
 const EventDetailPage = () => {
   const { id = '' } = useParams()
@@ -76,16 +78,18 @@ const EventDetailPage = () => {
           </Card>
         </Grid>
         <Grid item xs={12}>
-          <Paper elevation={3} sx={{ padding: 2 }}>
+          <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
             <Typography variant="h5" gutterBottom>
               Torneios da Temporada
             </Typography>
             <Modal label="Adicionar torneio">
-              <ChallengeForm callback={() => { }} data={{ event }} />
+              <ChallengeForm callback={createChallenge} data={{ event }} />
             </Modal>
 
-            <DynamicForm />
+
+            {/* <DynamicForm /> */}
           </Paper>
+          <ChallengeList seasonId={id} />
         </Grid>
       </Grid>
     </Box>

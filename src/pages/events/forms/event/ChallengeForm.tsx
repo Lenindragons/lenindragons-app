@@ -40,7 +40,7 @@ export const ChallengeForm = ({ callback, data }: ChallengeFormProps) => {
               type="number"
               variant="outlined"
               defaultValue={40}
-              {...register('roundsTime', { required: true })}
+              {...register('roundTime', { required: true })}
             />
           </div>
           <DateRange label="Data do torneio:" name="dates" control={control} />

@@ -12,6 +12,7 @@ import { EventPage } from './pages/events/Events'
 import { PlayersPage } from './pages/players/PlayersPage'
 import EventDetailPage from './pages/events/EventDetailPage'
 import { PageProvider } from './context/PageContext'
+import { ChallengeProvider } from './context/ChallengeContext'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -22,18 +23,23 @@ export const App = () => {
         <BrowserRouter>
           <AuthProvider>
             <PageProvider>
-              <EventProvider>
-                <GlobalStyle />
-                <Routes>
-                  <Route path="/" element={<MainPage />} />
-                  <Route element={<PrivateRoutes />}>
-                    <Route path="/profile" element={<HomePage />} />
-                    <Route path="/seasons" element={<EventPage />} />
-                    <Route path="/players" element={<PlayersPage />} />
-                    <Route path="/seasons/:id" element={<EventDetailPage />} />
-                  </Route>
-                </Routes>
-              </EventProvider>
+              <ChallengeProvider>
+                <EventProvider>
+                  <GlobalStyle />
+                  <Routes>
+                    <Route path="/" element={<MainPage />} />
+                    <Route element={<PrivateRoutes />}>
+                      <Route path="/profile" element={<HomePage />} />
+                      <Route path="/seasons" element={<EventPage />} />
+                      <Route path="/players" element={<PlayersPage />} />
+                      <Route
+                        path="/seasons/:id"
+                        element={<EventDetailPage />}
+                      />
+                    </Route>
+                  </Routes>
+                </EventProvider>
+              </ChallengeProvider>
             </PageProvider>
           </AuthProvider>
         </BrowserRouter>
