@@ -18,6 +18,7 @@ import { getPlayers } from '../../services/players'
 
 type FormValues = {
   players: {
+    place: number
     player: string
     wins: number
     looses: number
@@ -28,7 +29,7 @@ type FormValues = {
 const DynamicForm = () => {
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
-      players: [{ player: '', wins: 0, looses: 0, ties: 0 }],
+      players: [{ place: 0, player: '', wins: 0, looses: 0, ties: 0 }],
     },
   })
 
@@ -58,6 +59,7 @@ const DynamicForm = () => {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>Lugar</TableCell>
               <TableCell>Nome</TableCell>
               <TableCell>Vitórias</TableCell>
               <TableCell>Derrotas</TableCell>
@@ -68,19 +70,23 @@ const DynamicForm = () => {
             {fields.map((field, index) => (
               <TableRow key={field.id}>
                 <TableCell>
-                  {/* <Controller
-                    name={`players.${index}.player`}
+                  <Controller
+                    name={`players.${index}.place`}
                     control={control}
-                    render={({ field }) => <TextField {...field} />}
-                  /> */}
-
+                    render={({ field }) => (
+                      <TextField type="number" {...field} />
+                    )}
+                  />
+                </TableCell>
+                <TableCell>
                   <Controller
                     name={`players.${index}.player`}
                     control={control}
+                    defaultValue=""
                     render={({ field: { value, ref, onBlur, onChange } }) => (
                       <Autocomplete
                         value={value}
-                        style={{ marginTop: 10 }}
+                        style={{ minWidth: 300 }}
                         options={options}
                         onBlur={onBlur}
                         onChange={(evt, newValue) => {
@@ -97,9 +103,9 @@ const DynamicForm = () => {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Icone da Temporada:"
+                            label="Nome jogador:"
                             variant="outlined"
-                            name="icon"
+                            style={{ display: 'block' }}
                             inputRef={ref}
                           />
                         )}
@@ -143,7 +149,9 @@ const DynamicForm = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => append({ player: '', wins: 0, looses: 0, ties: 0 })}
+          onClick={() =>
+            append({ place: 0, player: '', wins: 0, looses: 0, ties: 0 })
+          }
         >
           Adicionar Jogador
         </Button>
