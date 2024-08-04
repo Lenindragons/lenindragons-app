@@ -1,7 +1,22 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import {
+  Grid,
+  Typography,
+  Box,
+  Card,
+  CardContent,
+  Avatar,
+  Paper,
+  Breadcrumbs,
+  Link,
+  Chip,
+} from '@mui/material'
 import { getEventById } from '../../services/events'
 import { getDate } from '../../helpers/format-date'
+import { Modal } from '../../components/commons/modal/Modal'
+import { ChallengeForm } from './forms/event/ChallengeForm'
 
 const EventDetailPage = () => {
   const { id = '' } = useParams()
@@ -9,7 +24,10 @@ const EventDetailPage = () => {
     name: '',
     description: '',
     dates: [{ startDate: null, endDate: null }],
-    image: '',
+    image: {
+      name: '',
+      url: '',
+    },
   })
 
   useEffect(() => {
@@ -17,23 +35,58 @@ const EventDetailPage = () => {
   }, [id])
 
   return (
-    <div>
-      <h1>Event Detail Page</h1>
-      <figure>
-        <img src={event?.image} alt={event?.name} width={350} />
-      </figure>
-      <p>Event ID: {id}</p>
-      <p>Event Name: {event?.name}</p>
-      <p>Event Description: {event?.description}</p>
-      <p>
-        Event Date Start:
-        {event.dates[0]?.startDate && getDate(event?.dates[0]?.startDate)}
-      </p>
-      <p>
-        Event Date End:
-        {event.dates[0]?.endDate && getDate(event?.dates[0]?.endDate)}
-      </p>
-    </div>
+    <Box sx={{ padding: 4 }}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={3}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Avatar
+              alt={event?.image.name}
+              src={event?.image.url}
+              sx={{
+                width: 140,
+                height: 140,
+                margin: 'auto',
+                backgroundColor: '#f0f0f0',
+              }}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={9}>
+          <Card>
+            <CardContent>
+              <Typography variant="h4" gutterBottom>
+                {event?.name}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {event?.description}
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2, marginTop: 2 }}>
+                <Chip
+                  label={`Início: ${event.dates[0]?.startDate && getDate(event?.dates[0]?.startDate)}`}
+                  color="primary"
+                  variant="outlined"
+                />
+                <Chip
+                  label={`Final: ${event.dates[0]?.endDate && getDate(event?.dates[0]?.endDate)}`}
+                  color="secondary"
+                  variant="outlined"
+                />
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h5" gutterBottom>
+              Torneios da Temporada
+            </Typography>
+            <Modal label="Adicionar torneio">
+              <ChallengeForm callback={() => { }} />
+            </Modal>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 

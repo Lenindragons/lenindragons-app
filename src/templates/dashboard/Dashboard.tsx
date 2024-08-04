@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Avatar } from '@mui/material'
 import HeaderComponent from './components/header/Header'
 import { SideMenu } from '../../components/side-menu/side-menu'
 import { DashboardContainer, HomeContainer, SideBar } from './style'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/fantasia-logo.png'
 import GearHammer from '../../assets/gear-hammer.svg'
 import Parchment from '../../assets/parchment.svg'
 
@@ -13,11 +12,7 @@ export const Dashboard = ({ children }: any) => {
       <HeaderComponent />
       <SideBar>
         <section>
-          <Avatar
-            alt="LeninDragons"
-            src={logo}
-            sx={{ width: 150, height: 150 }}
-          />
+          <img src={logo} alt="Fantasia Geek Store" width={150} height={150} />
         </section>
 
         <SideMenu
@@ -30,8 +25,14 @@ export const Dashboard = ({ children }: any) => {
             },
             {
               id: 'side-menu-2',
-              path: '/event',
-              label: 'Eventos',
+              path: '/seasons',
+              label: 'Temporadas',
+              icon: Parchment,
+            },
+            {
+              id: 'side-menu-3',
+              path: '/players',
+              label: 'Jogadores',
               icon: Parchment,
             },
           ]}

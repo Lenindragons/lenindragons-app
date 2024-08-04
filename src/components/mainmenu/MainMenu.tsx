@@ -28,11 +28,8 @@ const MenuContainer = styled.ul`
 export const MainMenu = ({ children }: MainMenuProps) => {
   return (
     <MenuContainer>
-      <li>Traga seu evento</li>
-      <li>Projetos</li>
-      <li>Sobre</li>
-      <li>Contato</li>
-      <li>APOIA.SE</li>
+      <li>Rankings</li>
+      <li>Regras</li>
       {children}
     </MenuContainer>
   )

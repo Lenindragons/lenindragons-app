@@ -283,7 +283,7 @@ export const EventList = () => {
 
   return (
     <>
-      <h2>Ultimos Eventos</h2>
+      <h2>Ultimas Temporadas</h2>
       <EventImagesContainer
         onMouseEnter={() => getClassName()}
         onMouseLeave={() => getClassName()}

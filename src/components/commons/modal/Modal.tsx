@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable prettier/prettier */
+import { Button } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
@@ -14,10 +15,13 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 0;
 `
 
 const ModalContent = styled.div`
   background-color: white;
+  min-width: 300px;
+  min-height: 200px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -25,6 +29,8 @@ const ModalContent = styled.div`
 
 const CloseButton = styled.button`
   cursor: pointer;
+  padding: 10px;
+  margin-bottom: 10px;
 `
 
 type ModalProps = {
@@ -32,6 +38,8 @@ type ModalProps = {
   isOpen?: boolean
   onClose?: () => void
   children: React.ReactNode
+  variant?: 'contained' | 'outlined' | 'text'
+  color?: 'primary' | 'secondary' | 'default'
 }
 
 export const Modal = ({
@@ -39,6 +47,8 @@ export const Modal = ({
   isOpen = false,
   onClose = () => { },
   children,
+  variant = 'contained',
+  color = 'primary',
 }: ModalProps) => {
   const [modalOpen, setModalOpen] = useState(isOpen)
 
@@ -53,18 +63,23 @@ export const Modal = ({
 
   if (!modalOpen) {
     return (
-      <button type="button" onClick={handleOpenModal}>
+      <Button variant={variant} color={color as 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'} onClick={handleOpenModal}>
         {label}
-      </button>
+      </Button>
     )
   }
 
   return (
-    <ModalOverlay>
-      <ModalContent>
-        <CloseButton onClick={handleClose}>Fechar</CloseButton>
-        <div>{children}</div>
-      </ModalContent>
-    </ModalOverlay>
+    <>
+      <Button variant={variant} color={color as 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'}>
+        {label}
+      </Button>
+      <ModalOverlay>
+        <ModalContent>
+          <CloseButton onClick={handleClose}>Fechar</CloseButton>
+          <div>{children}</div>
+        </ModalContent>
+      </ModalOverlay>
+    </>
   )
 }

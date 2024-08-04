@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import stalin from '../../../../assets/JosefDwarfStalinFire.png'
-import lenin from '../../../../assets/LordLenin.png'
+import bossOrder from '../../../../assets/boss-order.png'
+import redBlue from '../../../../assets/red-blue.png'
 import { MainMenu } from '../../../../components/mainmenu/MainMenu'
 
 const FooterContainer = styled.footer`
@@ -45,13 +45,13 @@ export const Footer = () => {
     <FooterContainer>
       <div>
         <figure className="stalin">
-          <img src={stalin} alt="stalin" width={400} />
+          <img src={redBlue} alt="red" width={400} />
         </figure>
         <div className="main">
           <MainMenu />
         </div>
         <figure className="lenin">
-          <img src={lenin} alt="lenin" width={400} />
+          <img src={bossOrder} alt="boss-order" width={500} />
         </figure>
       </div>
     </FooterContainer>

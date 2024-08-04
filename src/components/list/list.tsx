@@ -1,6 +1,19 @@
 import { styled } from 'styled-components'
 import { Timestamp } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Avatar,
+  Typography,
+  Box,
+  Button,
+} from '@mui/material'
 import { useEvents } from '../../context/EventContext'
 import { Modal } from '../commons/modal/Modal'
 import { EventForm } from '../../pages/events/forms/event/EventForm'
@@ -22,7 +35,7 @@ const EventItemHeader = styled(EventItem)`
 
 const EventData = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
   flex-direction: row;
   align-items: center;
   flex: 1;
@@ -79,43 +92,71 @@ export const EventList = () => {
   }
 
   return (
-    <ul>
-      <EventItemHeader>
-        <EventData>
-          <p>Nome</p>
-          <p>Data de Inicio</p>
-          <p>Status</p>
-          <p>Ações</p>
-        </EventData>
-      </EventItemHeader>
-      {events.map((event: any) => (
-        <EventItem key={event.id}>
-          <EventData>
-            <Link to={`/event/${event.id}`}>
-              <strong>{event.name}</strong>
-            </Link>
-            <p>{getDate(event.dates[0].startDate)}</p>
-            <p>{getStatus(event.created)}</p>
-            <div>
-              <EditButton onClick={() => handleEdit(event.id, {} as Event)}>
-                Editar
-              </EditButton>
-
-              <Modal label="Editar Evento">
-                <EventForm
-                  callback={(data) => editEvent(event.id, data)}
-                  data={event}
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Imagem</TableCell>
+            <TableCell>Nome</TableCell>
+            <TableCell>Data de Início</TableCell>
+            <TableCell>Data de Fim</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell>Ações</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {events.map((event: any) => (
+            <TableRow key={event.id}>
+              <TableCell>
+                <Avatar
+                  alt={event.image.name}
+                  src={event.image.url}
+                  sx={{ width: 56, height: 56, backgroundColor: '#f0f0f0' }}
                 />
-              </Modal>
+              </TableCell>
+              <TableCell>
+                <Link to={`/seasons/${event.id}`}>
+                  <Typography variant="body1">{event.name}</Typography>
+                </Link>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body2">
+                  {getDate(event.dates[0].startDate)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body2">
+                  {getDate(event.dates[0].endDate)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body2">
+                  {getStatus(event.created)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  <Modal label="Editar Evento">
+                    <EventForm
+                      callback={(data) => editEvent(event.id, data)}
+                      data={event}
+                    />
+                  </Modal>
 
-              <DeleteButton onClick={() => handleDelete(event.id)}>
-                Excluir
-              </DeleteButton>
-            </div>
-          </EventData>
-        </EventItem>
-      ))}
-    </ul>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleDelete(event.id)}
+                  >
+                    Excluir
+                  </Button>
+                </Box>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
 

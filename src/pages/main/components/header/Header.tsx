@@ -2,7 +2,7 @@
 /* eslint-disable react/require-default-props */
 import styled from 'styled-components'
 import ImageSlider from '../../../../components/slider/Slider'
-import logo from '../../../../assets/logo.png'
+import logo from '../../../../assets/fantasia-logo.png'
 import bg from '../../../../assets/bg-lenindragons.webp'
 import { MainMenu } from '../../../../components/mainmenu/MainMenu'
 import Options from '../options'
@@ -10,16 +10,18 @@ import Options from '../options'
 const MenuComunista = styled.nav`
   background: url(${bg});
   position: relative;
+  display: flex;
+  justify-content: center;
 
   .top {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    max-width: 68em;
     padding: 16px 32px;
   }
 
   .bottom {
-    min-height: 500px;
     display: flex;
   }
 
@@ -61,9 +63,9 @@ export const Header = () => {
           <Options />
         </MainMenu>
       </div>
-      <div className="bottom">
+      {/* <div className="bottom">
         <ImageSlider images={events.map((event: any) => event.image)} />
-      </div>
+      </div> */}
     </MenuComunista>
   )
 }

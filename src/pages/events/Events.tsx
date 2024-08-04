@@ -7,10 +7,6 @@ import { Modal } from '../../components/commons/modal/Modal'
 import { createEvent } from '../../services/events'
 
 export const Box = styled.section`
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 16px;
   margin: 16px;
 `
@@ -23,14 +19,14 @@ export const EventPage = () => {
   const { setTitle } = usePage()
 
   useEffect(() => {
-    setTitle('Eventos')
+    setTitle('Temporadas')
   }, [setTitle])
 
   return (
     <Box>
       <Header>
-        <Modal label="Criar Evento">
-          <EventForm callback={createEvent} />
+        <Modal label="Criar temporada">
+          <EventForm callback={createEvent} data={[]} />
         </Modal>
       </Header>
       <EventList />

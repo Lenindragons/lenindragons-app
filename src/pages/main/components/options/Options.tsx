@@ -63,7 +63,7 @@ const Options = () => {
         {user ? (
           <>
             <ListItemBlack>
-              <Link to="/home">Olá, {user && user.name}</Link>
+              <Link to="/profile">Olá, {user && user.name}</Link>
             </ListItemBlack>
             <ListItemWhite>
               <Logout />

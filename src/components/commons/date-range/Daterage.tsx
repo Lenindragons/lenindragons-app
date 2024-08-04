@@ -12,7 +12,6 @@ const DateRangeContainer = styled.div`
   border: 1px solid #bbb;
   border-radius: 8px;
   padding: 8px;
-  margin: 8px 0px;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
@@ -75,12 +74,6 @@ const DateRangeComponent = ({ label, name, control }: DatePickerProps) => {
         control={control}
         defaultValue={defaultValues}
         render={({ field }) => {
-          console.log({
-            field,
-            defaultValues,
-            theme,
-            values: getFieldValues(field),
-          })
           return (
             <DateRange
               onChange={(item) => field.onChange([item.selection])}

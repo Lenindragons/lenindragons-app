@@ -13,23 +13,30 @@ import {
 import { Event } from '../../types/Event'
 import { db } from '../firebaseConfig'
 import saveImageGetURL from '../images'
+import { getSpriteByName, getSprites } from '../sprites'
 
 const getEventCollection = () => {
   return collection(db, 'events')
 }
 
 export const createEvent = async (data: Event): Promise<void> => {
+  console.log({ data })
+  const sprite = await getSpriteByName(data.icon.name)
   try {
     const content = {
       name: data.name,
       description: data.description,
-      image: await saveImageGetURL(data.image),
+      image: {
+        name: data.icon.name,
+        url: sprite?.image,
+      },
       dates: data.dates,
     }
     await addDoc(getEventCollection(), {
       ...content,
       created: Timestamp.now(),
     })
+    console.log(content)
   } catch (err) {
     console.error(err)
   }

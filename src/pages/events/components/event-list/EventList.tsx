@@ -35,11 +35,11 @@ const EventList = () => {
   }, [])
 
   const handleEdit = (id: string) => {
-    console.log(id)
+    // console.log(id)
   }
 
   const handleRemove = (id: string) => {
-    console.log(id)
+    // console.log(id)
   }
 
   const columns: GridColDef[] = [

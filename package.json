@@ -11,14 +11,16 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@material-ui/core": "^4.12.4",
     "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@mui/icons-material": "^5.14.6",
     "@mui/material": "^5.14.6",
     "@mui/styled-engine": "^5.14.6",
+    "@mui/x-data-grid": "^7.11.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "axios": "^1.7.2",
     "date-fns": "^2.30.0",
     "firebase": "^10.1.0",
     "react": "^18.2.0",

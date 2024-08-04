@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Footer } from './components/footer/Footer'
 import { Header } from './components/header/Header'
 import { EventList } from './components/main/EventList'
+import RankingList from './components/ranking/RankingList'
 
 const MainContainer = styled.main`
   width: 100%;
@@ -41,15 +42,12 @@ export const MainPage = () => {
       <Header />
       <MainContainer>
         <header>
-          <h1>Lenindragons</h1>
-          <p>
-            Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit
-            amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis
-            venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem
-            ipsum dolor sit amet nullam dolore.
-          </p>
+          <h1>Ranking Fantasia Geek Store</h1>
+          <h2>Temporada: Umbreon - Terças & Quintas</h2>
         </header>
-        <EventList />
+        {/* <EventList /> */}
+
+        <RankingList />
       </MainContainer>
       <Footer />
     </>

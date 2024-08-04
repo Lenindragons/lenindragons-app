@@ -4,9 +4,14 @@ export type EventDate = {
   key: string
 }
 
+export type Icon = {
+  name: string
+  url: string
+}
+
 export type Event = {
   name: string
-  image: File
+  icon: Icon
   description: string
   dates: Array<EventDate>
 }
