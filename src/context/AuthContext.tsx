@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { app } from '../services/firebaseConfig'
 import { ContextProps } from './ContextProps'
 import { useErrorHandling } from './ErrorContext'
+import { formatUserMetadata } from '../helpers/format-date'
 
 const provider = new GoogleAuthProvider()
 
@@ -35,6 +36,7 @@ const AuthProvider = ({ children }: ContextProps) => {
         name: userInfo.displayName,
         email: userInfo.email,
         image: userInfo.photoURL,
+        ...formatUserMetadata(userInfo.metadata),
       }
     )
   }
