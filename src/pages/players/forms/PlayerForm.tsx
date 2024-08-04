@@ -4,14 +4,13 @@ import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../../../services/firebaseConfig'
 
 export const PlayerForm = ({ callback, closeModal }) => {
-  const { control, handleSubmit, reset } = useForm()
+  const { control, handleSubmit } = useForm()
 
   const onSubmit = async (data: any) => {
     try {
       await addDoc(collection(db, 'players'), data)
       callback(data)
       closeModal(true)
-      console.log('Player added successfully!')
     } catch (error) {
       console.error('Error adding player: ', error)
     }

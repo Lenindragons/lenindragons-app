@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import axios from 'axios'
-import { limit } from 'firebase/firestore'
 
 export const client = axios.create({
   baseURL: 'https://pokeapi.co/api/v2',

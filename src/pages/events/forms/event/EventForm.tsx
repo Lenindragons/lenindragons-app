@@ -21,8 +21,6 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
   const [options, setOptions] = useState<any[]>([])
   const [pokemon, setPokemon] = useState<any>(null)
 
-  console.log({ options })
-
   const onSubmit = async (formData: any): Promise<any> => {
     callback(formData)
   }
@@ -31,7 +29,6 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
     const fetchPokemons = async () => {
       try {
         const pokemons = await getPokemons()
-        console.log('useEffect', { pokemons })
         setOptions(pokemons)
       } catch (err) {
         console.error(err)
@@ -41,7 +38,7 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
     fetchPokemons()
   }, [])
 
-  const onAutoCompleteSubmit = async (value) => {
+  const onAutoCompleteSubmit = async (value: string) => {
     try {
       const pokemons = await getPokemons()
       setOptions(pokemons)
@@ -74,7 +71,6 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
                   onBlur={onBlur}
                   ref={ref}
                   onChange={(evt, newValue) => {
-                    console.log({ newValue })
                     onChange(newValue)
                   }}
                   getOptionLabel={(option) => {
@@ -82,7 +78,6 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
                   }}
                   onInputChange={(evt, newInputValue) => {
                     if (newInputValue) {
-                      console.log({ newInputValue })
                       onAutoCompleteSubmit(newInputValue)
                     } else {
                       setOptions([])

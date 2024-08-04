@@ -19,17 +19,6 @@ export const ChallengeForm = ({ callback, data }: ChallengeFormProps) => {
     defaultValues: data,
   })
 
-  // const fetchPlayers = async () => {
-  //   const players = await getPlayers()
-  //   const playersOptions = players.map((player) => ({
-  //     value: player.id,
-  //     name: player.name,
-  //   }))
-  //   console.log({ playersOptions })
-  //   setOptions(playersOptions)
-  //   console.log({ options })
-  // }
-
   const onSubmit = async (formData: any): Promise<any> => {
     callback(formData)
   }
@@ -61,41 +50,6 @@ export const ChallengeForm = ({ callback, data }: ChallengeFormProps) => {
 
           <h2>Adicionar Participantes</h2>
 
-          {/* <Controller
-            name="icon"
-            control={control}
-            defaultValue={null}
-            render={({ field: { value, ref, onBlur, onChange } }) => (
-              <Autocomplete
-                value={value}
-                style={{ marginTop: 10 }}
-                options={options}
-                onBlur={onBlur}
-                onChange={(evt, newValue) => {
-                  onChange(newValue)
-                }}
-                getOptionLabel={(option) => option.name}
-                onInputChange={(evt, newInputValue) => {
-                  if (newInputValue) {
-                    console.log(newInputValue)
-                    // fetchPlayers()
-                  } else {
-                    setOptions([])
-                  }
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Icone da Temporada:"
-                    variant="outlined"
-                    name="icon"
-                    inputRef={ref}
-                  />
-                )}
-              />
-            )}
-          /> */}
-
           <Controller
             name="icon"
             control={control}
@@ -112,7 +66,6 @@ export const ChallengeForm = ({ callback, data }: ChallengeFormProps) => {
                 getOptionLabel={(option) => option.name}
                 onInputChange={(evt, newInputValue) => {
                   if (newInputValue) {
-                    console.log(newInputValue)
                     onAutoCompleteSubmit()
                   } else {
                     setOptions([])

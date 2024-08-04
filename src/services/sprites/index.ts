@@ -84,7 +84,7 @@ export const getSpriteByName = async (name: string) => {
       const spriteData = querySnapshot.docs[0].data()
       return spriteData
     }
-    console.log('No such document!')
+
     return null
   } catch (err) {
     console.error(err)

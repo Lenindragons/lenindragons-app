@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -9,8 +10,6 @@ import {
   CardContent,
   Avatar,
   Paper,
-  Breadcrumbs,
-  Link,
   Chip,
 } from '@mui/material'
 import { getEventById } from '../../services/events'

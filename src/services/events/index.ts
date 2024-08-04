@@ -12,15 +12,13 @@ import {
 } from '@firebase/firestore'
 import { Event } from '../../types/Event'
 import { db } from '../firebaseConfig'
-import saveImageGetURL from '../images'
-import { getSpriteByName, getSprites } from '../sprites'
+import { getSpriteByName } from '../sprites'
 
 const getEventCollection = () => {
   return collection(db, 'events')
 }
 
 export const createEvent = async (data: Event): Promise<void> => {
-  console.log({ data })
   const sprite = await getSpriteByName(data.icon.name)
   try {
     const content = {
@@ -36,7 +34,6 @@ export const createEvent = async (data: Event): Promise<void> => {
       ...content,
       created: Timestamp.now(),
     })
-    console.log(content)
   } catch (err) {
     console.error(err)
   }
