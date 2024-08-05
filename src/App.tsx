@@ -11,6 +11,7 @@ import { EventProvider } from './context/EventContext'
 import { EventPage } from './pages/events/Events'
 import { PlayersPage } from './pages/players/PlayersPage'
 import EventDetailPage from './pages/events/EventDetailPage'
+import ChallengeDetailPage from './pages/challenge/ChallengeDetailPage'
 import { PageProvider } from './context/PageContext'
 import { ChallengeProvider } from './context/ChallengeContext'
 
@@ -35,6 +36,10 @@ export const App = () => {
                       <Route
                         path="/seasons/:id"
                         element={<EventDetailPage />}
+                      />
+                      <Route
+                        path="/challenges/:id"
+                        element={<ChallengeDetailPage />}
                       />
                     </Route>
                   </Routes>

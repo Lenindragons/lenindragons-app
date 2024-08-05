@@ -14,7 +14,9 @@ import {
   Autocomplete,
 } from '@mui/material'
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getPlayers } from '../../services/players'
+import { useChallenges } from '../../context/ChallengeContext'
 
 type FormValues = {
   players: {
@@ -34,6 +36,7 @@ const DynamicForm = () => {
   })
 
   const [options, setOptions] = useState<any[]>([])
+  const { editChallenge } = useChallenges()
 
   const onAutoCompleteSubmit = async () => {
     try {
@@ -49,8 +52,10 @@ const DynamicForm = () => {
     name: 'players',
   })
 
+  const { id = '' } = useParams()
+
   const onSubmit = (data: FormValues) => {
-    console.log(data)
+    editChallenge(id, data)
   }
 
   return (
@@ -73,8 +78,14 @@ const DynamicForm = () => {
                   <Controller
                     name={`players.${index}.place`}
                     control={control}
+                    disabled
                     render={({ field }) => (
-                      <TextField type="number" {...field} />
+                      <TextField
+                        style={{ width: '60px', textAlign: 'center' }}
+                        type="number"
+                        {...field}
+                        value={index + 1}
+                      />
                     )}
                   />
                 </TableCell>
@@ -82,17 +93,15 @@ const DynamicForm = () => {
                   <Controller
                     name={`players.${index}.player`}
                     control={control}
-                    defaultValue=""
                     render={({ field: { value, ref, onBlur, onChange } }) => (
                       <Autocomplete
-                        value={value}
                         style={{ minWidth: 300 }}
                         options={options}
                         onBlur={onBlur}
                         onChange={(evt, newValue) => {
                           onChange(newValue)
                         }}
-                        getOptionLabel={(option) => option.name}
+                        getOptionLabel={(option) => option.name || value}
                         onInputChange={(evt, newInputValue) => {
                           if (newInputValue) {
                             onAutoCompleteSubmit()
@@ -153,7 +162,7 @@ const DynamicForm = () => {
             append({ place: 0, player: '', wins: 0, looses: 0, ties: 0 })
           }
         >
-          Adicionar Jogador
+          Adicionar Jogador aos resultados
         </Button>
         <Button
           type="submit"
@@ -161,7 +170,7 @@ const DynamicForm = () => {
           color="secondary"
           sx={{ marginLeft: 2 }}
         >
-          Enviar
+          Salvar
         </Button>
       </Box>
     </form>

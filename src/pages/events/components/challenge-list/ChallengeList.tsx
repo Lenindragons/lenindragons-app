@@ -63,7 +63,7 @@ export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
           {challenges.map((challenge: any) => (
             <TableRow key={challenge.id}>
               <TableCell>
-                <Link to={`/challenge/${challenge.id}`}>
+                <Link to={`/challenges/${challenge.id}`}>
                   <Typography variant="body1">
                     {getDate(challenge.dates[0].startDate)}
                   </Typography>
