@@ -13,15 +13,12 @@ import { usePage } from '../../context/PageContext'
 import { getChallengeById } from '../../services/challenge'
 import DynamicForm from '../../components/dynamic-form'
 import { PlayerList } from './components/players-list/PlayerList'
-import {
-  PlayerItemsProvider,
-  usePlayerItem,
-} from './hooks/player-list/usePlayersList'
+import { usePlayerItem } from './hooks/player-list/usePlayersList'
 
 const ChallengeDetailPage = () => {
   const { setTitle } = usePage()
   const { id = '' } = useParams()
-  const { hasFinished } = usePlayerItem()
+  const { hasFinished } = usePlayerItem(id)
   const [tournament, setChallenge] = useState({
     id: '',
     rounds: '',
