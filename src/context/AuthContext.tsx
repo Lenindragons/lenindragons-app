@@ -7,7 +7,8 @@ import {
 } from 'firebase/auth'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { app } from '../services/firebaseConfig'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { app, db } from '../services/firebaseConfig'
 import { ContextProps } from './ContextProps'
 import { useErrorHandling } from './ErrorContext'
 import { formatUserMetadata } from '../helpers/format-date'
@@ -30,21 +31,27 @@ const AuthProvider = ({ children }: ContextProps) => {
 
   const auth = getAuth(app)
 
-  const getUserInfo = (userInfo: UserInfo) => {
-    return (
-      userInfo && {
+  const getUserInfo = async (userInfo: UserInfo): Promise<User | null> => {
+    const userDoc = doc(db, 'players', userInfo.uid)
+    const userSnapshot = await getDoc(userDoc)
+
+    if (!userSnapshot.exists()) {
+      const player = {
         name: userInfo.displayName,
         email: userInfo.email,
         image: userInfo.photoURL,
         ...formatUserMetadata(userInfo.metadata),
       }
-    )
+      await setDoc(userDoc, player)
+      return player
+    }
+    return userSnapshot.data() as User | null
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((userInfo) => {
+    const unsubscribe = auth.onAuthStateChanged(async (userInfo) => {
       if (userInfo) {
-        setUser(getUserInfo(userInfo))
+        setUser(await getUserInfo(userInfo))
         setLoadingStatus(false)
       }
     })
@@ -63,7 +70,7 @@ const AuthProvider = ({ children }: ContextProps) => {
       .then((res) => {
         setUser(getUserInfo(res.user))
       })
-      .then(() => navigate('/home'))
+      .then(() => navigate('/profile'))
       .catch((err) => {
         const { email, message, code } = err
         alertError(`[${code}:${email}]: ${message}`)

@@ -49,7 +49,6 @@ export const getChallenges = async (callback: any, id: string) => {
     return onSnapshot(challengesQuery, (challengesSnapshot) => {
       callback(
         challengesSnapshot.docs.map((document) => {
-          console.log('pokemon', document.data())
           const data = document.data()
           return {
             id: document.id,

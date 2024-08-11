@@ -1,0 +1,20 @@
+import { Pokemon } from '../../pages/challenge/hooks/player-list/types'
+
+export type Player = {
+  email: string
+  name: string
+  id: string
+}
+
+export type PlayerItemDynamyc = {
+  place: number
+  player: Player
+  wins: number
+  looses: number
+  ties: number
+  deck: Pokemon[]
+}
+
+export type FormValues = {
+  players: PlayerItemDynamyc[]
+}

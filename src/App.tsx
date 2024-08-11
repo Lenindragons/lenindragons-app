@@ -21,33 +21,28 @@ export const App = () => {
   return (
     <ErrorProvider>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <AuthProvider>
-            <PageProvider>
-              <ChallengeProvider>
-                <EventProvider>
-                  <GlobalStyle />
-                  <Routes>
-                    <Route path="/" element={<MainPage />} />
-                    <Route element={<PrivateRoutes />}>
-                      <Route path="/profile" element={<HomePage />} />
-                      <Route path="/seasons" element={<EventPage />} />
-                      <Route path="/players" element={<PlayersPage />} />
-                      <Route
-                        path="/seasons/:id"
-                        element={<EventDetailPage />}
-                      />
-                      <Route
-                        path="/challenges/:id"
-                        element={<ChallengeDetailPage />}
-                      />
-                    </Route>
-                  </Routes>
-                </EventProvider>
-              </ChallengeProvider>
-            </PageProvider>
-          </AuthProvider>
-        </BrowserRouter>
+        <AuthProvider>
+          <PageProvider>
+            <ChallengeProvider>
+              <EventProvider>
+                <GlobalStyle />
+                <Routes>
+                  <Route path="/" element={<MainPage />} />
+                  <Route element={<PrivateRoutes />}>
+                    <Route path="/profile" element={<HomePage />} />
+                    <Route path="/seasons" element={<EventPage />} />
+                    <Route path="/players" element={<PlayersPage />} />
+                    <Route path="/seasons/:id" element={<EventDetailPage />} />
+                    <Route
+                      path="/challenges/:id"
+                      element={<ChallengeDetailPage />}
+                    />
+                  </Route>
+                </Routes>
+              </EventProvider>
+            </ChallengeProvider>
+          </PageProvider>
+        </AuthProvider>
       </ThemeProvider>
     </ErrorProvider>
   )
