@@ -38,6 +38,22 @@ const MenuComunista = styled.nav`
   figure.lenin {
     right: 0;
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    ul {
+      flex-direction: column;
+      width: 100%;
+
+      li {
+        margin: 8px 0;
+        width: 100%;
+        text-align: left;
+      }
+    }
+  }
 `
 
 type LeninDragonsProps = {
@@ -46,7 +62,7 @@ type LeninDragonsProps = {
 const LeninDragons = ({ width = 80 }: LeninDragonsProps) => {
   return (
     <figure>
-      <img width={width} src={logo} alt="logo lenindragons" />
+      <img width={width} src={logo} alt="Fantasia Geek Store" />
     </figure>
   )
 }

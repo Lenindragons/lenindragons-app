@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore'
 import { db } from '../firebaseConfig'
 
 export const getPlayers = async () => {
@@ -13,4 +13,13 @@ export const getPlayers = async () => {
     console.error('Error fetching players: ', error)
   }
   return []
+}
+
+export const deletePlayer = async (id: string) => {
+  try {
+    const eventDoc = doc(db, 'players', id)
+    await deleteDoc(eventDoc)
+  } catch (err) {
+    console.error(err)
+  }
 }

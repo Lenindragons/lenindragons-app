@@ -84,9 +84,6 @@ const EventDetailPage = () => {
             <Modal label="Adicionar torneio">
               <ChallengeForm callback={createChallenge} data={{ event }} />
             </Modal>
-
-
-            {/* <DynamicForm /> */}
           </Paper>
           <ChallengeList seasonId={id} />
         </Grid>
