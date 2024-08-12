@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable prettier/prettier */
 import { DataGrid, GridAlignment } from '@material-ui/data-grid'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Box, Tab, Tabs } from '@mui/material'
 import { getEvents } from '../../../../services/events'
-import { getChallengeById, getChallengeBySeasonId } from '../../../../services/challenge'
+import { getChallengeBySeasonId } from '../../../../services/challenge'
 import { getRanking } from './getRanking'
 
 const DataGridContainer = styled.div`
@@ -23,8 +23,8 @@ const DataGridContainer = styled.div`
 `
 
 const columnConfig = {
-  align: 'center',
-  headerAlign: 'center',
+  align: 'center' as GridAlignment,
+  headerAlign: 'center' as GridAlignment,
   sortable: false,
   editable: false,
   filterable: false,
@@ -48,14 +48,12 @@ const columns = [
     headerName: 'Posição',
     width: 130,
     ...columnConfig,
-    align: 'center' as GridAlignment,
   },
   {
     field: 'name',
     headerName: 'Jogador',
     width: 350,
     ...columnConfig,
-    align: 'center' as GridAlignment,
   },
   {
     field: 'points',
@@ -64,12 +62,14 @@ const columns = [
     width: 200,
     ...columnConfig,
     flex: 1,
-    align: 'center' as GridAlignment,
   }
 ]
 
 export default function DataGridDemo() {
-  const [seasons, setSeasons] = useState([])
+  const [seasons, setSeasons] = useState<{
+    name: ReactNode
+    id: string
+  }[]>([])
   const [seasonSelected, setSeasonSelected] = useState('')
   const [challenges, setChallenges] = useState([])
   const [rows, setRows] = useState([])
@@ -107,7 +107,7 @@ export default function DataGridDemo() {
     }
   }, [challenges])
 
-  const handleChange = (e: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_e: React.SyntheticEvent, newValue: number) => {
     setSeasonSelected(seasons[newValue]?.id)
     setValue(newValue)
   }

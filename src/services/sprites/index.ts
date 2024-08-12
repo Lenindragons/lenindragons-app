@@ -10,8 +10,7 @@ import {
   deleteDoc,
   updateDoc,
 } from '@firebase/firestore'
-import firebase from 'firebase/compat/app'
-import { getDoc, getDocs, getFirestore, where } from 'firebase/firestore'
+import { getDocs, getFirestore, where } from 'firebase/firestore'
 import { Sprite } from '../../types/Sprite'
 import { db } from '../firebaseConfig'
 
@@ -97,13 +96,13 @@ export const getSpriteById = (id: string, callback: any) => {
     const spriteRef = collection(db, 'sprite')
     const spriteQuery = query(spriteRef, orderBy('created'), limit(20))
     return onSnapshot(spriteQuery, (spriteSnapshot) => {
-      const Sprite = spriteSnapshot.docs
+      const spritesnap = spriteSnapshot.docs
         .filter((document) => document.id === id)
         .map((document) => {
           const data = document.data()
           return { id: document.id, ...data }
         })
-      callback(Sprite.pop())
+      callback(spritesnap.pop())
     })
   } catch (err) {
     console.error(err)

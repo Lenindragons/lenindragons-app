@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { DataGrid, GridColDef, GridToolbar } from '@material-ui/data-grid'
-import { useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import { IconButton } from '@mui/material'
 import { Delete, Edit } from '@mui/icons-material'
@@ -27,7 +26,6 @@ const GridContainer = ({ selectedRows = [] }) => {
 
 const EventList = () => {
   const [events, setEvents] = useState([])
-  const navigate = useNavigate()
   const { onSelectionModelChange } = useEvents()
 
   useEffect(() => {
@@ -35,11 +33,11 @@ const EventList = () => {
   }, [])
 
   const handleEdit = (id: string) => {
-    // console.log(id)
+    console.log(id)
   }
 
   const handleRemove = (id: string) => {
-    // console.log(id)
+    console.log(id)
   }
 
   const columns: GridColDef[] = [
@@ -80,9 +78,6 @@ const EventList = () => {
         pageSize={5}
         checkboxSelection
         onSelectionModelChange={onSelectionModelChange}
-        onRowClick={(event) => {
-          // navigate(`/event/${event.row.id}`)
-        }}
         components={{
           Toolbar: GridContainer,
         }}

@@ -11,15 +11,6 @@ type Match = {
   result: 'player1' | 'player2' | 'draw'
 }
 
-type Round = {
-  matches: Match[]
-}
-
-type Tournament = {
-  players: Player[]
-  rounds: Round[]
-}
-
 export const pairPlayers = (players: Player[]): Match[] => {
   // Ordenar jogadores por pontuação
   players.sort((a, b) => b.score - a.score)

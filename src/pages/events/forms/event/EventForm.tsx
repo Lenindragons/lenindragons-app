@@ -70,13 +70,13 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
                   options={options}
                   onBlur={onBlur}
                   ref={ref}
-                  onChange={(evt, newValue) => {
+                  onChange={(_evt, newValue) => {
                     onChange(newValue)
                   }}
                   getOptionLabel={(option) => {
                     return option.name
                   }}
-                  onInputChange={(evt, newInputValue) => {
+                  onInputChange={(_evt, newInputValue) => {
                     if (newInputValue) {
                       onAutoCompleteSubmit(newInputValue)
                     } else {

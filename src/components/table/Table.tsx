@@ -8,7 +8,7 @@ const DataGridContainer = styled.div`
   }
 `
 
-export const Table = ({ rows, columns }) => {
+export const Table = ({ rows, columns }: { rows: any; columns: any }) => {
   return (
     <DataGridContainer
       style={{ height: 500, width: '100%', marginBottom: 200 }}

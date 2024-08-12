@@ -49,7 +49,10 @@ export const PlayerItemsProvider = ({ children }: { children: ReactNode }) => {
     setStatusFinished(status)
     const localStatusFinished = getLocalStatusFinished(id)
     if (!localStatusFinished) {
-      localStorage.setItem(id, JSON.stringify({ localStatusFinished: true }))
+      localStorage.setItem(
+        JSON.stringify(id),
+        JSON.stringify({ localStatusFinished: true })
+      )
     }
   }
 

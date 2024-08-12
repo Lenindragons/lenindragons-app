@@ -9,6 +9,7 @@ import {
   Button,
 } from '@mui/material'
 import { useParams } from 'react-router-dom'
+import { Timestamp } from 'firebase/firestore'
 import { usePage } from '../../context/PageContext'
 import { getChallengeById, updateChallenge } from '../../services/challenge'
 import DynamicForm from '../../components/dynamic-form'
@@ -19,7 +20,13 @@ import { getDate } from '../../helpers/format-date'
 const initialTournament = {
   id: '',
   rounds: '',
-  dates: [{ startDate: '', endDate: '', key: '' }],
+  dates: [
+    {
+      startDate: new Date().getTime() as unknown as Timestamp,
+      endDate: new Date().getTime() as unknown as Timestamp,
+      key: '',
+    },
+  ],
   seasonId: '',
   season: {
     id: '',
@@ -34,13 +41,14 @@ const initialTournament = {
       },
     ],
   },
+  roundTime: '',
 }
 
 const ChallengeDetailPage = () => {
   const { setTitle } = usePage()
   const { id = '' } = useParams()
   const { hasFinished, playerItems } = usePlayerItem(id)
-  const [tournament, setChallenge] = useState(initialTournament)
+  const [tournament, setChallenge] = useState<any>(initialTournament)
 
   useEffect(() => {
     const fetchChallenge = async () => {

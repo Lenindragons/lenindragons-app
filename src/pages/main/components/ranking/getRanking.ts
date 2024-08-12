@@ -1,6 +1,4 @@
-import { createRandomNumberGenerator } from '@mui/x-data-grid/internals'
-
-function getPoints(place) {
+function getPoints(place: any) {
   switch (place) {
     case '1':
       return 5
@@ -15,25 +13,36 @@ function getPoints(place) {
   }
 }
 
-export const getRanking = (challenges) => {
-  const filtered = challenges.filter((challenge) => challenge.challenge)
+export const getRanking = (challenges: any[]) => {
+  const filtered = challenges.filter(
+    (challenge: { challenge: any }) => challenge.challenge
+  )
   if (!filtered.length) return []
 
-  const players = filtered.reduce((acc, challenge) => {
-    challenge.challenge.result.forEach((player, foreachIndex) => {
-      const index = acc.findIndex((p) => p.name === player.name)
-      if (index === -1) {
-        acc.push({
-          ...player,
-          points: getPoints(player.place),
-          id: foreachIndex,
-        })
-      } else {
-        acc[index].points += getPoints(player.place)
-      }
-    })
-    return acc
-  }, [])
+  const players = filtered.reduce(
+    (acc: any[], challenge: { challenge: { result: any[] } }) => {
+      challenge.challenge.result.forEach(
+        (player: { name: any; place: any }, foreachIndex: any) => {
+          const index = acc.findIndex(
+            (p: { name: any }) => p.name === player.name
+          )
+          if (index === -1) {
+            acc.push({
+              ...player,
+              points: getPoints(player.place),
+              id: foreachIndex,
+            })
+          } else {
+            acc[index].points += getPoints(player.place)
+          }
+        }
+      )
+      return acc
+    },
+    []
+  )
 
-  return players.sort((a, b) => b.points - a.points)
+  return players.sort(
+    (a: { points: number }, b: { points: number }) => b.points - a.points
+  )
 }

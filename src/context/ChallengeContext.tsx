@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { GridSelectionModel } from '@material-ui/data-grid'
-import { useParams } from 'react-router-dom'
-import { set } from 'date-fns'
+
 import { ContextProps } from './ContextProps'
 import {
   getChallenges,
@@ -26,7 +25,7 @@ export const ChallengeProvider = ({ children }: ContextProps) => {
     setItems(items.filter((item) => item !== id))
   }
 
-  const editChallenge = (id: string, newChallengeData: Challenge) => {
+  const editChallenge = (id: string, newChallengeData: any) => {
     updateChallenge(id, newChallengeData)
   }
 

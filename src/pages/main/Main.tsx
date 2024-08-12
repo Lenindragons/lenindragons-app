@@ -2,7 +2,6 @@
 import styled from 'styled-components'
 import { Footer } from './components/footer/Footer'
 import { Header } from './components/header/Header'
-import { EventList } from './components/main/EventList'
 import RankingList from './components/ranking/RankingList'
 
 const MainContainer = styled.main`

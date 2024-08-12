@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import GlobalStyle from './styles/global'
 import { useDefaultTheme } from './context/DefaultThemeContext'
 import { AuthProvider } from './context/AuthContext'

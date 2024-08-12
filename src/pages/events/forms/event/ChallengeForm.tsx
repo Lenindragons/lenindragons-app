@@ -2,7 +2,6 @@
 /* eslint-disable react/require-default-props */
 import { useForm } from 'react-hook-form'
 import { FormControl, TextField } from '@mui/material'
-import { useNavigation, useParams } from 'react-router-dom'
 import DateRange from '../../../../components/commons/date-range/Daterage'
 import Button from '../../../../components/commons/button/Button'
 import { ChallengeFormContainer } from './challenge-form-style'

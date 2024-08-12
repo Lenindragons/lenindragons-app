@@ -1,8 +1,7 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/prop-types */
 import { TextField } from '@mui/material'
-import { Controller, UseFormClearErrors } from 'react-hook-form'
-import { FormValues } from '../../types'
+import { Controller } from 'react-hook-form'
 
 export const InputNumber = ({
   control,
@@ -10,12 +9,12 @@ export const InputNumber = ({
   clearErrors,
   hasError,
   hasFinished,
-  inputName,
+  inputName = '',
   fieldName,
 }: {
   control: any
   index: number
-  clearErrors: UseFormClearErrors<FormValues>
+  clearErrors: (inputName: string | undefined) => void
   hasError: (index: number, field: string) => boolean
   hasFinished: boolean
   inputName: string | undefined
@@ -35,7 +34,7 @@ export const InputNumber = ({
           {...field}
           onChange={(e) => {
             field.onChange(e)
-            clearErrors(inputName || '')
+            clearErrors(inputName)
           }}
           error={hasError(index, fieldName || '')}
         />

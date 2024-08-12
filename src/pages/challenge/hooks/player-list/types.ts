@@ -1,4 +1,5 @@
 export type Pokemon = {
+  url: string | undefined
   name: string
   type: string
 }
@@ -16,6 +17,6 @@ export interface PlayerItemsContextType {
   playerItems: PlayerItem[]
   addPlayerItem: (playerItems: PlayerItem[]) => void
   hasFinished: boolean
-  setHasFinished: React.Dispatch<React.SetStateAction<boolean>>
+  setHasFinished: (x: boolean) => void
   setId: React.Dispatch<React.SetStateAction<string>>
 }

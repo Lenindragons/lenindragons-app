@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-import { styled } from 'styled-components'
-import { Timestamp } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
 import {
   Table,
@@ -18,18 +16,7 @@ import { useEffect } from 'react'
 import { useChallenges } from '../../../../context/ChallengeContext'
 import { Modal } from '../../../../components/commons/modal/Modal'
 import { ChallengeForm } from '../../forms/event/ChallengeForm'
-import { Challenge } from '../../../../types/Challenge'
 import { getDate } from '../../../../helpers/format-date'
-
-const ChallengeItem = styled.li`
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-color: greenl;
-`
 
 export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
   const {
@@ -41,7 +28,7 @@ export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
 
   useEffect(() => {
     setSeasonId(seasonId)
-  }, [])
+  }, [seasonId, setSeasonId])
 
   const handleDelete = async (id: string) => {
     removeChallenge(id)

@@ -100,7 +100,7 @@ export const getChallengeById = async (id: string) => {
   }
 }
 
-export const getChallengeBySeasonId = async (id: string, callback) => {
+export const getChallengeBySeasonId = async (id: string, callback: any) => {
   try {
     const challengesRef = getChallengeCollection()
     const challengesQuery = query(

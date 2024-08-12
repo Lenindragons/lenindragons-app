@@ -80,7 +80,7 @@ const DynamicForm = () => {
       }
     }
     fetchPokemons()
-  }, [])
+  }, [id, setId])
 
   const onAutoCompletePokemonSubmit = async (value: string) => {
     try {
@@ -104,7 +104,9 @@ const DynamicForm = () => {
   }
 
   const hasError = (index: number, field: string) => {
-    return !!errors.players?.[index]?.[field]
+    return !!errors.players?.[index]?.[
+      field as keyof (typeof errors.players)[0]
+    ]
   }
 
   return (
@@ -144,11 +146,11 @@ const DynamicForm = () => {
                               isOptionEqualToValue={(option, value) => {
                                 return option.id === value.id
                               }}
-                              onChange={(evt, newValue) => {
+                              onChange={(_evt, newValue) => {
                                 onChange(newValue)
                               }}
                               getOptionLabel={(option) => option.name || value}
-                              onInputChange={(evt, newInputValue) => {
+                              onInputChange={(_evt, newInputValue) => {
                                 if (newInputValue) {
                                   onAutoCompleteSubmit()
                                 } else {
@@ -223,11 +225,11 @@ const DynamicForm = () => {
                               isOptionEqualToValue={(option, value) => {
                                 return option.name === value.name
                               }}
-                              onChange={(evt, newValue) => {
+                              onChange={(_evt, newValue) => {
                                 onChange(newValue)
                               }}
                               getOptionLabel={(option) => option.name || value}
-                              onInputChange={(evt, newInputValue) => {
+                              onInputChange={(_evt, newInputValue) => {
                                 if (newInputValue) {
                                   onAutoCompletePokemonSubmit(newInputValue)
                                 } else {
@@ -314,7 +316,7 @@ const DynamicForm = () => {
                 <Dialog
                   onClose={() => toast.dismiss()}
                   onConfirm={() => {
-                    setHasFinished(true, id)
+                    setHasFinished(true)
                     setButtonDisabled(true)
                     toast.dismiss()
                     toastSuccess(NotificationMessages.SUCCESS)

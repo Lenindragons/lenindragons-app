@@ -1,4 +1,3 @@
-import { styled } from 'styled-components'
 import { Timestamp } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
 import {
@@ -19,64 +18,8 @@ import { Modal } from '../commons/modal/Modal'
 import { EventForm } from '../../pages/events/forms/event/EventForm'
 import { getDate } from '../../helpers/format-date'
 
-const EventItem = styled.li`
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-color: greenl;
-`
-
-const EventItemHeader = styled(EventItem)`
-  background-color: #f2f2f2;
-`
-
-const EventData = styled.div`
-  display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
-  flex-direction: row;
-  align-items: center;
-  flex: 1;
-  justify-content: space-between;
-
-  p:last-child,
-  > div:last-child {
-    flex: 1;
-    text-align: center;
-  }
-
-  > div:last-child {
-    display: flex;
-    justify-content: space-around;
-  }
-`
-
-const EditButton = styled.button`
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 3px;
-`
-
-const DeleteButton = styled.button`
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 3px;
-`
-
 export const EventList = () => {
   const { events, removeEvent, editEvent } = useEvents()
-
-  const handleEdit = (id: string, newEventData: Event) => {
-    editEvent(id, newEventData)
-  }
 
   const handleDelete = async (id: string) => {
     removeEvent(id)

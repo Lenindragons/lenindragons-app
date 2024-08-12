@@ -24,6 +24,10 @@ type User = {
   image: string | null
 }
 
+interface UserInfoAuth extends UserInfo {
+  metadata: any
+}
+
 const AuthProvider = ({ children }: ContextProps) => {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoadingStatus] = useState(true)
@@ -32,7 +36,7 @@ const AuthProvider = ({ children }: ContextProps) => {
 
   const auth = getAuth(app)
 
-  const getUserInfo = async (userInfo: UserInfo): Promise<User | null> => {
+  const getUserInfo = async (userInfo: UserInfoAuth): Promise<User | null> => {
     const userDoc = doc(db, 'players', userInfo.uid)
     const userSnapshot = await getDoc(userDoc)
 
@@ -42,7 +46,7 @@ const AuthProvider = ({ children }: ContextProps) => {
         email: userInfo.email,
         image: userInfo.photoURL,
         type: UserType.PLAYER,
-        ...formatUserMetadata(userInfo.metadata),
+        ...formatUserMetadata(userInfo?.metadata),
       }
       await setDoc(userDoc, player)
       return player
@@ -69,8 +73,8 @@ const AuthProvider = ({ children }: ContextProps) => {
 
   const signInGoogle = () => {
     signInWithPopup(auth, provider)
-      .then((res) => {
-        setUser(getUserInfo(res.user))
+      .then(async (res) => {
+        setUser(await getUserInfo(res.user))
       })
       .then(() => navigate('/profile'))
       .catch((err) => {
