@@ -10,9 +10,24 @@ export const getTimeStampInMiliseconds = (timestamp: Timestamp) => {
   return new Date(timestampMiliseconds)
 }
 
-export const getDate = (timestamp: Timestamp) => {
-  const date = getTimeStampInMiliseconds(timestamp)
-  return format(date, 'dd/MM/yyyy', { locale: ptBR })
+export const isTimestamp = (value: any): value is Timestamp => {
+  return (
+    value instanceof Timestamp ||
+    (value &&
+      typeof value === 'object' &&
+      typeof value.seconds === 'number' &&
+      typeof value.nanoseconds === 'number')
+  )
+}
+
+export const getDate = (timestamp: Timestamp | string) => {
+  if (timestamp) {
+    const date = isTimestamp(timestamp)
+      ? getTimeStampInMiliseconds(timestamp as Timestamp)
+      : new Date(timestamp as string)
+    return format(date, 'dd/MM/yyyy', { locale: ptBR })
+  }
+  return ''
 }
 
 export interface UserMetadata {

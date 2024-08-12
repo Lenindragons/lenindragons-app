@@ -39,7 +39,7 @@ export const PlayerItemsProvider = ({ children }: { children: ReactNode }) => {
     const fetchGetPlayerItems = async () => {
       if (id) {
         const challenge = await getChallengeById(id)
-        setPlayerItems(challenge?.challenge.result)
+        setPlayerItems(challenge?.challenge?.result || [])
       }
     }
     fetchGetPlayerItems()
