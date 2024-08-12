@@ -1,8 +1,12 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable prettier/prettier */
-import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid'
-import { render } from '@testing-library/react'
-import { fi } from 'date-fns/locale'
+import { DataGrid, GridAlignment } from '@material-ui/data-grid'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Box, Tab, Tabs } from '@mui/material'
+import { getEvents } from '../../../../services/events'
+import { getChallengeById, getChallengeBySeasonId } from '../../../../services/challenge'
+import { getRanking } from './getRanking'
 
 const DataGridContainer = styled.div`
   .data-grid-header * {
@@ -34,16 +38,24 @@ const columnConfig = {
 const columns = [
   {
     field: 'id',
+    headerName: 'ID',
+    width: 90,
+    ...columnConfig,
+    hide: true
+  },
+  {
+    field: 'place',
     headerName: 'Posição',
     width: 130,
     ...columnConfig,
+    align: 'center' as GridAlignment,
   },
   {
     field: 'name',
     headerName: 'Jogador',
     width: 350,
     ...columnConfig,
-
+    align: 'center' as GridAlignment,
   },
   {
     field: 'points',
@@ -52,42 +64,70 @@ const columns = [
     width: 200,
     ...columnConfig,
     flex: 1,
+    align: 'center' as GridAlignment,
   }
 ]
 
-const rows = [
-  { id: 1, name: 'Ju', points: 28 },
-  { id: 2, name: 'Mauricio', points: 24 },
-  { id: 3, name: 'Douglas', points: 22 },
-  { id: 4, name: 'Erick', points: 18 },
-  { id: 5, name: 'Matheus Dias', points: 16 },
-  { id: 6, name: 'Emiliano', points: 14 },
-  { id: 7, name: 'José Paulo', points: 13 },
-  { id: 8, name: 'Jonas', points: 12 },
-  { id: 9, name: 'Henrique', points: 9 },
-  { id: 10, name: 'Douglas Kubiack', points: 7 },
-  { id: 11, name: 'Fernando Machado', points: 6 },
-  { id: 12, name: 'Gabriel (Jr.)', points: 6 },
-  { id: 13, name: 'Gabriel Carneiro', points: 5 },
-  { id: 14, name: 'Thiago', points: 4 },
-  { id: 15, name: 'Marcos', points: 4 },
-  { id: 16, name: 'Fernando', points: 3 },
-  { id: 17, name: 'Eduardo Gomes', points: 3 },
-  { id: 18, name: 'Isadora', points: 2 },
-  { id: 19, name: 'João Vitor', points: 2 },
-  { id: 20, name: 'Luan Carneiro', points: 1 },
-  { id: 21, name: 'Douglas Coelho', points: 1 },
-  { id: 21, name: 'Luahn', points: 1 },
-]
-
 export default function DataGridDemo() {
+  const [seasons, setSeasons] = useState([])
+  const [seasonSelected, setSeasonSelected] = useState('')
+  const [challenges, setChallenges] = useState([])
+  const [rows, setRows] = useState([])
+  const [value, setValue] = useState(0)
+
+  useEffect(() => {
+    const fetchSeasons = async () => {
+      getEvents(setSeasons)
+    }
+    fetchSeasons()
+  }, [])
+
+  useEffect(() => {
+    if (seasons.length) {
+      setSeasonSelected(seasons[0].id)
+    }
+  }, [seasons])
+
+  const fetchChallenges = (seasonId: string) => {
+    getChallengeBySeasonId(seasonId, setChallenges)
+  }
+
+  useEffect(() => {
+    if (seasonSelected) {
+      fetchChallenges(seasonSelected)
+    }
+  }, [
+    seasonSelected
+  ])
+
+  useEffect(() => {
+    if (challenges.length) {
+      console.log(getRanking(challenges || []))
+      setRows(getRanking(challenges || []))
+    }
+  }, [challenges])
+
+  const handleChange = (e: React.SyntheticEvent, newValue: number) => {
+    setSeasonSelected(seasons[newValue]?.id)
+    setValue(newValue)
+  }
+
   return (
-    <DataGridContainer style={{ height: 500, width: '100%', marginBottom: 200 }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={20}
-      />
-    </DataGridContainer>
+    <>
+      <Box>
+        <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
+          {seasons.map((season) => (
+            <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
+          ))}
+        </Tabs>
+      </Box>
+      <DataGridContainer style={{ height: 500, width: '100%', marginBottom: 200 }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={20}
+        />
+      </DataGridContainer>
+    </>
   )
 }

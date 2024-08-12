@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import {
   collection,
   addDoc,
@@ -95,6 +96,33 @@ export const getChallengeById = async (id: string) => {
     return {}
   } catch (err) {
     console.error(err)
+    return null
+  }
+}
+
+export const getChallengeBySeasonId = async (id: string, callback) => {
+  try {
+    const challengesRef = getChallengeCollection()
+    const challengesQuery = query(
+      challengesRef,
+      where('seasonId', '==', id),
+      orderBy('created'),
+      limit(20)
+    )
+    return onSnapshot(challengesQuery, (challengesSnapshot) => {
+      callback(
+        challengesSnapshot.docs.map((document) => {
+          const data = document.data()
+          return {
+            id: document.id,
+            ...data,
+          }
+        })
+      )
+    })
+  } catch (err) {
+    console.error(err)
+    callback([])
     return null
   }
 }
