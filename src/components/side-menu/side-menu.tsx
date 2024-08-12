@@ -3,12 +3,14 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { useAuth } from '../../context/AuthContext'
 
 interface SideMenuItem {
   id: string
   label: string
   path: string
   icon?: string
+  permission?: string[]
 }
 
 const SideMenuStructure = styled.ul`
@@ -46,6 +48,7 @@ const SideMenuStructure = styled.ul`
 `
 
 export const SideMenu = ({ items }: { items: SideMenuItem[] }) => {
+  const { user } = useAuth()
   const [active, setActive] = useState(
     localStorage.getItem('side-menu-active') || items[0].id
   )
@@ -68,16 +71,18 @@ export const SideMenu = ({ items }: { items: SideMenuItem[] }) => {
 
   return (
     <SideMenuStructure>
-      {items.map((item: SideMenuItem) => (
-        <li
-          key={item.id}
-          onClick={handleClick(item.id)}
-          className={isActive(item.id)}
-        >
-          <img src={item.icon} alt="" />
-          <Link to={item.path}>{item.label}</Link>
-        </li>
-      ))}
+      {items
+        .filter((item) => item.permission?.includes(user.type))
+        .map((item: SideMenuItem) => (
+          <li
+            key={item.id}
+            onClick={handleClick(item.id)}
+            className={isActive(item.id)}
+          >
+            <img src={item.icon} alt="" />
+            <Link to={item.path}>{item.label}</Link>
+          </li>
+        ))}
     </SideMenuStructure>
   )
 }

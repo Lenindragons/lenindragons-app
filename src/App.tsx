@@ -28,8 +28,14 @@ export const App = () => {
                 <GlobalStyle />
                 <Routes>
                   <Route path="/" element={<MainPage />} />
-                  <Route element={<PrivateRoutes />}>
+                  <Route
+                    element={
+                      <PrivateRoutes allowedTypes={['player', 'admin']} />
+                    }
+                  >
                     <Route path="/profile" element={<HomePage />} />
+                  </Route>
+                  <Route element={<PrivateRoutes allowedTypes={['admin']} />}>
                     <Route path="/seasons" element={<EventPage />} />
                     <Route path="/players" element={<PlayersPage />} />
                     <Route path="/seasons/:id" element={<EventDetailPage />} />
