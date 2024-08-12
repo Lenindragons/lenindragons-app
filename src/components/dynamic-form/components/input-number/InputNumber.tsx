@@ -14,7 +14,7 @@ export const InputNumber = ({
 }: {
   control: any
   index: number
-  clearErrors: (inputName: string | undefined) => void
+  clearErrors: unknown | any | ((inputName: string) => void)
   hasError: (index: number, field: string) => boolean
   hasFinished: boolean
   inputName: string | undefined
