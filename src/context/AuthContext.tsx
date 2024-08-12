@@ -12,6 +12,7 @@ import { app, db } from '../services/firebaseConfig'
 import { ContextProps } from './ContextProps'
 import { useErrorHandling } from './ErrorContext'
 import { formatUserMetadata } from '../helpers/format-date'
+import { UserType } from '../types/Player'
 
 const provider = new GoogleAuthProvider()
 
@@ -40,6 +41,7 @@ const AuthProvider = ({ children }: ContextProps) => {
         name: userInfo.displayName,
         email: userInfo.email,
         image: userInfo.photoURL,
+        type: UserType.PLAYER,
         ...formatUserMetadata(userInfo.metadata),
       }
       await setDoc(userDoc, player)
