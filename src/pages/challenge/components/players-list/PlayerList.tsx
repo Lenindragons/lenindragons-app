@@ -8,10 +8,12 @@ import {
   TableRow,
   Paper,
 } from '@mui/material'
+import { useParams } from 'react-router-dom'
 import { usePlayerItem } from '../../hooks/player-list/usePlayersList'
 
 export const PlayerList = () => {
-  const { playerItems } = usePlayerItem()
+  const { id = '' } = useParams()
+  const { playerItems } = usePlayerItem(id)
   return (
     <TableContainer component={Paper}>
       <Table>

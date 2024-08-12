@@ -7,6 +7,7 @@ import {
   useEffect,
 } from 'react'
 import { PlayerItem, PlayerItemsContextType } from './types'
+import { getChallengeById } from '../../../../services/challenge'
 
 const PlayerItemsContext = createContext<PlayerItemsContextType | undefined>(
   undefined
@@ -32,6 +33,16 @@ export const PlayerItemsProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setStatusFinished(getLocalStatusFinished(id))
+  }, [id])
+
+  useEffect(() => {
+    const fetchGetPlayerItems = async () => {
+      if (id) {
+        const challenge = await getChallengeById(id)
+        setPlayerItems(challenge?.challenge.result)
+      }
+    }
+    fetchGetPlayerItems()
   }, [id])
 
   const setHasFinished = (status: boolean) => {

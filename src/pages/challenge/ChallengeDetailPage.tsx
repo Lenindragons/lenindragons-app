@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { usePage } from '../../context/PageContext'
-import { getChallengeById } from '../../services/challenge'
+import { getChallengeById, updateChallenge } from '../../services/challenge'
 import DynamicForm from '../../components/dynamic-form'
 import { PlayerList } from './components/players-list/PlayerList'
 import { usePlayerItem } from './hooks/player-list/usePlayersList'
@@ -39,7 +39,7 @@ const initialTournament = {
 const ChallengeDetailPage = () => {
   const { setTitle } = usePage()
   const { id = '' } = useParams()
-  const { hasFinished } = usePlayerItem(id)
+  const { hasFinished, playerItems } = usePlayerItem(id)
   const [tournament, setChallenge] = useState(initialTournament)
 
   useEffect(() => {
@@ -63,18 +63,26 @@ const ChallengeDetailPage = () => {
       <Typography variant="h4" gutterBottom>
         Torneio em {tournament.season.name}
       </Typography>
-      <Typography variant="h6" gutterBottom>
-        Data do Torneio:{' '}
-        {tournament?.dates[0].startDate &&
-          getDate(tournament?.dates[0].startDate)}
-      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
+          <Typography variant="h6" gutterBottom>
+            Resumo das rodadas
+          </Typography>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Resumo das rodadas
+                <strong>Data do Torneio:</strong>{' '}
+                {tournament?.dates[0].startDate &&
+                  getDate(tournament?.dates[0].startDate)}
               </Typography>
+              <p>
+                <strong>Tempo de Rodada:</strong>{' '}
+                {tournament?.roundTime && `${tournament?.roundTime} minutos`}
+              </p>
+              <p>
+                <strong>Quantidade de Rodadas:</strong>{' '}
+                {tournament?.rounds && `${tournament?.rounds} rodadas`}
+              </p>
               <List />
             </CardContent>
           </Card>
@@ -85,7 +93,13 @@ const ChallengeDetailPage = () => {
           </Typography>
           <PlayerList />
           {hasFinished && (
-            <Button variant="contained" style={{ marginTop: 15 }}>
+            <Button
+              variant="contained"
+              style={{ marginTop: 15 }}
+              onClick={() => {
+                updateChallenge(id, { challenge: { result: playerItems } })
+              }}
+            >
               <Typography variant="button">Salvar resultado</Typography>
             </Button>
           )}

@@ -10,9 +10,8 @@ import {
   deleteDoc,
   updateDoc,
 } from '@firebase/firestore'
-import { useParams } from 'react-router-dom'
 import { getDoc, where } from 'firebase/firestore'
-import { Challenge } from '../../types/Challenge'
+import { Challenge, ChallengeResult } from '../../types/Challenge'
 import { db } from '../firebaseConfig'
 
 const getChallengeCollection = () => {
@@ -73,7 +72,10 @@ export const deleteChallenge = async (id: string) => {
   }
 }
 
-export const updateChallenge = (id: string, newChallengeData: Challenge) => {
+export const updateChallenge = (
+  id: string,
+  newChallengeData: ChallengeResult
+) => {
   try {
     const eventDoc = doc(db, 'challenges', id)
     updateDoc(eventDoc, newChallengeData)
