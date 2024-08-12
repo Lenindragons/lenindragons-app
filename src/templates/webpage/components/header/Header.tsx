@@ -2,11 +2,11 @@
 /* eslint-disable react/require-default-props */
 import styled from 'styled-components'
 import logo from '../../../../assets/fantasia-logo.png'
-import bg from '../../../../assets/bg-lenindragons.webp'
+import bg from '../../../../assets/bg-plataform.webp'
 import { MainMenu } from '../../../../components/mainmenu/MainMenu'
 import Options from '../options'
 
-const MenuComunista = styled.nav`
+const MenuContainer = styled.nav`
   background: url(${bg});
   position: relative;
   display: flex;
@@ -56,10 +56,10 @@ const MenuComunista = styled.nav`
   }
 `
 
-type LeninDragonsProps = {
+type PlataformProps = {
   width?: number
 }
-const LeninDragons = ({ width = 80 }: LeninDragonsProps) => {
+const PlataformLogo = ({ width = 80 }: PlataformProps) => {
   return (
     <figure>
       <img width={width} src={logo} alt="Fantasia Geek Store" />
@@ -69,13 +69,13 @@ const LeninDragons = ({ width = 80 }: LeninDragonsProps) => {
 
 export const Header = () => {
   return (
-    <MenuComunista>
+    <MenuContainer>
       <div className="top">
-        <LeninDragons width={150} />
+        <PlataformLogo width={150} />
         <MainMenu>
           <Options />
         </MainMenu>
       </div>
-    </MenuComunista>
+    </MenuContainer>
   )
 }

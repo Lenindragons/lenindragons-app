@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import bg from '../../assets/bg-lenindragons.webp'
+import bg from '../../assets/bg-plataform.webp'
 
 export const HomeContainer = styled.div`
   display: grid;
