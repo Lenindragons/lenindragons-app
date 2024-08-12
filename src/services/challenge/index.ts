@@ -11,7 +11,7 @@ import {
   updateDoc,
 } from '@firebase/firestore'
 import { useParams } from 'react-router-dom'
-import { where } from 'firebase/firestore'
+import { getDoc, where } from 'firebase/firestore'
 import { Challenge } from '../../types/Challenge'
 import { db } from '../firebaseConfig'
 
@@ -82,19 +82,15 @@ export const updateChallenge = (id: string, newChallengeData: Challenge) => {
   }
 }
 
-export const getChallengeById = (id: string, callback: any) => {
+export const getChallengeById = async (id: string) => {
   try {
-    const eventRef = collection(db, 'challenges')
-    const eventQuery = query(eventRef, orderBy('created'), limit(20))
-    return onSnapshot(eventQuery, (eventSnapshot) => {
-      const event = eventSnapshot.docs
-        .filter((document) => document.id === id)
-        .map((document) => {
-          const data = document.data()
-          return { id: document.id, ...data }
-        })
-      callback(event.pop())
-    })
+    const eventRef = doc(db, 'challenges', id)
+    const docSnap = await getDoc(eventRef)
+    if (docSnap.exists()) {
+      const data = docSnap.data()
+      return data
+    }
+    return {}
   } catch (err) {
     console.error(err)
     return null

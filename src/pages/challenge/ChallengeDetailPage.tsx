@@ -14,38 +14,45 @@ import { getChallengeById } from '../../services/challenge'
 import DynamicForm from '../../components/dynamic-form'
 import { PlayerList } from './components/players-list/PlayerList'
 import { usePlayerItem } from './hooks/player-list/usePlayersList'
+import { getDate } from '../../helpers/format-date'
+
+const initialTournament = {
+  id: '',
+  rounds: '',
+  dates: [{ startDate: '', endDate: '', key: '' }],
+  seasonId: '',
+  season: {
+    id: '',
+    name: '',
+    icon: '',
+    description: '',
+    dates: [
+      {
+        endDate: '',
+        startDate: '',
+        key: '',
+      },
+    ],
+  },
+}
 
 const ChallengeDetailPage = () => {
   const { setTitle } = usePage()
   const { id = '' } = useParams()
   const { hasFinished } = usePlayerItem(id)
-  const [tournament, setChallenge] = useState({
-    id: '',
-    rounds: '',
-    date: [{ startDate: '', endDate: '', key: '' }],
-    seasonId: '',
-    season: {
-      id: '',
-      name: '',
-      icon: '',
-      description: '',
-      dates: [
-        {
-          endDate: '',
-          startDate: '',
-          key: '',
-        },
-      ],
-    },
-  })
+  const [tournament, setChallenge] = useState(initialTournament)
 
   useEffect(() => {
-    getChallengeById(id, setChallenge)
+    const fetchChallenge = async () => {
+      return getChallengeById(id)
+    }
+    const fetchChallengeData = async () => {
+      const challengeData = (await fetchChallenge()) || initialTournament
+      setChallenge(challengeData)
+    }
+
+    fetchChallengeData()
   }, [id])
-
-  useEffect(() => {
-    console.log({ tournament })
-  }, [tournament])
 
   useEffect(() => {
     setTitle('Torneio')
@@ -57,9 +64,9 @@ const ChallengeDetailPage = () => {
         Torneio em {tournament.season.name}
       </Typography>
       <Typography variant="h6" gutterBottom>
-        Data do Torneio:
-        {/* {tournament.date[0].startDate !== '' &&
-            getDate(tournament.date[0].startDate)} */}
+        Data do Torneio:{' '}
+        {tournament?.dates[0].startDate &&
+          getDate(tournament?.dates[0].startDate)}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
