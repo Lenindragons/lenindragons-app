@@ -14,6 +14,7 @@ import EventDetailPage from './pages/events/EventDetailPage'
 import ChallengeDetailPage from './pages/challenge/ChallengeDetailPage'
 import { PageProvider } from './context/PageContext'
 import { ChallengeProvider } from './context/ChallengeContext'
+import { RulesPage } from './pages/rules/Rules'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -28,6 +29,7 @@ export const App = () => {
                 <GlobalStyle />
                 <Routes>
                   <Route path="/" element={<MainPage />} />
+                  <Route path="/rules" element={<RulesPage />} />
                   <Route
                     element={
                       <PrivateRoutes allowedTypes={['player', 'admin']} />

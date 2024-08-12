@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore'
 import { db } from '../firebaseConfig'
 
