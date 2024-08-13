@@ -40,6 +40,9 @@ export const MainMenu = ({ children }: MainMenuProps) => {
         <Link to="/">Rankings</Link>
       </li>
       <li className="menu-item">
+        <Link to="/challenges">Torneios</Link>
+      </li>
+      <li className="menu-item">
         <Link to="/rules">Regras</Link>
       </li>
       {children}
