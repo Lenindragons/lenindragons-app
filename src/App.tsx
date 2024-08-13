@@ -16,6 +16,7 @@ import { PageProvider } from './context/PageContext'
 import { ChallengeProvider } from './context/ChallengeContext'
 import { RulesPage } from './pages/rules/Rules'
 import { ChallengeListPage } from './pages/challenge/ChallengeListPage'
+import { ChallengeListDetailPage } from './pages/challenge/ChallengeListDetailPage'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -32,6 +33,10 @@ export const App = () => {
                   <Route path="/" element={<MainPage />} />
                   <Route path="/rules" element={<RulesPage />} />
                   <Route path="/challenges" element={<ChallengeListPage />} />
+                  <Route
+                    path="/challenge/:id"
+                    element={<ChallengeListDetailPage />}
+                  />
                   <Route
                     element={
                       <PrivateRoutes allowedTypes={['player', 'admin']} />

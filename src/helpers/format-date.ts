@@ -20,12 +20,15 @@ export const isTimestamp = (value: any): value is Timestamp => {
   )
 }
 
-export const getDate = (timestamp: Timestamp | string) => {
+export const getDate = (
+  timestamp: Timestamp | string,
+  formatDate = 'dd/MM/yyyy'
+) => {
   if (timestamp) {
     const date = isTimestamp(timestamp)
       ? getTimeStampInMiliseconds(timestamp as Timestamp)
       : new Date(timestamp as string)
-    return format(date, 'dd/MM/yyyy', { locale: ptBR })
+    return format(date, formatDate, { locale: ptBR })
   }
   return ''
 }

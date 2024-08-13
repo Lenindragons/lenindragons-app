@@ -42,7 +42,9 @@ export const WebPageTemplate = ({
   return (
     <>
       <Header />
-      <MainContainer>{children}</MainContainer>
+      <MainContainer style={{ marginBottom: '300px' }}>
+        {children}
+      </MainContainer>
       <Footer />
     </>
   )

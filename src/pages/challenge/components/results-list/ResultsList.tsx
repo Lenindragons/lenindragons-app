@@ -1,5 +1,6 @@
 import {
   Box,
+  Paper,
   Tab,
   Table,
   TableBody,
@@ -10,8 +11,10 @@ import {
   Tabs,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { getEvents } from '../../../../services/events'
 import { getChallengeBySeasonId } from '../../../../services/challenge'
+import { getDate } from '../../../../helpers/format-date'
 
 export const ResultsList = () => {
   const [seasons, setSeasons] = useState([])
@@ -59,7 +62,7 @@ export const ResultsList = () => {
             <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
           ))}
         </Tabs>
-        <TableContainer>
+        <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
@@ -76,7 +79,14 @@ export const ResultsList = () => {
                 .filter((c) => !!c?.challenge?.result)
                 .map((challenge: any) => (
                   <TableRow key={challenge.id} style={{ textAlign: 'center' }}>
-                    <TableCell style={{ textAlign: 'center' }}>date</TableCell>
+                    <TableCell style={{ textAlign: 'center' }}>
+                      <Link
+                        to={`/challenge/${challenge.id}`}
+                        style={{ textDecoration: 'none' }}
+                      >
+                        {getDate(challenge.dates[0].startDate, 'dd MMM yyyy')}
+                      </Link>
+                    </TableCell>
                     <TableCell style={{ textAlign: 'center' }}>
                       {challenge.roundTime}
                     </TableCell>
