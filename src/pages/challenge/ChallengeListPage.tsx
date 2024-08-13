@@ -4,9 +4,8 @@ import { ResultsList } from './components/results-list/ResultsList'
 export const ChallengeListPage = () => {
   return (
     <WebPageTemplate>
-      <header>
-        <h1>Desafios</h1>
-        <p>Desafios disponíveis para a comunidade</p>
+      <header style={{ marginBottom: '20px' }}>
+        <h2>Torneios por Temporadas</h2>
       </header>
       <ResultsList />
     </WebPageTemplate>
