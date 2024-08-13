@@ -102,7 +102,6 @@ export default function DataGridDemo() {
 
   useEffect(() => {
     if (challenges.length) {
-      console.log(getRanking(challenges || []))
       setRows(getRanking(challenges || []))
     }
   }, [challenges])

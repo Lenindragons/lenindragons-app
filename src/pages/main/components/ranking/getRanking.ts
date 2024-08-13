@@ -14,6 +14,11 @@ function getPoints(place: any) {
 }
 
 export const getRanking = (challenges: any[]) => {
+  console.log({
+    challenges: challenges
+      .filter((c) => c.challenge)
+      .map((c) => ({ torneio: c.challenge.result })),
+  })
   const filtered = challenges.filter(
     (challenge: { challenge: any }) => challenge.challenge
   )
@@ -42,7 +47,12 @@ export const getRanking = (challenges: any[]) => {
     []
   )
 
-  return players.sort(
-    (a: { points: number }, b: { points: number }) => b.points - a.points
-  )
+  return players
+    .sort((a: { points: number }, b: { points: number }) => b.points - a.points)
+    .map((player: { name: any; points: any }, i: number) => ({
+      id: i,
+      place: i + 1,
+      name: player.name,
+      points: player.points,
+    }))
 }
