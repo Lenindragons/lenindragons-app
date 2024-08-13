@@ -13,7 +13,7 @@ import { Timestamp } from 'firebase/firestore'
 import { usePage } from '../../context/PageContext'
 import { getChallengeById, updateChallenge } from '../../services/challenge'
 import DynamicForm from '../../components/dynamic-form'
-import { PlayerList } from './components/players-list/PlayerList'
+import PlayerList from './components/players-list/PlayerList'
 import { usePlayerItem } from './hooks/player-list/usePlayersList'
 import { getDate } from '../../helpers/format-date'
 

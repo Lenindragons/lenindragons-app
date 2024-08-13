@@ -1,3 +1,5 @@
+import { EventDate } from '../../../../types/Event'
+
 export type Pokemon = {
   url: string | undefined
   name: string
@@ -13,8 +15,19 @@ export interface PlayerItem {
   deck: Pokemon[]
 }
 
+type Challenge = {
+  challenge: {
+    result: PlayerItem[]
+  }
+  dates: EventDate[]
+  season: {
+    name: string
+  }
+}
+
 export interface PlayerItemsContextType {
   playerItems: PlayerItem[]
+  challenge: Challenge
   addPlayerItem: (playerItems: PlayerItem[]) => void
   hasFinished: boolean
   setHasFinished: (x: boolean) => void

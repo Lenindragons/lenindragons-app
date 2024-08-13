@@ -1,6 +1,8 @@
+import { Timestamp } from 'firebase/firestore'
+
 export type EventDate = {
-  endDate: Date
-  startDate: Date
+  endDate: Timestamp | string
+  startDate: Timestamp | string
   key: string
 }
 

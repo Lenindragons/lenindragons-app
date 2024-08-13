@@ -23,6 +23,7 @@ const getLocalStatusFinished = (id: string) => {
 export const PlayerItemsProvider = ({ children }: { children: ReactNode }) => {
   const [playerItems, setPlayerItems] = useState<PlayerItem[]>([])
   const [id, setId] = useState<string>('')
+  const [challenge, setChallenge] = useState<any>({})
   const [hasFinished, setStatusFinished] = useState<boolean>(
     getLocalStatusFinished(id)
   )
@@ -38,8 +39,9 @@ export const PlayerItemsProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchGetPlayerItems = async () => {
       if (id) {
-        const challenge = await getChallengeById(id)
-        setPlayerItems(challenge?.challenge?.result || [])
+        const challenges = await getChallengeById(id)
+        setChallenge(challenges)
+        setPlayerItems(challenges?.challenge?.result || [])
       }
     }
     fetchGetPlayerItems()
@@ -58,7 +60,14 @@ export const PlayerItemsProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <PlayerItemsContext.Provider
-      value={{ playerItems, addPlayerItem, setHasFinished, hasFinished, setId }}
+      value={{
+        playerItems,
+        addPlayerItem,
+        challenge,
+        setHasFinished,
+        hasFinished,
+        setId,
+      }}
     >
       {children}
     </PlayerItemsContext.Provider>

@@ -6,7 +6,7 @@ export type Challenge = {
   rounds: number
   roundTime: number
   event: Event
-  dates: EventDate
+  dates: EventDate[] | string
   created: Timestamp
 }
 
@@ -15,3 +15,12 @@ export type ChallengeResult = {
     result: PlayerItem[]
   }
 }
+
+export type Season = {
+  name: string
+}
+
+export type ChallengeListDetail = Challenge &
+  ChallengeResult & {
+    season: Season
+  }

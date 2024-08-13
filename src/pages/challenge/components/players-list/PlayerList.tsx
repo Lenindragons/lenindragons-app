@@ -11,7 +11,7 @@ import {
 import { useParams } from 'react-router-dom'
 import { usePlayerItem } from '../../hooks/player-list/usePlayersList'
 
-export const PlayerList = () => {
+const PlayerList = () => {
   const { id = '' } = useParams()
   const { playerItems } = usePlayerItem(id)
   return (
@@ -55,3 +55,5 @@ export const PlayerList = () => {
     </TableContainer>
   )
 }
+
+export default PlayerList

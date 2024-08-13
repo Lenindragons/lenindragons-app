@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import {
   Box,
   Paper,
@@ -15,11 +16,13 @@ import { Link } from 'react-router-dom'
 import { getEvents } from '../../../../services/events'
 import { getChallengeBySeasonId } from '../../../../services/challenge'
 import { getDate } from '../../../../helpers/format-date'
+import { ChallengeResult } from '../../../../types/Challenge'
 
 export const ResultsList = () => {
-  const [seasons, setSeasons] = useState([])
+  const [seasons, setSeasons] = useState<{ name: string; id: string }[]>([])
   const [challenges, setChallenges] = useState([])
   const [seasonSelected, setSeasonSelected] = useState('')
+  const [value, setValue] = useState(0)
 
   useEffect(() => {
     const fetchSeasons = async () => {
@@ -43,10 +46,11 @@ export const ResultsList = () => {
       fetchChallenges(seasonSelected)
       console.log(challenges)
     }
-  }, [seasonSelected])
+  }, [challenges, seasonSelected])
 
-  const handleChange = (_e: React.SyntheticEvent, newValue: string) => {
-    setSeasonSelected(newValue)
+  const handleChange = (_e: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue)
+    setSeasonSelected(seasons[newValue]?.id)
   }
 
   const tableHeadStyle: React.CSSProperties = {
@@ -57,7 +61,7 @@ export const ResultsList = () => {
   return (
     <div style={{ height: '1000px' }}>
       <Box>
-        <Tabs value={seasonSelected} onChange={handleChange}>
+        <Tabs value={value} onChange={handleChange}>
           {seasons.map((season: { name: string; id: string }) => (
             <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
           ))}
@@ -76,7 +80,7 @@ export const ResultsList = () => {
             </TableHead>
             <TableBody>
               {challenges
-                .filter((c) => !!c?.challenge?.result)
+                .filter((c: ChallengeResult) => !!c?.challenge?.result)
                 .map((challenge: any) => (
                   <TableRow key={challenge.id} style={{ textAlign: 'center' }}>
                     <TableCell style={{ textAlign: 'center' }}>
@@ -98,20 +102,26 @@ export const ResultsList = () => {
                     </TableCell>
                     <TableCell style={{ textAlign: 'center' }}>
                       {
-                        challenge.challenge.result.find((p) => p.place === '1')
-                          .name
+                        challenge.challenge.result.find(
+                          (p: { place: string }) => p.place === '1'
+                        ).name
                       }
                     </TableCell>
                     <TableCell style={{ textAlign: 'center' }}>
                       {challenge.challenge.result
-                        .find((p) => p.place === '1')
-                        .deck.map((pokemon) => (
-                          <img
-                            height={55}
-                            src={pokemon.url}
-                            alt={pokemon.name}
-                          />
-                        ))}
+                        .find((p: { place: string }) => p.place === '1')
+                        .deck.map(
+                          (pokemon: {
+                            url: string | undefined
+                            name: string | undefined
+                          }) => (
+                            <img
+                              height={55}
+                              src={pokemon.url}
+                              alt={pokemon.name}
+                            />
+                          )
+                        )}
                     </TableCell>
                   </TableRow>
                 ))}
