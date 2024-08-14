@@ -12,6 +12,7 @@ import {
   Typography,
   Box,
   Button,
+  Chip,
 } from '@mui/material'
 import { useEvents } from '../../context/EventContext'
 import { Modal } from '../commons/modal/Modal'
@@ -28,6 +29,7 @@ export const EventList = () => {
   const getStatus = (date: Timestamp) => {
     const now = new Date()
     const eventDate = date.toDate()
+    console.log({ eventDate, now })
     if (eventDate < now) {
       return 'Encerrado'
     }
@@ -73,9 +75,15 @@ export const EventList = () => {
                 </Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="body2">
-                  {getStatus(event.created)}
-                </Typography>
+                <Chip
+                  label={getStatus(event.dates[0].endDate)}
+                  variant="outlined"
+                  color={
+                    getStatus(event.dates[0].endDate) === 'Encerrado'
+                      ? 'error'
+                      : 'success'
+                  }
+                />
               </TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', gap: 2 }}>
