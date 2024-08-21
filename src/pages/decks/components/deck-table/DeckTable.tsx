@@ -19,7 +19,7 @@ import {
   Grid,
   FormControl,
 } from '@mui/material'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import useDeckStore, {
   Deck,
   PokemonIcon,
@@ -54,7 +54,7 @@ export const DeckTable: React.FC = () => {
     await deleteDeck(id)
   }
 
-  const handleUpdate = async (updatedValue: { name: any; icons: any }) => {
+  const handleUpdate: SubmitHandler<FormValues> = async (updatedValue: any) => {
     const { name, icons } = updatedValue
     const newValue = {
       id: currentDeck?.id || '',

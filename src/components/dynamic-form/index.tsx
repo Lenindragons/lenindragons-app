@@ -21,7 +21,6 @@ import { toast, ToastContainer } from 'react-toastify'
 import { getPlayers } from '../../services/players'
 import { useChallenges } from '../../context/ChallengeContext'
 import { usePlayerItem } from '../../pages/challenge/hooks/player-list/usePlayersList'
-import { getPokemons } from '../../services/poke-api/client'
 import Dialog from '../commons/dialog/Dialog'
 import { mappingPlayers, validateFields } from './utils'
 import { FormValues } from './types'
@@ -40,8 +39,7 @@ const DynamicForm = () => {
   const [options, setOptions] = useState<any[]>([])
   const [, setPokemon] = useState<any>(null)
 
-  const { addPlayerItem, setHasFinished, hasFinished, setId } =
-    usePlayerItem(id)
+  const { addPlayerItem, setHasFinished, hasFinished } = usePlayerItem(id)
   const { editChallenge } = useChallenges()
 
   const {
