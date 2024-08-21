@@ -1,69 +1,11 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable prettier/prettier */
-import { DataGrid, GridAlignment } from '@material-ui/data-grid'
 import { ReactNode, useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { Box, Tab, Tabs } from '@mui/material'
 import { getEvents } from '../../../../services/events'
 import { getChallengeBySeasonId } from '../../../../services/challenge'
 import { getRanking } from './getRanking'
-
-const DataGridContainer = styled.div`
-  .data-grid-header * {
-    font-weight: bold !important;
-  }
-  
-  .MuiDataGrid-row:nth-child(1),
-  .MuiDataGrid-row:nth-child(2),
-  .MuiDataGrid-row:nth-child(3) {
-    background-color: #eee;
-    font-weight: bold;
-    color: #777 !important;
-  } 
-`
-
-const columnConfig = {
-  align: 'center' as GridAlignment,
-  headerAlign: 'center' as GridAlignment,
-  sortable: false,
-  editable: false,
-  filterable: false,
-  hideSortIcons: true,
-  hide: false,
-  disableReorder: true,
-  disableColumnMenu: true,
-  headerClassName: 'data-grid-header',
-}
-
-const columns = [
-  {
-    field: 'id',
-    headerName: 'ID',
-    width: 90,
-    ...columnConfig,
-    hide: true
-  },
-  {
-    field: 'place',
-    headerName: 'Posição',
-    width: 130,
-    ...columnConfig,
-  },
-  {
-    field: 'name',
-    headerName: 'Jogador',
-    width: 350,
-    ...columnConfig,
-  },
-  {
-    field: 'points',
-    headerName: 'Pontos',
-    type: 'number',
-    width: 200,
-    ...columnConfig,
-    flex: 1,
-  }
-]
+import { RankingTable } from '../ranking-table'
 
 export default function DataGridDemo() {
   const [seasons, setSeasons] = useState<{
@@ -120,13 +62,7 @@ export default function DataGridDemo() {
           ))}
         </Tabs>
       </Box>
-      <DataGridContainer style={{ height: 500, width: '100%', marginBottom: 200 }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={20}
-        />
-      </DataGridContainer>
+      <RankingTable rows={rows} />
     </>
   )
 }
