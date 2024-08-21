@@ -5,6 +5,8 @@ import logo from '../../../../assets/fantasia-logo.png'
 import bg from '../../../../assets/bg-plataform.webp'
 import { MainMenu } from '../../../../components/mainmenu/MainMenu'
 import Options from '../options'
+import useIsMobile from '../../../../helpers/is-mobile'
+import MobileHeader from '../header-mobile/MobileContainer'
 
 const MenuContainer = styled.nav`
   background: url(${bg});
@@ -68,7 +70,9 @@ const PlataformLogo = ({ width = 80 }: PlataformProps) => {
 }
 
 export const Header = () => {
-  return (
+  const isMobile = useIsMobile()
+
+  const component = !isMobile ? (
     <MenuContainer>
       <div className="top">
         <PlataformLogo width={150} />
@@ -77,5 +81,9 @@ export const Header = () => {
         </MainMenu>
       </div>
     </MenuContainer>
+  ) : (
+    <MobileHeader />
   )
+
+  return component
 }

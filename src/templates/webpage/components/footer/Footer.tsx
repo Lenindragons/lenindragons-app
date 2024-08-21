@@ -11,7 +11,7 @@ const FooterContainer = styled.footer`
   position: relative;
 
   figure.stalin,
-  figure.lenin {
+  figure.boss-order {
     position: absolute;
     bottom: -3px;
     z-index: 9999;
@@ -21,7 +21,7 @@ const FooterContainer = styled.footer`
     left: 0;
   }
 
-  figure.lenin {
+  figure.boss-order {
     right: 0;
   }
 
@@ -39,6 +39,23 @@ const FooterContainer = styled.footer`
       'menu newsletter newsletter socialnetworks'
       'credits credits credits credits';
   }
+
+  @media (max-width: 768px) {
+    .main,
+    figure.stalin {
+      display: none;
+    }
+
+    figure.boss-order {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      img {
+        width: 100%;
+        max-width: 500px;
+      }
+    }
+  }
 `
 export const Footer = () => {
   return (
@@ -50,8 +67,8 @@ export const Footer = () => {
         <div className="main">
           <MainMenu />
         </div>
-        <figure className="lenin">
-          <img src={bossOrder} alt="boss-order" width={500} />
+        <figure className="boss-order">
+          <img src={bossOrder} alt="boss-order" />
         </figure>
       </div>
     </FooterContainer>

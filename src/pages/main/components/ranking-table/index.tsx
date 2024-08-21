@@ -36,7 +36,7 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
         return {
           icon: MasterBall,
           style: {
-            background: 'linear-gradient(to right, #ff7f50, #ff6347, #ff4500)',
+            background: 'linear-gradient(135deg, #6a0dad, #ff69b4, #ffffff)',
             ...commonStyle,
           },
         }
@@ -44,7 +44,7 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
         return {
           icon: UltraBall,
           style: {
-            background: 'linear-gradient(to right, #4682b4, #5f9ea0, #87ceeb)',
+            background: 'linear-gradient(to right, #4b4b4b, #ffd700, #f0f0f0)',
             ...commonStyle,
           },
         }
@@ -52,7 +52,7 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
         return {
           icon: GreatBall,
           style: {
-            background: 'linear-gradient(to right, #32cd32, #3cb371, #2e8b57)',
+            background: 'linear-gradient(to right, #4169e1, #87cefa, #f0f0f0)',
             ...commonStyle,
           },
         }
@@ -60,7 +60,7 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
         return {
           icon: PokeBall,
           style: {
-            background: 'linear-gradient(to right, #ffeb3b, #ffd700, #ffb300)',
+            background: 'linear-gradient(to right, #ff0000, #ffffff, #f0f0f0)',
             ...commonStyle,
           },
         }

@@ -53,8 +53,17 @@ export default function DataGridDemo() {
     setValue(newValue)
   }
 
+  const getSeasonContent = () => {
+    const seasonSelectedByUser = seasons.find(s => s.id === seasonSelected)
+    return seasonSelectedByUser || { name: '', description: '' } as any
+  }
+
   return (
     <>
+      <header>
+        <h1>{getSeasonContent()?.name}</h1>
+        <h2>{getSeasonContent()?.description}</h2>
+      </header>
       <Box>
         <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
           {seasons.map((season) => (
