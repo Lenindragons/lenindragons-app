@@ -59,75 +59,84 @@ export const ResultsList = () => {
   }
 
   return (
-    <div style={{ height: '1000px' }}>
+    <div>
       <Box>
-        <Tabs value={value} onChange={handleChange}>
-          {seasons.map((season: { name: string; id: string }) => (
-            <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
-          ))}
-        </Tabs>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell style={tableHeadStyle}>Data</TableCell>
-                <TableCell style={tableHeadStyle}>Tempo de Rodada</TableCell>
-                <TableCell style={tableHeadStyle}>Rodadas</TableCell>
-                <TableCell style={tableHeadStyle}>Jogadores</TableCell>
-                <TableCell style={tableHeadStyle}>Vencedor</TableCell>
-                <TableCell style={tableHeadStyle}>Deck</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {challenges
-                .filter((c: ChallengeResult) => !!c?.challenge?.result)
-                .map((challenge: any) => (
-                  <TableRow key={challenge.id} style={{ textAlign: 'center' }}>
-                    <TableCell style={{ textAlign: 'center' }}>
-                      <Link
-                        to={`/challenge/${challenge.id}`}
-                        style={{ textDecoration: 'none' }}
-                      >
-                        {getDate(challenge.dates[0].startDate, 'dd MMM yyyy')}
-                      </Link>
-                    </TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>
-                      {challenge.roundTime}
-                    </TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>
-                      {challenge.rounds}
-                    </TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>
-                      {challenge.challenge.result.length}
-                    </TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>
-                      {
-                        challenge.challenge.result.find(
-                          (p: { place: string }) => p.place === '1'
-                        ).name
-                      }
-                    </TableCell>
-                    <TableCell style={{ textAlign: 'center' }}>
-                      {challenge.challenge.result
-                        .find((p: { place: string }) => p.place === '1')
-                        .deck.icons.map(
-                          (pokemon: {
-                            url: string | undefined
-                            name: string | undefined
-                          }) => (
-                            <img
-                              height={55}
-                              src={pokemon.url}
-                              alt={pokemon.name}
-                            />
-                          )
-                        )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <>
+          <Tabs value={value} onChange={handleChange}>
+            {seasons.map((season: { name: string; id: string }) => (
+              <Tab
+                label={season.name}
+                style={{ padding: 10 }}
+                key={season.id}
+              />
+            ))}
+          </Tabs>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={tableHeadStyle}>Data</TableCell>
+                  <TableCell style={tableHeadStyle}>Tempo de Rodada</TableCell>
+                  <TableCell style={tableHeadStyle}>Rodadas</TableCell>
+                  <TableCell style={tableHeadStyle}>Jogadores</TableCell>
+                  <TableCell style={tableHeadStyle}>Vencedor</TableCell>
+                  <TableCell style={tableHeadStyle}>Deck</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {challenges
+                  .filter((c: ChallengeResult) => !!c?.challenge?.result)
+                  .map((challenge: any) => (
+                    <TableRow
+                      key={challenge.id}
+                      style={{ textAlign: 'center' }}
+                    >
+                      <TableCell style={{ textAlign: 'center' }}>
+                        <Link
+                          to={`/challenge/${challenge.id}`}
+                          style={{ textDecoration: 'none' }}
+                        >
+                          {getDate(challenge.dates[0].startDate, 'dd MMM yyyy')}
+                        </Link>
+                      </TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>
+                        {challenge.roundTime}
+                      </TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>
+                        {challenge.rounds}
+                      </TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>
+                        {challenge.challenge.result.length}
+                      </TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>
+                        {
+                          challenge.challenge.result.find(
+                            (p: { place: string }) => p.place === '1'
+                          ).name
+                        }
+                      </TableCell>
+                      <TableCell style={{ textAlign: 'center' }}>
+                        {challenge.challenge.result
+                          .find((p: { place: string }) => p.place === '1')
+                          .deck.icons.map(
+                            (pokemon: {
+                              url: string | undefined
+                              name: string | undefined
+                            }) => (
+                              <img
+                                height={55}
+                                src={pokemon.url}
+                                alt={pokemon.name}
+                              />
+                            )
+                          )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </>
       </Box>
     </div>
   )

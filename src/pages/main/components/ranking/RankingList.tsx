@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable prettier/prettier */
 import { ReactNode, useEffect, useState } from 'react'
-import { Box, Tab, Tabs } from '@mui/material'
+import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { getEvents } from '../../../../services/events'
 import { getChallengeBySeasonId } from '../../../../services/challenge'
 import { getRanking } from './getRanking'
 import { RankingTable } from '../ranking-table'
+import { getDate } from '../../../../helpers/format-date'
 
 export default function DataGridDemo() {
   const [seasons, setSeasons] = useState<{
@@ -55,23 +56,23 @@ export default function DataGridDemo() {
 
   const getSeasonContent = () => {
     const seasonSelectedByUser = seasons.find(s => s.id === seasonSelected)
+    console.log({ seasonSelectedByUser })
     return seasonSelectedByUser || { name: '', description: '' } as any
   }
 
   return (
-    <>
+    <Box style={{ width: '100%' }}>
       <header>
-        <h1>{getSeasonContent()?.name}</h1>
-        <h2>{getSeasonContent()?.description}</h2>
+        <Typography variant="h4">{getSeasonContent()?.name}</Typography>
+        <Typography variant="h6">{getSeasonContent()?.description}</Typography>
       </header>
-      <Box>
-        <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
-          {seasons.map((season) => (
-            <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
-          ))}
-        </Tabs>
-      </Box>
+      <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
+        {seasons.map((season) => (
+          <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
+        ))}
+      </Tabs>
+
       <RankingTable rows={rows} />
-    </>
+    </Box>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react'
 import {
   AppBar,
@@ -11,9 +12,12 @@ import {
   Divider,
   ThemeProvider,
   createTheme,
+  Grid,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../../../context/AuthContext'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,9 +40,40 @@ const darkTheme = createTheme({
   },
 })
 
+const Login = () => {
+  const { signInGoogle } = useAuth()
+  return (
+    <ListItem>
+      <a
+        href="#"
+        onClick={signInGoogle}
+        style={{ color: 'white', textDecoration: 'none' }}
+      >
+        Login
+      </a>
+    </ListItem>
+  )
+}
+
+const Logout = () => {
+  const { logout } = useAuth()
+  return (
+    <ListItem>
+      <a
+        href="#"
+        onClick={logout}
+        style={{ color: 'white', textDecoration: 'none' }}
+      >
+        Sair
+      </a>
+    </ListItem>
+  )
+}
+
 const MobileHeader = () => {
   const classes = useStyles()
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const { user } = useAuth()
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -60,22 +95,43 @@ const MobileHeader = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem button>
-          <ListItemText primary="Rankings" />
+        <ListItem>
+          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+            <ListItemText primary="Rankings" />
+          </Link>
         </ListItem>
-        <ListItem button>
-          <ListItemText primary="Torneios" />
+        <ListItem>
+          <Link
+            to="/challenges"
+            style={{ color: 'white', textDecoration: 'none' }}
+          >
+            <ListItemText primary="Torneios" />
+          </Link>
         </ListItem>
-        <ListItem button>
-          <ListItemText primary="Regras" />
+        <ListItem>
+          <Link to="/rules" style={{ color: 'white', textDecoration: 'none' }}>
+            <ListItemText primary="Regras" />
+          </Link>
         </ListItem>
         <Divider />
-        <ListItem button>
-          <ListItemText primary="Cadastre-se" />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary="Login" />
-        </ListItem>
+        {user ? (
+          <>
+            <ListItem>
+              <Link
+                style={{ color: 'white', textDecoration: 'none' }}
+                to="/profile"
+              >
+                <ListItemText primary="Acessar plataforma" />
+              </Link>
+            </ListItem>
+            <Logout />
+          </>
+        ) : (
+          <>
+            <ListItem>Cadastre-se</ListItem>
+            <Login />
+          </>
+        )}
       </List>
     </div>
   )
@@ -94,9 +150,23 @@ const MobileHeader = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Fantasia Geek Store
-            </Typography>
+            <Grid container justifyContent="space-between" alignItems="center">
+              <Typography variant="h6" className={classes.title}>
+                Fantasia Geek Store
+              </Typography>
+              <Typography
+                variant="h6"
+                style={{ textAlign: 'right' }}
+                className={classes.title}
+              >
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to="/profile"
+                >
+                  Olá, {user && user.name}
+                </Link>
+              </Typography>
+            </Grid>
           </Toolbar>
         </AppBar>
         <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>

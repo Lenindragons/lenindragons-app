@@ -23,6 +23,9 @@ const FooterContainer = styled.footer`
 
   figure.boss-order {
     right: 0;
+    img {
+      max-width: 500px;
+    }
   }
 
   .main {
@@ -52,7 +55,7 @@ const FooterContainer = styled.footer`
       justify-content: center;
       img {
         width: 100%;
-        max-width: 500px;
+        min-width: 300px;
       }
     }
   }
@@ -61,15 +64,9 @@ export const Footer = () => {
   return (
     <FooterContainer>
       <div>
-        <figure className="stalin">
-          <img src={redBlue} alt="red" width={400} />
-        </figure>
         <div className="main">
           <MainMenu />
         </div>
-        <figure className="boss-order">
-          <img src={bossOrder} alt="boss-order" />
-        </figure>
       </div>
     </FooterContainer>
   )

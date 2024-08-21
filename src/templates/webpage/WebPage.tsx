@@ -9,6 +9,10 @@ const MainContainer = styled.main`
   margin: 0 auto;
   padding: 0 2.5em;
   font-family: Roboto, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   header {
     margin: 50px 0;
@@ -42,9 +46,7 @@ export const WebPageTemplate = ({
   return (
     <>
       <Header />
-      <MainContainer style={{ marginBottom: '300px' }}>
-        {children}
-      </MainContainer>
+      <MainContainer>{children}</MainContainer>
       <Footer />
     </>
   )
