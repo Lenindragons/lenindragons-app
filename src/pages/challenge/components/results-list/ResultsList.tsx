@@ -17,12 +17,14 @@ import { getEvents } from '../../../../services/events'
 import { getChallengeBySeasonId } from '../../../../services/challenge'
 import { getDate } from '../../../../helpers/format-date'
 import { ChallengeResult } from '../../../../types/Challenge'
+import useIsMobile from '../../../../helpers/is-mobile'
 
 export const ResultsList = () => {
   const [seasons, setSeasons] = useState<{ name: string; id: string }[]>([])
   const [challenges, setChallenges] = useState([])
   const [seasonSelected, setSeasonSelected] = useState('')
   const [value, setValue] = useState(0)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const fetchSeasons = async () => {
@@ -76,9 +78,15 @@ export const ResultsList = () => {
               <TableHead>
                 <TableRow>
                   <TableCell style={tableHeadStyle}>Data</TableCell>
-                  <TableCell style={tableHeadStyle}>Tempo de Rodada</TableCell>
-                  <TableCell style={tableHeadStyle}>Rodadas</TableCell>
-                  <TableCell style={tableHeadStyle}>Jogadores</TableCell>
+                  {!isMobile && (
+                    <>
+                      <TableCell style={tableHeadStyle}>
+                        Tempo de Rodada
+                      </TableCell>
+                      <TableCell style={tableHeadStyle}>Rodadas</TableCell>
+                      <TableCell style={tableHeadStyle}>Jogadores</TableCell>
+                    </>
+                  )}
                   <TableCell style={tableHeadStyle}>Vencedor</TableCell>
                   <TableCell style={tableHeadStyle}>Deck</TableCell>
                 </TableRow>
@@ -99,15 +107,19 @@ export const ResultsList = () => {
                           {getDate(challenge.dates[0].startDate, 'dd MMM yyyy')}
                         </Link>
                       </TableCell>
-                      <TableCell style={{ textAlign: 'center' }}>
-                        {challenge.roundTime}
-                      </TableCell>
-                      <TableCell style={{ textAlign: 'center' }}>
-                        {challenge.rounds}
-                      </TableCell>
-                      <TableCell style={{ textAlign: 'center' }}>
-                        {challenge.challenge.result.length}
-                      </TableCell>
+                      {!isMobile && (
+                        <>
+                          <TableCell style={{ textAlign: 'center' }}>
+                            {challenge.roundTime}
+                          </TableCell>
+                          <TableCell style={{ textAlign: 'center' }}>
+                            {challenge.rounds}
+                          </TableCell>
+                          <TableCell style={{ textAlign: 'center' }}>
+                            {challenge.challenge.result.length}
+                          </TableCell>
+                        </>
+                      )}
                       <TableCell style={{ textAlign: 'center' }}>
                         {
                           challenge.challenge.result.find(
