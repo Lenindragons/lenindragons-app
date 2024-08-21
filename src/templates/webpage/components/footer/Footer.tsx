@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import bossOrder from '../../../../assets/boss-order.png'
-import redBlue from '../../../../assets/red-blue.png'
 import { MainMenu } from '../../../../components/mainmenu/MainMenu'
 
 const FooterContainer = styled.footer`

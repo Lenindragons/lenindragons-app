@@ -6,7 +6,6 @@ import { getEvents } from '../../../../services/events'
 import { getChallengeBySeasonId } from '../../../../services/challenge'
 import { getRanking } from './getRanking'
 import { RankingTable } from '../ranking-table'
-import { getDate } from '../../../../helpers/format-date'
 
 export default function DataGridDemo() {
   const [seasons, setSeasons] = useState<{
