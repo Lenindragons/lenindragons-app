@@ -110,7 +110,7 @@ export const ResultsList = () => {
                     <TableCell style={{ textAlign: 'center' }}>
                       {challenge.challenge.result
                         .find((p: { place: string }) => p.place === '1')
-                        .deck.map(
+                        .deck.icons.map(
                           (pokemon: {
                             url: string | undefined
                             name: string | undefined
