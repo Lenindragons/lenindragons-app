@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { MainMenu } from '../../../../components/mainmenu/MainMenu'
+import CopyrightFooter from '../copyright-footer'
 
 const FooterContainer = styled.footer`
   background: ${(props) => props.theme.colors.primary};
@@ -60,12 +61,15 @@ const FooterContainer = styled.footer`
 `
 export const Footer = () => {
   return (
-    <FooterContainer>
-      <div>
-        <div className="main">
-          <MainMenu />
+    <>
+      <FooterContainer>
+        <div>
+          <div className="main">
+            <MainMenu />
+          </div>
         </div>
-      </div>
-    </FooterContainer>
+      </FooterContainer>
+      <CopyrightFooter />
+    </>
   )
 }
