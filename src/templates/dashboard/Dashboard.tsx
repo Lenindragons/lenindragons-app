@@ -39,6 +39,13 @@ export const Dashboard = ({ children }: any) => {
               permission: [UserType.ADMIN],
               icon: Parchment,
             },
+            {
+              id: 'side-menu-4',
+              path: '/decks',
+              label: 'Decks',
+              permission: [UserType.ADMIN],
+              icon: Parchment,
+            },
           ]}
         />
       </SideBar>

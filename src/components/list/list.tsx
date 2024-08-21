@@ -29,7 +29,6 @@ export const EventList = () => {
   const getStatus = (date: Timestamp) => {
     const now = new Date()
     const eventDate = date.toDate()
-    console.log({ eventDate, now })
     if (eventDate < now) {
       return 'Encerrado'
     }

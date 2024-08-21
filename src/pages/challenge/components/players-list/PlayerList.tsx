@@ -10,6 +10,16 @@ import {
 } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { usePlayerItem } from '../../hooks/player-list/usePlayersList'
+import { PlayerItem, Pokemon } from '../../hooks/player-list/types'
+
+interface OldPlayerItem {
+  place: number
+  name: string
+  wins: number
+  looses: number
+  ties: number
+  deck: Pokemon[]
+}
 
 const PlayerList = () => {
   const { id = '' } = useParams()
@@ -28,28 +38,29 @@ const PlayerList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {playerItems.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.place}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.wins}</TableCell>
-              <TableCell>{row.looses}</TableCell>
-              <TableCell>{row.ties}</TableCell>
-              <TableCell>
-                {row.deck.map((deck) => {
-                  return (
+          {playerItems.map((row: OldPlayerItem | PlayerItem | any, index) => {
+            const items = row.deck.icons ? row.deck.icons : row.deck
+            return (
+              <TableRow key={index}>
+                <TableCell>{row.place}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.wins}</TableCell>
+                <TableCell>{row.looses}</TableCell>
+                <TableCell>{row.ties}</TableCell>
+                <TableCell>
+                  {items.map((icon: any) => (
                     <img
-                      key={deck.name}
-                      src={deck.url}
-                      alt={deck.name}
-                      title={`deck ${deck.name}`}
+                      key={icon.name}
+                      src={icon.url}
+                      alt={icon.name}
+                      title={`icon: ${icon.name}`}
                       style={{ width: '50px' }}
                     />
-                  )
-                })}
-              </TableCell>
-            </TableRow>
-          ))}
+                  ))}
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </TableContainer>

@@ -12,7 +12,11 @@ export interface PlayerItem {
   wins: number
   looses: number
   ties: number
-  deck: Pokemon[]
+  deck: {
+    icons: Pokemon[]
+    name: string
+    id: string
+  }
 }
 
 type Challenge = {

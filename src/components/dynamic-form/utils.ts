@@ -33,7 +33,7 @@ export const validateFields = (
       !field.wins ||
       !field.looses ||
       !field.ties ||
-      !field.deck.length
+      !field.deck
     ) {
       if (!field.place) {
         setError(`players.${index}.place`, errorObject)
@@ -50,7 +50,7 @@ export const validateFields = (
       if (!field.ties) {
         setError(`players.${index}.ties`, errorObject)
       }
-      if (!field.deck.length) {
+      if (!field.deck) {
         setError(`players.${index}.deck`, errorObject)
       }
       return false

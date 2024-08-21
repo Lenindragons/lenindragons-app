@@ -94,8 +94,6 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
               )}
             />
 
-            {/* <ImageInput name="image" control={control} /> */}
-
             <TextField
               label="Descrição do Temporada:"
               variant="outlined"

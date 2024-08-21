@@ -30,12 +30,13 @@ import DynamicTableHead from './components/table-header/DynamicTableHead'
 import { InputNumber } from './components/input-number/InputNumber'
 import { toastError, toastSuccess } from '../commons/toast-error/ToastError'
 import { NotificationMessages } from './constants'
+import useDeckStore from '../../services/decks/useDeckStore'
 
 const DynamicForm = () => {
   const { id = '' } = useParams()
 
-  const [pokemonOptions, setPokemonOptions] = useState<any[]>([])
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
+  const { decks, fetchDecks } = useDeckStore()
   const [options, setOptions] = useState<any[]>([])
   const [, setPokemon] = useState<any>(null)
 
@@ -59,7 +60,7 @@ const DynamicForm = () => {
           wins: 0,
           looses: 0,
           ties: 0,
-          deck: [],
+          deck: { icons: [], name: '', id: '' },
         },
       ],
     },
@@ -70,20 +71,19 @@ const DynamicForm = () => {
   })
 
   useEffect(() => {
-    setId(id)
-    const fetchPokemons = async () => {
+    const fetchPokemonDeck = async () => {
       try {
-        const pokemons = await getPokemons()
-        setPokemonOptions(pokemons)
+        await fetchDecks()
       } catch (err) {
         console.error(err)
       }
     }
-    fetchPokemons()
-  }, [id, setId])
+    fetchPokemonDeck()
+  }, [fetchDecks])
 
   const onAutoCompletePokemonSubmit = async (value: string) => {
     try {
+      console.log('value', value)
       setPokemon(value)
     } catch (err) {
       console.error(err)
@@ -218,17 +218,18 @@ const DynamicForm = () => {
                           <Grid item xs={12}>
                             <Autocomplete
                               fullWidth
-                              multiple
-                              options={pokemonOptions}
+                              options={decks}
                               onBlur={onBlur}
                               disabled={hasFinished}
-                              isOptionEqualToValue={(option, value) => {
-                                return option.name === value.name
+                              isOptionEqualToValue={(option, values) => {
+                                return option.id === values.id
                               }}
                               onChange={(_evt, newValue) => {
                                 onChange(newValue)
                               }}
-                              getOptionLabel={(option) => option.name || value}
+                              getOptionLabel={(option: any) => {
+                                return option.name || value
+                              }}
                               onInputChange={(_evt, newInputValue) => {
                                 if (newInputValue) {
                                   onAutoCompletePokemonSubmit(newInputValue)
@@ -240,7 +241,7 @@ const DynamicForm = () => {
                               renderInput={(params) => (
                                 <TextField
                                   {...params}
-                                  label="Pokemons:"
+                                  label="Deck:"
                                   variant="outlined"
                                   style={{ minWidth: '200px' }}
                                   inputRef={ref}
@@ -292,7 +293,7 @@ const DynamicForm = () => {
                 wins: 0,
                 looses: 0,
                 ties: 0,
-                deck: [],
+                deck: { icons: [], name: '', id: '' },
               })
             }}
           >
