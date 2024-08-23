@@ -55,7 +55,6 @@ export default function DataGridDemo() {
 
   const getSeasonContent = () => {
     const seasonSelectedByUser = seasons.find(s => s.id === seasonSelected)
-    console.log({ seasonSelectedByUser })
     return seasonSelectedByUser || { name: '', description: '' } as any
   }
 
