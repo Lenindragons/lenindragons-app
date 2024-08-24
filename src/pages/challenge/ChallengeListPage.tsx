@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { WebPageTemplate } from '../../templates/webpage/WebPage'
+import { WebPageTemplate } from '@/templates/webpage/WebPage'
 import { ResultsList } from './components/results-list/ResultsList'
-import redBlue from '../../assets/red-blue.png'
+import redBlue from '@/assets/red-blue.png'
 
 const FigureContainer = styled.figure`
   margin-top: 50px;

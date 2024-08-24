@@ -7,7 +7,7 @@ import {
   useEffect,
 } from 'react'
 import { PlayerItem, PlayerItemsContextType } from './types'
-import { getChallengeById } from '../../../../services/challenge'
+import { getChallengeById } from '@/services/challenge'
 
 const PlayerItemsContext = createContext<PlayerItemsContextType | undefined>(
   undefined

@@ -6,7 +6,7 @@ export type Challenge = {
   rounds: number
   roundTime: number
   event: Event
-  dates: EventDate[] | string
+  dates: EventDate[] | string | any
   created: Timestamp
 }
 

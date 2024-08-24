@@ -3,10 +3,10 @@
 import { Skeleton } from '@mui/material'
 import { Suspense, lazy } from 'react'
 import { useParams } from 'react-router-dom'
-import { WebPageTemplate } from '../../templates/webpage/WebPage'
+import { WebPageTemplate } from '@/templates/webpage/WebPage'
 import { usePlayerItem } from './hooks/player-list/usePlayersList'
 
-import { getDate } from '../../helpers/format-date'
+import { getDate } from '@/helpers/format-date'
 import { PlayerItemsContextType } from './hooks/player-list/types'
 
 const PlayerList = lazy(() => import('./components/players-list/PlayerList'))

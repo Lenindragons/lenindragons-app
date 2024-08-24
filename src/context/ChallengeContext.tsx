@@ -31,6 +31,7 @@ export const ChallengeProvider = ({ children }: ContextProps) => {
 
   useEffect(() => {
     getChallenges(setChallenges, seasonId)
+    console.log(seasonId)
   }, [seasonId])
 
   return (

@@ -14,10 +14,10 @@ import {
   Button,
   Chip,
 } from '@mui/material'
-import { useEvents } from '../../context/EventContext'
+import { useEvents } from '@/context/EventContext'
 import { Modal } from '../commons/modal/Modal'
-import { EventForm } from '../../pages/events/forms/event/EventForm'
-import { getDate } from '../../helpers/format-date'
+import { EventForm } from '@/pages/dashboard/seasons/forms/event/EventForm'
+import { getDate } from '@/helpers/format-date'
 
 export const EventList = () => {
   const { events, removeEvent, editEvent } = useEvents()

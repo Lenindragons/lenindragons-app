@@ -37,7 +37,10 @@ export const MainMenu = ({ children }: MainMenuProps) => {
   return (
     <MenuContainer>
       <li className="menu-item">
-        <Link to="/">Rankings</Link>
+        <Link to="/">Home</Link>
+      </li>
+      <li className="menu-item">
+        <Link to="/ranking">Rankings</Link>
       </li>
       <li className="menu-item">
         <Link to="/challenges">Torneios</Link>

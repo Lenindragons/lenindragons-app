@@ -25,6 +25,8 @@ export const createChallenge = async (data: Challenge): Promise<void> => {
       rounds: data.rounds,
       roundTime: data.roundTime,
       seasonId: data.event.id,
+      seasonEndDate: data.dates[0]?.endDate,
+      seasonStartDate: data.dates[0]?.startDate,
       season: data.event,
       dates: data.dates,
     }
@@ -64,6 +66,28 @@ export const getChallenges = async (callback: any, id: string) => {
   }
 }
 
+export const getAllChallenges = async (callback: any) => {
+  try {
+    const challengesRef = getChallengeCollection()
+    const challengesQuery = query(challengesRef, orderBy('created'))
+    return onSnapshot(challengesQuery, (challengesSnapshot) => {
+      callback(
+        challengesSnapshot.docs.map((document) => {
+          const data = document.data()
+          return {
+            id: document.id,
+            ...data,
+          }
+        })
+      )
+    })
+  } catch (err) {
+    console.error(err)
+    callback([])
+    return null
+  }
+}
+
 export const deleteChallenge = async (id: string) => {
   try {
     const eventDoc = doc(db, 'challenges', id)
@@ -82,6 +106,31 @@ export const updateChallenge = (
     updateDoc(eventDoc, newChallengeData)
   } catch (err) {
     console.error(err)
+  }
+}
+
+export const getChallengeByDate = async (date: Timestamp, callback: any) => {
+  try {
+    const challengesRef = getChallengeCollection()
+    const challengesQuery = query(
+      challengesRef,
+      where('seasonEndDate', '>=', date)
+    )
+    return onSnapshot(challengesQuery, (challengesSnapshot) => {
+      callback(
+        challengesSnapshot.docs.map((document) => {
+          const data = document.data()
+          return {
+            id: document.id,
+            ...data,
+          }
+        })
+      )
+    })
+  } catch (err) {
+    console.error(err)
+    callback([])
+    return null
   }
 }
 

@@ -1,4 +1,4 @@
-import { EventDate } from '../../../../types/Event'
+import { EventDate } from '@/types/Event'
 
 export type Pokemon = {
   url: string | undefined

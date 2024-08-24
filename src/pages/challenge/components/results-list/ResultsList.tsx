@@ -13,11 +13,11 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getEvents } from '../../../../services/events'
-import { getChallengeBySeasonId } from '../../../../services/challenge'
-import { getDate } from '../../../../helpers/format-date'
-import { ChallengeResult } from '../../../../types/Challenge'
-import useIsMobile from '../../../../helpers/is-mobile'
+import { getEvents } from '@/services/events'
+import { getChallengeBySeasonId } from '@/services/challenge'
+import { getDate } from '@/helpers/format-date'
+import { ChallengeResult } from '@/types/Challenge'
+import useIsMobile from '@/helpers/is-mobile'
 
 export const ResultsList = () => {
   const [seasons, setSeasons] = useState<{ name: string; id: string }[]>([])

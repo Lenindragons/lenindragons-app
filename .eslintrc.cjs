@@ -38,5 +38,6 @@ module.exports = {
     'react/jsx-no-constructed-context-values': 'off',
     'react/jsx-props-no-spreading': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
+    'import/extensions': 'off',
   },
 }

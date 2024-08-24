@@ -5,19 +5,19 @@ import { useDefaultTheme } from './context/DefaultThemeContext'
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
 import ErrorProvider from './context/ErrorContext'
-import { MainPage } from './pages/main/Main'
-import { HomePage } from './pages/home/Home'
+import { RankingPage } from './pages/ranking'
+import { MainPage } from './pages/main'
+import { ProfilePage } from './pages/dashboard/profile'
 import { EventProvider } from './context/EventContext'
-import { EventPage } from './pages/events/Events'
-import { PlayersPage } from './pages/players/PlayersPage'
-import EventDetailPage from './pages/events/EventDetailPage'
+import { SeasonsPage, SeasonDetailPage } from './pages/dashboard/seasons'
+import { PlayersPage } from './pages/dashboard/players/PlayersPage'
 import ChallengeDetailPage from './pages/challenge/ChallengeDetailPage'
 import { PageProvider } from './context/PageContext'
 import { ChallengeProvider } from './context/ChallengeContext'
 import { RulesPage } from './pages/rules/Rules'
 import { ChallengeListPage } from './pages/challenge/ChallengeListPage'
 import { ChallengeListDetailPage } from './pages/challenge/ChallengeListDetailPage'
-import { DeckPage } from './pages/decks/DeckPage'
+import { DeckPage } from './pages/dashboard/decks/DeckPage'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -32,6 +32,7 @@ export const App = () => {
                 <GlobalStyle />
                 <Routes>
                   <Route path="/" element={<MainPage />} />
+                  <Route path="/ranking" element={<RankingPage />} />
                   <Route path="/rules" element={<RulesPage />} />
                   <Route path="/challenges" element={<ChallengeListPage />} />
                   <Route
@@ -43,13 +44,13 @@ export const App = () => {
                       <PrivateRoutes allowedTypes={['player', 'admin']} />
                     }
                   >
-                    <Route path="/profile" element={<HomePage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
                   </Route>
                   <Route element={<PrivateRoutes allowedTypes={['admin']} />}>
-                    <Route path="/seasons" element={<EventPage />} />
+                    <Route path="/seasons" element={<SeasonsPage />} />
                     <Route path="/players" element={<PlayersPage />} />
                     <Route path="/decks" element={<DeckPage />} />
-                    <Route path="/seasons/:id" element={<EventDetailPage />} />
+                    <Route path="/seasons/:id" element={<SeasonDetailPage />} />
                     <Route
                       path="/challenges/:id"
                       element={<ChallengeDetailPage />}
