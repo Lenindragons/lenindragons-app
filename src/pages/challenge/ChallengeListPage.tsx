@@ -11,7 +11,7 @@ const FigureContainer = styled.figure`
 export const ChallengeListPage = () => {
   return (
     <WebPageTemplate>
-      <header style={{ marginBottom: '20px' }}>
+      <header style={{ marginBottom: '20px', width: '100%' }}>
         <h2>Torneios por Temporadas</h2>
       </header>
       <ResultsList />

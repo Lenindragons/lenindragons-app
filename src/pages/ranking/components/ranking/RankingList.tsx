@@ -64,19 +64,17 @@ export const RankingList = () => {
     <Box style={{ width: '100%' }}>
       <header>
         <Typography variant="h4">{getSeasonContent()?.name}</Typography>
-
-        <div style={{ marginTop: '20px' }} dangerouslySetInnerHTML={{
-          __html: DOMPurify.sanitize(getSeasonContent()?.description)
-        }} />
-
       </header>
       <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
         {seasons.map((season) => (
           <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
         ))}
       </Tabs>
-
       <RankingTable rows={rows} />
+
+      <div style={{ marginTop: '20px', padding: '20px' }} dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(getSeasonContent()?.description)
+      }} />
     </Box>
   )
 }

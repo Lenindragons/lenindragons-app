@@ -35,6 +35,17 @@ const DeckNameContainer = styled.div`
   align-items: center;
 `
 
+const DeckScoreContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`
+
 const DeckPercentageContainer = styled.div`
   grid-area: percentage;
   display: flex;
@@ -103,10 +114,17 @@ export const MainPage = () => {
     return mapped
   }
 
-  const getRandomColor = () => {
-    const colors = ['purple', 'red', 'green', 'blue']
-    const randomIndex = Math.floor(Math.random() * colors.length)
-    return colors[randomIndex] || 'red'
+  const getRandomColor = (score: number) => {
+    if (score < 20) {
+      return 'red'
+    }
+    if (score >= 20 && score < 40) {
+      return 'blue'
+    }
+    if (score >= 40 && score < 60) {
+      return 'green'
+    }
+    return 'purple'
   }
 
   return (
@@ -123,14 +141,7 @@ export const MainPage = () => {
         <Typography variant="h4">Meta Fantasia Geek Store</Typography>
       </Box>
 
-      <div
-        style={{
-          width: '100%',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr ',
-          gap: 5,
-        }}
-      >
+      <DeckScoreContainer>
         {calculateScore(challenges)
           .sort(
             (acc: { score: number }, cur: { score: number }) =>
@@ -159,14 +170,7 @@ export const MainPage = () => {
                     <ProgressBar
                       hideText
                       score={deck?.score}
-                      progressColor={
-                        getRandomColor() as
-                        | 'purple'
-                        | 'red'
-                        | 'green'
-                        | 'blue'
-                        | undefined
-                      }
+                      progressColor={getRandomColor(deck?.score)}
                     />
                   </DeckProgressContainer>
                   <DeckPercentageContainer>
@@ -178,7 +182,7 @@ export const MainPage = () => {
               </Box>
             )
           )}
-      </div>
+      </DeckScoreContainer>
     </WebPageTemplate>
   )
 }

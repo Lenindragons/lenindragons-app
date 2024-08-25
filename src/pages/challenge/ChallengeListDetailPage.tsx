@@ -21,7 +21,7 @@ export const ChallengeListDetailPage = () => {
 
   return (
     <WebPageTemplate>
-      <header style={{ marginBottom: '20px' }}>
+      <header style={{ marginBottom: '20px', width: '100%' }}>
         <h2>Resutado em {(challenge as any)?.season?.name}</h2>
         <p>
           <strong>Data:</strong>{' '}
