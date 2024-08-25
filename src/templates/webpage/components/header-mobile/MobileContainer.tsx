@@ -97,6 +97,14 @@ const MobileHeader = () => {
       <List>
         <ListItem>
           <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+            <ListItemText primary="Home" />
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link
+            to="/ranking"
+            style={{ color: 'white', textDecoration: 'none' }}
+          >
             <ListItemText primary="Rankings" />
           </Link>
         </ListItem>
