@@ -61,7 +61,7 @@ export const ResultsList = () => {
   }
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <Box>
         <>
           <Tabs value={value} onChange={handleChange}>
