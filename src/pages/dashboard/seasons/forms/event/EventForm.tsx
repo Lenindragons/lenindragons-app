@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/require-default-props */
 import { Controller, useForm } from 'react-hook-form'
-import { Autocomplete, Box, FormControl, TextField } from '@mui/material'
+import {
+  Autocomplete,
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material'
 import { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill'
 import DateRange from '@/components/commons/date-range/Daterage'
@@ -24,6 +32,7 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
   const [pokemon, setPokemon] = useState<any>(null)
 
   const onSubmit = async (formData: any): Promise<any> => {
+    console.log({ formData })
     callback(formData)
   }
 
@@ -95,17 +104,23 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
                 />
               )}
             />
-
-            {/* <TextField
-              label="Descrição do Temporada:"
-              variant="outlined"
-              multiline
-              {...register('description', { required: true })}
-              rows={4}
-              fullWidth
-              style={{ marginTop: 10 }}
-              required
-            /> */}
+            <FormControl fullWidth>
+              <InputLabel id="type-label">Tipo:</InputLabel>
+              <Controller
+                name="type"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Select labelId="type-label" label="Tipo:" {...field}>
+                    <MenuItem value="season">Temporada</MenuItem>
+                    <MenuItem value="league_challenge">
+                      League Challenge
+                    </MenuItem>
+                    <MenuItem value="league_cup">League Cup</MenuItem>
+                  </Select>
+                )}
+              />
+            </FormControl>
             <Box mb={2}>
               <Controller
                 name="description"

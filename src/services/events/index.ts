@@ -10,6 +10,7 @@ import {
   deleteDoc,
   updateDoc,
 } from '@firebase/firestore'
+import { where } from 'firebase/firestore'
 import { Event } from '../../types/Event'
 import { db } from '../firebaseConfig'
 import { getSpriteByName } from '../sprites'
@@ -24,6 +25,7 @@ export const createEvent = async (data: Event): Promise<void> => {
     const content = {
       name: data.name,
       description: data.description,
+      type: data.type || 'season',
       image: {
         name: data.icon.name,
         url: sprite?.image,
@@ -42,7 +44,12 @@ export const createEvent = async (data: Event): Promise<void> => {
 export const getEvents = async (callback: any) => {
   try {
     const eventsRef = getEventCollection()
-    const eventsQuery = query(eventsRef, orderBy('created'), limit(20))
+    const eventsQuery = query(
+      eventsRef,
+      where('type', '==', 'season'),
+      orderBy('created'),
+      limit(20)
+    )
     return onSnapshot(eventsQuery, (eventsSnapshot) => {
       callback(
         eventsSnapshot.docs.map((document) => {
