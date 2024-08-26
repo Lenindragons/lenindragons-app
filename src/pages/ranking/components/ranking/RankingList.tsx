@@ -8,6 +8,7 @@ import { getEvents } from '@/services/events'
 import { getChallengeBySeasonId } from '@/services/challenge'
 import { getRanking } from './getRanking'
 import { RankingTable } from '../ranking-table'
+import { Loading } from '@/components/commons/loading/Loading'
 
 export const RankingList = ({ type = 'season' }: { type: string }) => {
   const [seasons, setSeasons] = useState<{
@@ -58,6 +59,21 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
   const getSeasonContent = () => {
     const seasonSelectedByUser = seasons.find(s => s.id === seasonSelected)
     return seasonSelectedByUser || { name: '', description: '' } as any
+  }
+
+  if (!seasons.length) {
+    return (
+      <div
+        style={{
+          height: '500px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Loading />
+      </div>
+    )
   }
 
   return (

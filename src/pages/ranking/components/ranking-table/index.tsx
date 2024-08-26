@@ -1,5 +1,6 @@
 import {
   Grid,
+  keyframes,
   Paper,
   Table,
   TableBody,
@@ -23,6 +24,17 @@ interface RankedPlayer {
   name: string
   points: number
 }
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
 
 export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
   const getBall = (place: string) => {
@@ -95,10 +107,15 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((player: any) => (
+          {rows.map((player: any, index: number) => (
             <TableRow
               key={player.id}
-              style={getBall(player.place)?.style as React.CSSProperties}
+              sx={{
+                opacity: 0,
+                animation: `${fadeIn} 0.5s forwards`,
+                animationDelay: `${index * 0.1}s`,
+                ...getBall(player.place)?.style,
+              }}
             >
               <TableCell style={{ textAlign: 'center' }}>
                 {player.place}

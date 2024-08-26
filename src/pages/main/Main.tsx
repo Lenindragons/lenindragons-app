@@ -1,12 +1,24 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
 import { ProgressBar } from 'react-progressbar-fancy'
-import { Box, Paper, Typography } from '@mui/material'
+import { Box, keyframes, Paper, Typography } from '@mui/material'
 import styled from 'styled-components'
 import { Key, useEffect, useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
 import { WebPageTemplate } from '../../templates/webpage/WebPage'
 import { getChallengeByDate } from '@/services/challenge'
+import { Loading } from '@/components/commons/loading/Loading'
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
 
 const DeckRankingContainer = styled.div`
   display: grid;
@@ -127,6 +139,23 @@ export const MainPage = () => {
     return 'purple'
   }
 
+  if (!challenges.length) {
+    return (
+      <WebPageTemplate>
+        <div
+          style={{
+            height: '500px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Loading />
+        </div>
+      </WebPageTemplate>
+    )
+  }
+
   return (
     <WebPageTemplate>
       <Box
@@ -156,7 +185,15 @@ export const MainPage = () => {
               },
               index: Key | null | undefined
             ) => (
-              <Box key={index} component={Paper}>
+              <Box
+                key={index}
+                component={Paper}
+                sx={{
+                  opacity: 0,
+                  animation: `${fadeIn} 0.5s forwards`,
+                  animationDelay: `${(index as number) * 0.1}s`,
+                }}
+              >
                 <DeckRankingContainer>
                   <DeckIconContainer>
                     {deck.icons.map((icon, i) => (

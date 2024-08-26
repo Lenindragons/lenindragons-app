@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 import {
   Box,
+  keyframes,
   Paper,
   Tab,
   Table,
@@ -18,6 +19,18 @@ import { getChallengeBySeasonId } from '@/services/challenge'
 import { getDate } from '@/helpers/format-date'
 import { ChallengeResult } from '@/types/Challenge'
 import useIsMobile from '@/helpers/is-mobile'
+import { Loading } from '@/components/commons/loading/Loading'
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
 
 export const ResultsList = ({ type = 'season' }: { type: string }) => {
   const [seasons, setSeasons] = useState<{ name: string; id: string }[]>([])
@@ -60,6 +73,21 @@ export const ResultsList = ({ type = 'season' }: { type: string }) => {
     fontWeight: 'bold',
   }
 
+  if (!challenges.length) {
+    return (
+      <div
+        style={{
+          height: '500px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Loading />
+      </div>
+    )
+  }
+
   return (
     <div style={{ width: '100%' }}>
       <Box>
@@ -94,10 +122,15 @@ export const ResultsList = ({ type = 'season' }: { type: string }) => {
               <TableBody>
                 {challenges
                   .filter((c: ChallengeResult) => !!c?.challenge?.result)
-                  .map((challenge: any) => (
+                  .map((challenge: any, index: number) => (
                     <TableRow
                       key={challenge.id}
-                      style={{ textAlign: 'center' }}
+                      sx={{
+                        opacity: 0,
+                        animation: `${fadeIn} 0.5s forwards`,
+                        animationDelay: `${(index as number) * 0.1}s`,
+                        textAlign: 'center',
+                      }}
                     >
                       <TableCell style={{ textAlign: 'center' }}>
                         <Link
