@@ -41,12 +41,12 @@ export const createEvent = async (data: Event): Promise<void> => {
   }
 }
 
-export const getEvents = async (callback: any) => {
+export const getEvents = async (callback: any, type: string) => {
   try {
     const eventsRef = getEventCollection()
     const eventsQuery = query(
       eventsRef,
-      where('type', '==', 'season'),
+      where('type', '==', type),
       orderBy('created'),
       limit(20)
     )

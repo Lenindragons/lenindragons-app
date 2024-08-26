@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/require-default-props */
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import logo from '../../../../assets/fantasia-logo.png'
 import bg from '../../../../assets/bg-plataform.webp'
 import { MainMenu } from '../../../../components/mainmenu/MainMenu'
@@ -18,7 +19,6 @@ const MenuContainer = styled.nav`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    max-width: 68em;
     padding: 16px 32px;
   }
 
@@ -58,14 +58,26 @@ const MenuContainer = styled.nav`
   }
 `
 
+const PlataformLogoContainer = styled.figure`
+  img {
+    transition: transform 0.3s easy-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+`
+
 type PlataformProps = {
   width?: number
 }
-const PlataformLogo = ({ width = 80 }: PlataformProps) => {
+const PlataformLogo = ({ width = 60 }: PlataformProps) => {
   return (
-    <figure>
-      <img width={width} src={logo} alt="Fantasia Geek Store" />
-    </figure>
+    <PlataformLogoContainer>
+      <Link to="/">
+        <img width={width} src={logo} alt="Fantasia Geek Store" />
+      </Link>
+    </PlataformLogoContainer>
   )
 }
 
@@ -75,7 +87,7 @@ export const Header = () => {
   const component = !isMobile ? (
     <MenuContainer>
       <div className="top">
-        <PlataformLogo width={150} />
+        <PlataformLogo width={60} />
         <MainMenu>
           <Options />
         </MainMenu>

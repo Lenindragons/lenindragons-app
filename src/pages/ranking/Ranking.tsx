@@ -5,7 +5,7 @@ import { RankingList } from './components/ranking/RankingList'
 export const RankingPage = () => {
   return (
     <WebPageTemplate>
-      <RankingList />
+      <RankingList type="season" />
     </WebPageTemplate>
   )
 }

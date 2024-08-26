@@ -29,7 +29,7 @@ const EventList = () => {
   const { onSelectionModelChange } = useEvents()
 
   useEffect(() => {
-    getEvents(setEvents)
+    getEvents(setEvents, 'season')
   }, [])
 
   const handleEdit = (id: string) => {

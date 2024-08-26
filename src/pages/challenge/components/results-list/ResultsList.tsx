@@ -19,7 +19,7 @@ import { getDate } from '@/helpers/format-date'
 import { ChallengeResult } from '@/types/Challenge'
 import useIsMobile from '@/helpers/is-mobile'
 
-export const ResultsList = () => {
+export const ResultsList = ({ type = 'season' }: { type: string }) => {
   const [seasons, setSeasons] = useState<{ name: string; id: string }[]>([])
   const [challenges, setChallenges] = useState([])
   const [seasonSelected, setSeasonSelected] = useState('')
@@ -28,7 +28,7 @@ export const ResultsList = () => {
 
   useEffect(() => {
     const fetchSeasons = async () => {
-      getEvents(setSeasons)
+      getEvents(setSeasons, type)
     }
     fetchSeasons()
   }, [])

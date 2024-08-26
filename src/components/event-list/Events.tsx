@@ -44,7 +44,7 @@ export const Events = () => {
   const [events, setEvents] = useState<any>([])
 
   useEffect(() => {
-    getEvents(setEvents)
+    getEvents(setEvents, 'season')
   }, [])
 
   return (

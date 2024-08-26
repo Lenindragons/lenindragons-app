@@ -18,6 +18,7 @@ import { RulesPage } from './pages/rules/Rules'
 import { ChallengeListPage } from './pages/challenge/ChallengeListPage'
 import { ChallengeListDetailPage } from './pages/challenge/ChallengeListDetailPage'
 import { DeckPage } from './pages/dashboard/decks/DeckPage'
+import { LeagueChallengePage } from './pages/league-challenge'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -33,6 +34,10 @@ export const App = () => {
                 <Routes>
                   <Route path="/" element={<MainPage />} />
                   <Route path="/ranking" element={<RankingPage />} />
+                  <Route
+                    path="/league-challenge"
+                    element={<LeagueChallengePage />}
+                  />
                   <Route path="/rules" element={<RulesPage />} />
                   <Route path="/challenges" element={<ChallengeListPage />} />
                   <Route

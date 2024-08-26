@@ -2,14 +2,14 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable prettier/prettier */
 import { ReactNode, useEffect, useState } from 'react'
-import { Box, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Grid, Tab, Tabs, Typography } from '@mui/material'
 import DOMPurify from 'dompurify'
 import { getEvents } from '@/services/events'
 import { getChallengeBySeasonId } from '@/services/challenge'
 import { getRanking } from './getRanking'
 import { RankingTable } from '../ranking-table'
 
-export const RankingList = () => {
+export const RankingList = ({ type = 'season' }: { type: string }) => {
   const [seasons, setSeasons] = useState<{
     name: ReactNode
     id: string
@@ -21,10 +21,10 @@ export const RankingList = () => {
 
   useEffect(() => {
     const fetchSeasons = async () => {
-      getEvents(setSeasons)
+      getEvents(setSeasons, type)
     }
     fetchSeasons()
-  }, [])
+  }, [type])
 
   useEffect(() => {
     if (seasons.length) {
@@ -61,20 +61,26 @@ export const RankingList = () => {
   }
 
   return (
-    <Box style={{ width: '100%' }}>
-      <header>
-        <Typography variant="h4">{getSeasonContent()?.name}</Typography>
-      </header>
-      <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
-        {seasons.map((season) => (
-          <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
-        ))}
-      </Tabs>
-      <RankingTable rows={rows} />
+    <Box style={{ width: '100%', marginTop: '50px' }}>
+      <Grid container spacing={4} gap={0}>
+        <Grid item xs={8}>
+          <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
+            {seasons.map((season) => (
+              <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
+            ))}
+          </Tabs>
+          <RankingTable rows={rows} />
+        </Grid>
+        <Grid item xs={4}>
+          <div style={{ marginTop: '50px' }}>
+            <Typography variant="h6">{getSeasonContent()?.name}</Typography>
+            <div style={{ marginTop: '20px', padding: '20px' }} dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(getSeasonContent()?.description)
+            }} />
+          </div>
+        </Grid>
+      </Grid>
 
-      <div style={{ marginTop: '20px', padding: '20px' }} dangerouslySetInnerHTML={{
-        __html: DOMPurify.sanitize(getSeasonContent()?.description)
-      }} />
     </Box>
   )
 }

@@ -14,7 +14,7 @@ export const ChallengeListPage = () => {
       <header style={{ marginBottom: '20px', width: '100%' }}>
         <h2>Torneios por Temporadas</h2>
       </header>
-      <ResultsList />
+      <ResultsList type="season" />
       <FigureContainer>
         <img src={redBlue} alt="red" width={400} />
       </FigureContainer>
