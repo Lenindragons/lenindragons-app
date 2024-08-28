@@ -19,20 +19,31 @@ import {
   Button,
   Grid,
   FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import useDeckStore, { Deck, PokemonIcon } from '@/services/decks/useDeckStore'
 import { PokemonSelect } from '@/components/commons/pokemon-select/PokemonSelect'
-import { FormValues } from '@/components/dynamic-form/types'
+import { Pokemon } from '@/pages/challenge/hooks/player-list/types'
+
+type DeckValues = {
+  id: string
+  name: string
+  icons: Pokemon[]
+  type: string
+}
 
 export const DeckTable: React.FC = () => {
   const { decks, fetchDecks, deleteDeck, updateDeck } = useDeckStore()
-  const { control, handleSubmit } = useForm<FormValues>()
+  const { control, handleSubmit } = useForm<DeckValues>()
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [currentDeck, setCurrentDeck] = useState<Deck | null>({
     id: '',
     name: '',
     icons: [],
+    type: '',
   })
   const [name, setName] = useState('')
   const [icons, setIcons] = useState([{}] as PokemonIcon[])
@@ -52,15 +63,16 @@ export const DeckTable: React.FC = () => {
     await deleteDeck(id)
   }
 
-  const handleUpdate: SubmitHandler<FormValues> = async (updatedValue: any) => {
-    const { name, icons } = updatedValue
+  const handleUpdate: SubmitHandler<DeckValues> = async (updatedValue: any) => {
+    const { name, icons, type } = updatedValue
     const newValue = {
       id: currentDeck?.id || '',
-      name: name ? name : currentDeck?.name,
-      icons: icons ? icons : currentDeck?.icons,
+      name: name || currentDeck?.name,
+      icons: icons || currentDeck?.icons,
+      type: type || currentDeck?.type,
     }
 
-    await updateDeck(newValue.id, newValue.name, newValue.icons)
+    await updateDeck(newValue.id, newValue.name, newValue.icons, newValue.type)
     setEditDialogOpen(false)
     setCurrentDeck(null)
     setName('')
@@ -72,9 +84,16 @@ export const DeckTable: React.FC = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ maxWidth: 50 }}>Ícones do Deck</TableCell>
+            <TableCell>Ícones do Deck</TableCell>
             <TableCell>Nome do Deck</TableCell>
-            <TableCell style={{ textAlign: 'center' }}>Ações</TableCell>
+            <TableCell>Tipo</TableCell>
+            <TableCell
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Ações
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -93,7 +112,8 @@ export const DeckTable: React.FC = () => {
                 </Grid>
               </TableCell>
               <TableCell>{deck.name}</TableCell>
-              <TableCell style={{ maxWidth: 100, textAlign: 'center' }}>
+              <TableCell>{deck.type}</TableCell>
+              <TableCell style={{ maxWidth: 150, textAlign: 'center' }}>
                 <Grid
                   container
                   justifyContent="center"
@@ -128,10 +148,26 @@ export const DeckTable: React.FC = () => {
             <TextField
               label="Nome do Deck"
               value={name}
+              name="name"
               onChange={(e) => setName(e.target.value)}
               fullWidth
               margin="normal"
             />
+            <FormControl fullWidth>
+              <InputLabel id="type-label">Tipo:</InputLabel>
+              <Controller
+                name="type"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Select labelId="type-label" label="Tipo:" {...field}>
+                    <MenuItem value="standard">Standard</MenuItem>
+                    <MenuItem value="expanded">Expanded</MenuItem>
+                    <MenuItem value="GLC">GYM Leader Challenge (GLC)</MenuItem>
+                  </Select>
+                )}
+              />
+            </FormControl>
             <PokemonSelect
               name="icons"
               control={control}

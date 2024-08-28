@@ -7,12 +7,16 @@ import {
   FormControl,
   DialogTitle,
   DialogActions,
+  MenuItem,
+  Select,
+  InputLabel,
 } from '@mui/material'
 import useDeckStore, { PokemonIcon } from '@/services/decks/useDeckStore'
 import { PokemonSelect } from '@/components/commons/pokemon-select/PokemonSelect'
 
 interface FormValues {
   name: string
+  type: string
   icons: PokemonIcon[]
 }
 
@@ -21,7 +25,7 @@ export const CreateDeck: React.FC = () => {
   const { control, handleSubmit, reset } = useForm<FormValues>()
 
   const onSubmit = async (data: FormValues) => {
-    await createDeck(data.name, data.icons)
+    await createDeck(data.name, data.icons, data.type)
     reset()
   }
 
@@ -44,6 +48,21 @@ export const CreateDeck: React.FC = () => {
             />
           )}
         />
+        <FormControl fullWidth>
+          <InputLabel id="type-label">Tipo:</InputLabel>
+          <Controller
+            name="type"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Select labelId="type-label" label="Tipo:" {...field}>
+                <MenuItem value="standard">Standard</MenuItem>
+                <MenuItem value="expanded">Expanded</MenuItem>
+                <MenuItem value="GLC">GYM Leader Challenge (GLC)</MenuItem>
+              </Select>
+            )}
+          />
+        </FormControl>
         <PokemonSelect name="icons" control={control} defaultValue={[]} />
       </DialogContent>
       <DialogActions>
