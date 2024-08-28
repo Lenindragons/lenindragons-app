@@ -66,7 +66,7 @@ export const DeckTable: React.FC = () => {
   const handleUpdate: SubmitHandler<DeckValues> = async (updatedValue: any) => {
     const { name, icons, type } = updatedValue
     const newValue = {
-      id: currentDeck?.id || '',
+      id: currentDeck?.id ?? '',
       name: name || currentDeck?.name,
       icons: icons || currentDeck?.icons,
       type: type || currentDeck?.type,
