@@ -25,8 +25,8 @@ export const createChallenge = async (data: Challenge): Promise<void> => {
       rounds: data.rounds,
       roundTime: data.roundTime,
       seasonId: data.event.id,
-      seasonEndDate: data.dates[0]?.endDate,
-      seasonStartDate: data.dates[0]?.startDate,
+      seasonEndDate: data.event.dates[0]?.endDate,
+      seasonStartDate: data.event.dates[0]?.startDate,
       season: data.event,
       dates: data.dates,
     }

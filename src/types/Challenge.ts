@@ -18,6 +18,7 @@ export type ChallengeResult = {
 
 export type Season = {
   name: string
+  dates: EventDate[]
 }
 
 export type ChallengeListDetail = Challenge &
