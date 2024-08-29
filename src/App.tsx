@@ -6,9 +6,8 @@ import { AuthProvider } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
 import ErrorProvider from './context/ErrorContext'
 import { MainPage } from './pages/main/Main'
-import { HomePage } from './pages/home/Home'
-import { EventProvider } from './context/EventContext'
-import { EventPage } from './pages/events/Events'
+import { ProfilePage } from './pages/dashboard/profile'
+import NotFoundPage from './pages/404/not-found'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -18,16 +17,14 @@ export const App = () => {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <AuthProvider>
-            <EventProvider>
-              <GlobalStyle />
-              <Routes>
-                <Route path="/" element={<MainPage />} />
-                <Route element={<PrivateRoutes />}>
-                  <Route path="/home" element={<HomePage />} />
-                  <Route path="/event" element={<EventPage />} />
-                </Route>
-              </Routes>
-            </EventProvider>
+            <GlobalStyle />
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route element={<PrivateRoutes />}>
+                <Route path="/dashboard/profile" element={<ProfilePage />} />
+              </Route>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
           </AuthProvider>
         </BrowserRouter>
       </ThemeProvider>
