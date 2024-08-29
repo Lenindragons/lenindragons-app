@@ -6,7 +6,14 @@ import { AuthProvider } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
 import ErrorProvider from './context/ErrorContext'
 import { MainPage } from './pages/main/Main'
-import { OpenPage, StorePage, TransitPage, DonePage } from './pages/dashboard'
+import {
+  OpenPage,
+  StorePage,
+  TransitPage,
+  DonePage,
+  OrderPage,
+  UserPage,
+} from './pages/dashboard'
 import { NotFoundPage } from './pages/404/not-found'
 
 export const App = () => {
@@ -29,6 +36,8 @@ export const App = () => {
                 <Route path="/dashboard/transit" element={<TransitPage />} />
                 <Route path="/dashboard/store" element={<StorePage />} />
                 <Route path="/dashboard/done" element={<DonePage />} />
+                <Route path="/dashboard/admin/users" element={<UserPage />} />
+                <Route path="/dashboard/admin/orders" element={<OrderPage />} />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
