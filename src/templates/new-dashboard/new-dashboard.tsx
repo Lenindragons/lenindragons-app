@@ -15,7 +15,6 @@ import {
   Box,
   BottomNavigation,
   BottomNavigationAction,
-  useTheme,
   useMediaQuery,
   createTheme,
   ThemeProvider,

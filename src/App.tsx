@@ -1,8 +1,7 @@
 import { ThemeProvider } from 'styled-components'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { createTheme, useTheme } from '@mui/material'
+import { createTheme } from '@mui/material'
 import GlobalStyle from './styles/global'
-import { useDefaultTheme } from './context/DefaultThemeContext'
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoutes from './routes/PrivateRoute'
 import ErrorProvider from './context/ErrorContext'
@@ -11,7 +10,6 @@ import { ProfilePage } from './pages/dashboard/profile'
 import { NotFoundPage } from './pages/404/not-found'
 
 export const App = () => {
-  // const { theme } = useDefaultTheme()
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
