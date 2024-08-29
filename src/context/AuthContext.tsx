@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import {
   GoogleAuthProvider,
   UserInfo,
@@ -7,29 +8,22 @@ import {
 } from 'firebase/auth'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { app } from '../services/firebaseConfig'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { app, db } from '../services/firebaseConfig'
 import { ContextProps } from './ContextProps'
 import { useErrorHandling } from './ErrorContext'
 
-const provider = new GoogleAuthProvider()
-
 const AuthContext = createContext({})
 
-type User = {
-  name: string | null
-  email: string | null
-  image: string | null
-}
-
 const AuthProvider = ({ children }: ContextProps) => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<any | null>(null)
   const [loading, setLoadingStatus] = useState(true)
   const navigate = useNavigate()
   const { alertError } = useErrorHandling()
 
   const auth = getAuth(app)
 
-  const getUserInfo = (userInfo: UserInfo) => {
+  const getUserInfo = (userInfo: any) => {
     return (
       userInfo && {
         name: userInfo.displayName,
@@ -56,16 +50,31 @@ const AuthProvider = ({ children }: ContextProps) => {
     navigate('/')
   }
 
-  const signInGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((res) => {
-        setUser(getUserInfo(res.user))
+  const signInGoogle = async () => {
+    const provider = new GoogleAuthProvider()
+    try {
+      const result = await signInWithPopup(auth, provider)
+      const { user } = result
+
+      const userDoc = doc(db, 'users', user.uid)
+      const userSnapshot = await getDoc(userDoc)
+      if (!userSnapshot.exists()) {
+        await setDoc(userDoc, {
+          name: user.displayName,
+          email: user.email,
+          image: user.photoURL,
+          type: 'customer',
+        })
+      }
+      const userData = userSnapshot.data()
+      setUser({
+        uid: user.uid,
+        ...userData,
       })
-      .then(() => navigate('/dashboard/open'))
-      .catch((err) => {
-        const { email, message, code } = err
-        alertError(`[${code}:${email}]: ${message}`)
-      })
+      navigate('/dashboard/open')
+    } catch (error) {
+      alertError('Erro ao autenticar com o Google:', error)
+    }
   }
 
   return (
