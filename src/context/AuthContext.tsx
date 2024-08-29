@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import {
   GoogleAuthProvider,
-  UserInfo,
   getAuth,
   signInWithPopup,
   signOut,
