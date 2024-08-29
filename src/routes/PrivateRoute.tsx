@@ -3,6 +3,7 @@ import React from 'react'
 import { Dashboard } from '../templates/dashboard/Dashboard'
 import { useAuth } from '../context/AuthContext'
 import { Loading } from '../components/commons/loading/Loading'
+import NewDashboard from '@/templates/new-dashboard/NewDashboard'
 
 interface PrivateRouteProps {
   allowedTypes: string[]
@@ -16,9 +17,9 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedTypes }) => {
   }
 
   return allowedTypes.includes(user.type) ? (
-    <Dashboard>
+    <NewDashboard>
       <Outlet />
-    </Dashboard>
+    </NewDashboard>
   ) : (
     <Navigate to="/" />
   )
