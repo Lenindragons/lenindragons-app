@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import bg from '../../../../assets/bg-lenindragons.webp'
 import Options from '../options'
 
-const MenuComunista = styled.nav`
+const Menu = styled.nav`
   background: url(${bg});
   position: relative;
 
@@ -38,10 +38,10 @@ const MenuComunista = styled.nav`
 
 export const Header = () => {
   return (
-    <MenuComunista>
+    <Menu>
       <div className="top">
         <Options />
       </div>
-    </MenuComunista>
+    </Menu>
   )
 }

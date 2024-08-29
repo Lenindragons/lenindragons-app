@@ -61,7 +61,7 @@ const AuthProvider = ({ children }: ContextProps) => {
       .then((res) => {
         setUser(getUserInfo(res.user))
       })
-      .then(() => navigate('/dashboard/profile'))
+      .then(() => navigate('/dashboard/open'))
       .catch((err) => {
         const { email, message, code } = err
         alertError(`[${code}:${email}]: ${message}`)

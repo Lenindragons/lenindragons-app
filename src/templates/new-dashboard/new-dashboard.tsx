@@ -27,10 +27,12 @@ import {
   ReceiptLongOutlined as ReceiptLongOutlinedIcon,
   AirplanemodeActiveOutlined as AirplanemodeActiveOutlinedIcon,
 } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 
 const drawerWidth = 240
 
-const NewDashboard = ({ children }: { children: any }) => {
+export const NewDashboard = ({ children }: { children: any }) => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState(0)
   const theme = createTheme({
@@ -44,16 +46,40 @@ const NewDashboard = ({ children }: { children: any }) => {
     setOpen(!open)
   }
 
+  const { logout } = useAuth()
+  const navigate = useNavigate()
+
   const menuItems = [
-    { text: 'Em Aberto', icon: <ReceiptLongOutlinedIcon /> },
-    { text: 'Em Transito', icon: <AirplanemodeActiveOutlinedIcon /> },
-    { text: 'Em Estoque', icon: <InventoryOutlinedIcon /> },
-    { text: 'Concluídos', icon: <ScheduleOutlinedIcon /> },
-    { text: 'Sair', icon: <ExitToAppIcon /> },
+    {
+      text: 'Em Aberto',
+      icon: <ReceiptLongOutlinedIcon />,
+      onClick: () => navigate('/dashboard/open'),
+    },
+    {
+      text: 'Em Transito',
+      icon: <AirplanemodeActiveOutlinedIcon />,
+      onClick: () => navigate('/dashboard/transit'),
+    },
+    {
+      text: 'Em Estoque',
+      icon: <InventoryOutlinedIcon />,
+      onClick: () => navigate('/dashboard/store'),
+    },
+    {
+      text: 'Concluídos',
+      icon: <ScheduleOutlinedIcon />,
+      onClick: () => navigate('/dashboard/done'),
+    },
+    {
+      text: 'Sair',
+      icon: <ExitToAppIcon />,
+      onClick: () => logout(),
+    },
   ]
 
   return (
     <ThemeProvider theme={theme}>
+      teste
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar
@@ -92,7 +118,7 @@ const NewDashboard = ({ children }: { children: any }) => {
           <Box sx={{ overflow: 'auto' }}>
             <List>
               {menuItems.map((item, index) => (
-                <ListItem button key={index}>
+                <ListItem button key={index} onClick={item.onClick}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />
                 </ListItem>
@@ -105,12 +131,6 @@ const NewDashboard = ({ children }: { children: any }) => {
           sx={{
             flexGrow: 1,
             p: 3,
-            marginLeft: isMobile ? 0 : drawerWidth,
-            transition: (theme) =>
-              theme.transitions.create(['margin-left', 'width'], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-              }),
           }}
         >
           <Toolbar />
@@ -136,6 +156,7 @@ const NewDashboard = ({ children }: { children: any }) => {
                 key={index}
                 label={item.text}
                 icon={item.icon}
+                onClick={item.onClick}
               />
             ))}
           </BottomNavigation>
@@ -144,5 +165,3 @@ const NewDashboard = ({ children }: { children: any }) => {
     </ThemeProvider>
   )
 }
-
-export default NewDashboard
