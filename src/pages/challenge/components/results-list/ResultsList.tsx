@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getEvents } from '@/services/events'
+import { getEventsByType } from '@/services/events'
 import { getChallengeBySeasonId } from '@/services/challenge'
 import { getDate } from '@/helpers/format-date'
 import { ChallengeResult } from '@/types/Challenge'
@@ -41,10 +41,10 @@ export const ResultsList = ({ type = 'season' }: { type: string }) => {
 
   useEffect(() => {
     const fetchSeasons = async () => {
-      getEvents(setSeasons, type)
+      getEventsByType(setSeasons, type)
     }
     fetchSeasons()
-  }, [])
+  }, [type])
 
   useEffect(() => {
     if (seasons.length) {

@@ -36,7 +36,7 @@ type DeckValues = {
 }
 
 export const DeckTable: React.FC = () => {
-  const { decks, fetchDecks, deleteDeck, updateDeck } = useDeckStore()
+  const { decks, getDecks, deleteDeck, updateDeck } = useDeckStore()
   const { control, handleSubmit } = useForm<DeckValues>()
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [currentDeck, setCurrentDeck] = useState<Deck | null>({
@@ -49,8 +49,8 @@ export const DeckTable: React.FC = () => {
   const [icons, setIcons] = useState([{}] as PokemonIcon[])
 
   useEffect(() => {
-    fetchDecks()
-  }, [fetchDecks])
+    getDecks()
+  }, [getDecks])
 
   const handleEdit = (deck: Deck) => {
     setCurrentDeck(deck)

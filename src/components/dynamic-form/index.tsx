@@ -30,12 +30,13 @@ import { InputNumber } from './components/input-number/InputNumber'
 import { toastError, toastSuccess } from '../commons/toast-error/ToastError'
 import { NotificationMessages } from './constants'
 import useDeckStore from '../../services/decks/useDeckStore'
+import { getChallengeById } from '@/services/challenge'
 
 const DynamicForm = () => {
   const { id = '' } = useParams()
 
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
-  const { decks, fetchDecks } = useDeckStore()
+  const { decks, getDecksByType } = useDeckStore()
   const [options, setOptions] = useState<any[]>([])
   const [, setPokemon] = useState<any>(null)
 
@@ -68,16 +69,29 @@ const DynamicForm = () => {
     name: 'players',
   })
 
+  const getFormat = (type: string) => {
+    if (
+      type === 'season' ||
+      type === 'league_challenge' ||
+      type === 'league_cup'
+    ) {
+      return 'standard'
+    }
+    return type
+  }
+
   useEffect(() => {
     const fetchPokemonDeck = async () => {
       try {
-        await fetchDecks()
+        const data = await getChallengeById(id)
+        const type = data?.season?.type || 'standard'
+        await getDecksByType(getFormat(type))
       } catch (err) {
         console.error(err)
       }
     }
     fetchPokemonDeck()
-  }, [fetchDecks])
+  }, [getDecksByType, id])
 
   const onAutoCompletePokemonSubmit = async (value: string) => {
     try {

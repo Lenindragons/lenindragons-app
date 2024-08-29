@@ -4,7 +4,7 @@
 import { ReactNode, useEffect, useState } from 'react'
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material'
 import DOMPurify from 'dompurify'
-import { getEvents } from '@/services/events'
+import { getEventsByType } from '@/services/events'
 import { getChallengeBySeasonId } from '@/services/challenge'
 import { getRanking } from './getRanking'
 import { RankingTable } from '../ranking-table'
@@ -22,7 +22,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
 
   useEffect(() => {
     const fetchSeasons = async () => {
-      getEvents(setSeasons, type)
+      getEventsByType(setSeasons, type)
     }
     fetchSeasons()
   }, [type])

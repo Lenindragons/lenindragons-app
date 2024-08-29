@@ -5,7 +5,9 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from 'firebase/firestore'
 import { db } from '../firebaseConfig'
 
@@ -23,7 +25,8 @@ export interface Deck {
 
 interface DeckStore {
   decks: Deck[]
-  fetchDecks: () => Promise<void>
+  getDecks: () => Promise<void>
+  getDecksByType: (type: string) => Promise<void>
   createDeck: (
     name: string,
     icons: PokemonIcon[],
@@ -40,8 +43,18 @@ interface DeckStore {
 
 const useDeckStore = create<DeckStore>((set) => ({
   decks: [],
-  fetchDecks: async () => {
-    const querySnapshot = await getDocs(collection(db, 'decks'))
+  getDecks: async () => {
+    const queryDecks = query(collection(db, 'decks'))
+    const querySnapshot = await getDocs(queryDecks)
+    const decks: Deck[] = []
+    querySnapshot.forEach((documment) => {
+      decks.push({ id: documment.id, ...documment.data() } as Deck)
+    })
+    set({ decks })
+  },
+  getDecksByType: async (type: string) => {
+    const queryDecks = query(collection(db, 'decks'), where(type, '==', type))
+    const querySnapshot = await getDocs(queryDecks)
     const decks: Deck[] = []
     querySnapshot.forEach((documment) => {
       decks.push({ id: documment.id, ...documment.data() } as Deck)

@@ -18,12 +18,28 @@ import { useEvents } from '@/context/EventContext'
 import { Modal } from '../commons/modal/Modal'
 import { EventForm } from '@/pages/dashboard/seasons/forms/event/EventForm'
 import { getDate } from '@/helpers/format-date'
+import glcIcon from '@/assets/glc-logo-min.png'
+import lcIcon from '@/assets/league-challenge-min.png'
+import plIcon from '@/assets/pokemon-league-min.png'
 
 export const EventList = () => {
   const { events, removeEvent, editEvent } = useEvents()
 
   const handleDelete = async (id: string) => {
     removeEvent(id)
+  }
+
+  const getIcon = (type: string) => {
+    switch (type) {
+      case 'GLC':
+        return glcIcon
+      case 'league_challenge':
+        return lcIcon
+      case 'season':
+        return plIcon
+      default:
+        return ''
+    }
   }
 
   const getStatus = (date: Timestamp) => {
@@ -42,10 +58,13 @@ export const EventList = () => {
           <TableRow>
             <TableCell>Imagem</TableCell>
             <TableCell>Nome</TableCell>
-            <TableCell>Data de Início</TableCell>
-            <TableCell>Data de Fim</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Ações</TableCell>
+            <TableCell style={{ textAlign: 'center' }}>Tipo</TableCell>
+            <TableCell style={{ textAlign: 'center' }}>
+              Data de Início
+            </TableCell>
+            <TableCell style={{ textAlign: 'center' }}>Data de Fim</TableCell>
+            <TableCell style={{ textAlign: 'center' }}>Status</TableCell>
+            <TableCell style={{ textAlign: 'center' }}>Ações</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -63,17 +82,24 @@ export const EventList = () => {
                   <Typography variant="body1">{event.name}</Typography>
                 </Link>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ textAlign: 'center' }}>
+                <img
+                  alt={event.type}
+                  src={getIcon(event.type)}
+                  style={{ width: event.type === 'GLC' ? 64 : 54 }}
+                />
+              </TableCell>
+              <TableCell style={{ textAlign: 'center' }}>
                 <Typography variant="body2">
                   {getDate(event.dates[0].startDate)}
                 </Typography>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ textAlign: 'center' }}>
                 <Typography variant="body2">
                   {getDate(event.dates[0].endDate)}
                 </Typography>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ textAlign: 'center' }}>
                 <Chip
                   label={getStatus(event.dates[0].endDate)}
                   variant="outlined"
@@ -85,7 +111,14 @@ export const EventList = () => {
                 />
               </TableCell>
               <TableCell>
-                <Box sx={{ display: 'flex', gap: 2 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                    gap: 2,
+                    justifyContent: 'center',
+                  }}
+                >
                   <Modal label="Editar Evento">
                     <EventForm
                       callback={(data) => editEvent(event.id, data)}

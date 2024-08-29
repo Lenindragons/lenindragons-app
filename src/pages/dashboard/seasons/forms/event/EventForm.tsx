@@ -117,6 +117,7 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
                       League Challenge
                     </MenuItem>
                     <MenuItem value="league_cup">League Cup</MenuItem>
+                    <MenuItem value="GLC">GYM Leader Challenge (GLC)</MenuItem>
                   </Select>
                 )}
               />

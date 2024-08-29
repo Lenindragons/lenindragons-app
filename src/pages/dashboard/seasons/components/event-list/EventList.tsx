@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridToolbar } from '@material-ui/data-grid'
 import Button from '@mui/material/Button'
 import { IconButton } from '@mui/material'
 import { Delete, Edit } from '@mui/icons-material'
-import { getEvents } from '@/services/events'
+import { getEventsByType } from '@/services/events'
 import { useEvents } from '@/context/EventContext'
 
 // eslint-disable-next-line react/prop-types
@@ -29,7 +29,7 @@ const EventList = () => {
   const { onSelectionModelChange } = useEvents()
 
   useEffect(() => {
-    getEvents(setEvents, 'season')
+    getEventsByType(setEvents, 'season')
   }, [])
 
   const handleEdit = (id: string) => {

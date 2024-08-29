@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { createContext, useContext, useEffect, useState } from 'react'
 import { GridSelectionModel } from '@material-ui/data-grid'
 
@@ -29,9 +30,12 @@ export const ChallengeProvider = ({ children }: ContextProps) => {
     updateChallenge(id, newChallengeData)
   }
 
+  const getChallengeById = async (id: string) => {
+    return challenges.find((challenge: any) => challenge?.id === id)
+  }
+
   useEffect(() => {
     getChallenges(setChallenges, seasonId)
-    console.log(seasonId)
   }, [seasonId])
 
   return (
@@ -39,6 +43,7 @@ export const ChallengeProvider = ({ children }: ContextProps) => {
       value={{
         challenges,
         items,
+        getChallengeById,
         onSelectionModelChange,
         removeChallenge,
         editChallenge,

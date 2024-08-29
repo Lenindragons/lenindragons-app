@@ -88,8 +88,13 @@ export const MainPage = () => {
     if (!challenges || !challenges.length) {
       return []
     }
-    const challengeMapped = challenges.map(
-      (challenge: { challenge: { result: any[] } }) => {
+
+    const challengesFiltered = challenges.filter(
+      (challenge: any) => challenge.challenge
+    )
+
+    const challengeMapped = challengesFiltered.map(
+      (challenge: { challenge: { result: any[] | any } }) => {
         return challenge.challenge.result.map((deck: { deck: any }) => ({
           name: deck.deck.name,
           icons: deck.deck.icons,

@@ -41,7 +41,29 @@ export const createEvent = async (data: Event): Promise<void> => {
   }
 }
 
-export const getEvents = async (callback: any, type: string) => {
+export const getEvents = async (callback: any) => {
+  try {
+    const eventsRef = getEventCollection()
+    const eventsQuery = query(eventsRef, orderBy('created'), limit(20))
+    return onSnapshot(eventsQuery, (eventsSnapshot) => {
+      callback(
+        eventsSnapshot.docs.map((document) => {
+          const data = document.data()
+          return {
+            id: document.id,
+            ...data,
+          }
+        })
+      )
+    })
+  } catch (err) {
+    console.error(err)
+    callback([])
+    return null
+  }
+}
+
+export const getEventsByType = async (callback: any, type: string) => {
   try {
     const eventsRef = getEventCollection()
     const eventsQuery = query(

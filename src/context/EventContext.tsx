@@ -24,7 +24,7 @@ export const EventProvider = ({ children }: ContextProps) => {
   }
 
   useEffect(() => {
-    getEvents(setEvents, 'season')
+    getEvents(setEvents)
   }, [])
 
   return (
