@@ -21,7 +21,7 @@ const DateRangeComponent = ({ label, name, control }: DatePickerProps) => {
           <DateRange
             onChange={(item) => field.onChange([item.selection])}
             moveRangeOnFirstSelection={false}
-            rangeColors={[theme.colors.primary]}
+            rangeColors={[theme.primary]}
             ranges={field.value}
           />
         )}

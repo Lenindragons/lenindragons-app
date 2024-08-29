@@ -13,9 +13,9 @@ export default createGlobalStyle`
   }
 
   body {
-    background: ${(props) => props.theme.colors.background};
+    background: ${(props) => props.theme.background};
     font-size: 14px;
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme.text};
     font-family: sans-serif;
     min-height: 100%;
   }

@@ -13,7 +13,7 @@ export const Loading = () => {
   const theme = useTheme()
   return (
     <LoadingContainer>
-      <ReactLoading type="spin" color={theme.colors.primary} width={80} />
+      <ReactLoading type="spin" color={theme.primary} width={80} />
     </LoadingContainer>
   )
 }

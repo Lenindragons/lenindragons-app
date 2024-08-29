@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from 'react-router-dom'
-import { Dashboard } from '../templates/dashboard/Dashboard'
+import Dashboard from '../templates/new-dashboard/new-dashboard'
 import { useAuth } from '../context/AuthContext'
 import { Loading } from '../components/commons/loading/Loading'
 

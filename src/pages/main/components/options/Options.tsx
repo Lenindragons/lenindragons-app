@@ -34,7 +34,7 @@ const ListContainerOptions = styled.ul`
       font-weight: 700;
       text-decoration: none;
       &:hover {
-        color: ${(props) => props.theme.colors.primary};
+        color: ${(props) => props.theme.primary};
       }
     }
   }
