@@ -95,7 +95,6 @@ const DynamicForm = () => {
 
   const onAutoCompletePokemonSubmit = async (value: string) => {
     try {
-      console.log('value', value)
       setPokemon(value)
     } catch (err) {
       console.error(err)
