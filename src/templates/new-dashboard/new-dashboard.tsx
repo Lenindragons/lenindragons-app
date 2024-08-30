@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -18,6 +18,8 @@ import {
   useMediaQuery,
   createTheme,
   ThemeProvider,
+  Collapse,
+  Divider,
 } from '@mui/material'
 import {
   Menu as MenuIcon,
@@ -26,14 +28,17 @@ import {
   InventoryOutlined as InventoryOutlinedIcon,
   ReceiptLongOutlined as ReceiptLongOutlinedIcon,
   AirplanemodeActiveOutlined as AirplanemodeActiveOutlinedIcon,
+  ReceiptOutlined as ReceiptOutlinedIcon,
+  PeopleAltOutlined as PeopleAltOutlinedIcon,
 } from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 const drawerWidth = 240
 
 export const NewDashboard = ({ children }: { children: any }) => {
   const [open, setOpen] = useState(false)
+  const [openCollapsed] = useState(true)
   const [value, setValue] = useState(0)
   const theme = createTheme({
     palette: {
@@ -79,7 +84,6 @@ export const NewDashboard = ({ children }: { children: any }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      teste
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar
@@ -123,6 +127,29 @@ export const NewDashboard = ({ children }: { children: any }) => {
                   <ListItemText primary={item.text} />
                 </ListItem>
               ))}
+              <Divider />
+              <ListItem>Admin</ListItem>
+              <Divider />
+              <Collapse in={openCollapsed} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/dashboard/admin/orders"
+                  >
+                    <ListItemIcon>
+                      <ReceiptOutlinedIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Pedidos" />
+                  </ListItem>
+                  <ListItem button component={Link} to="/dashboard/admin/users">
+                    <ListItemIcon>
+                      <PeopleAltOutlinedIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Usuários" />
+                  </ListItem>
+                </List>
+              </Collapse>
             </List>
           </Box>
         </Drawer>

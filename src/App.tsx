@@ -12,6 +12,7 @@ import {
   TransitPage,
   DonePage,
   OrderPage,
+  OrderDetailPage,
   UserPage,
 } from './pages/dashboard'
 import { NotFoundPage } from './pages/404/not-found'
@@ -38,6 +39,10 @@ export const App = () => {
                 <Route path="/dashboard/done" element={<DonePage />} />
                 <Route path="/dashboard/admin/users" element={<UserPage />} />
                 <Route path="/dashboard/admin/orders" element={<OrderPage />} />
+                <Route
+                  path="/dashboard/admin/orders/detail"
+                  element={<OrderDetailPage />}
+                />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
