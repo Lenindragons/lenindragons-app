@@ -1,8 +1,8 @@
 export const StorePage = () => {
   return (
     <div>
-      <h1>Concluidos</h1>
-      <p>Concluidos page content</p>
+      <h1>Em Estoque</h1>
+      <p>Em Estoque page content</p>
     </div>
   )
 }
