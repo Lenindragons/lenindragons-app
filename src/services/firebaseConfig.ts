@@ -1,4 +1,4 @@
-import { getFirestore } from '@firebase/firestore'
+import { memoryLocalCache, initializeFirestore } from '@firebase/firestore'
 import { initializeApp } from 'firebase/app'
 
 const firebaseConfig = {
@@ -12,4 +12,5 @@ const firebaseConfig = {
 }
 
 export const app = initializeApp(firebaseConfig)
-export const db = getFirestore(app)
+
+export const db = initializeFirestore(app, { localCache: memoryLocalCache() })
