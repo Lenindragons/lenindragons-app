@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import { Timestamp } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
 import {
@@ -26,7 +27,12 @@ export const EventList = () => {
   const { events, removeEvent, editEvent } = useEvents()
 
   const handleDelete = async (id: string) => {
-    removeEvent(id)
+    const confirmed = window.confirm(
+      'Você tem certeza que quer deletar esse torneio?'
+    )
+    if (confirmed) {
+      removeEvent(id)
+    }
   }
 
   const getIcon = (type: string) => {
