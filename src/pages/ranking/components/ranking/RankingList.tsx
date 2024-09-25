@@ -129,15 +129,17 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
         </Grid>
 
         {!isMobile && (
-          <div style={{ marginTop: '50px' }}>
-            <Typography variant="h6">{getSeasonContent()?.name}</Typography>
-            <div
-              style={{ marginTop: '20px', padding: '20px' }}
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(getSeasonContent()?.description),
-              }}
-            />
-          </div>
+          <Grid item xs={4}>
+            <div style={{ marginTop: '50px' }}>
+              <Typography variant="h6">{getSeasonContent()?.name}</Typography>
+              <div
+                style={{ marginTop: '20px', padding: '20px' }}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(getSeasonContent()?.description),
+                }}
+              />
+            </div>
+          </Grid>
         )}
       </Grid>
     </Box>

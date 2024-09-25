@@ -14,10 +14,10 @@ export const RulesPage = () => {
       <Container>
         <Box my={4}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Torneios das Terças e Quintas
+            Torneios da Fantasia
           </Typography>
           <Typography variant="h6" component="h2" gutterBottom>
-            STANDARD
+            Modelo STANDARD
           </Typography>
           <Typography variant="body1" gutterBottom>
             Horário: 19h
