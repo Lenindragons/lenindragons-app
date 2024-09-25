@@ -31,7 +31,12 @@ export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
   }, [seasonId, setSeasonId])
 
   const handleDelete = async (id: string) => {
-    removeChallenge(id)
+    const confirmed = window.confirm(
+      'Você tem certeza que quer deletar esse torneio?'
+    )
+    if (confirmed) {
+      removeChallenge(id)
+    }
   }
 
   return (

@@ -28,7 +28,7 @@ export const EventList = () => {
 
   const handleDelete = async (id: string) => {
     const confirmed = window.confirm(
-      'Você tem certeza que quer deletar esse torneio?'
+      'Você tem certeza que quer deletar esse temporada?'
     )
     if (confirmed) {
       removeEvent(id)
