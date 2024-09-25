@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import { DefaultTheme } from 'styled-components'
+import { createTheme, ThemeProvider } from '@mui/material'
 import usePersistedState from '../utils/usePersistedState'
 import light from '../styles/themes/light'
 import dark from '../styles/themes/dark'
@@ -13,9 +14,19 @@ const DefaultThemeProvider = ({ children }: ContextProps) => {
     setTheme(theme.title === 'light' ? dark : light)
   }
 
+  const createdTheme = createTheme({
+    components: {
+      MuiUseMediaQuery: {
+        defaultProps: {
+          noSsr: true,
+        },
+      },
+    },
+  })
+
   return (
     <DefaultThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      <ThemeProvider theme={createdTheme}>{children}</ThemeProvider>
     </DefaultThemeContext.Provider>
   )
 }

@@ -2,7 +2,8 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable prettier/prettier */
 import { ReactNode, useEffect, useState } from 'react'
-import { Box, Grid, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Collapse, Grid, IconButton, Paper, Tab, Tabs, Typography, useMediaQuery } from '@mui/material'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DOMPurify from 'dompurify'
 import { getEventsByType } from '@/services/events'
 import { getChallengeBySeasonId } from '@/services/challenge'
@@ -19,6 +20,13 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
   const [challenges, setChallenges] = useState([])
   const [rows, setRows] = useState([])
   const [value, setValue] = useState(0)
+  const [collapseOpen, setCollapseOpen] = useState(false);
+  const isMobile = useMediaQuery((theme: any) => {
+    console.log(theme)
+    return theme.breakpoints.down('sm')
+  });
+
+
 
   useEffect(() => {
     const fetchSeasons = async () => {
@@ -56,6 +64,10 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
     setValue(newValue)
   }
 
+  const handleCollapseToggle = () => {
+    setCollapseOpen(!collapseOpen);
+  };
+
   const getSeasonContent = () => {
     const seasonSelectedByUser = seasons.find(s => s.id === seasonSelected)
     return seasonSelectedByUser || { name: '', description: '' } as any
@@ -76,10 +88,38 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
     )
   }
 
+  const gridSize = isMobile ? 12 : 8
+
   return (
     <Box style={{ width: '100%', marginTop: '50px' }}>
+      <Grid item xs={12} sm={4}>
+        {isMobile && (
+          <>
+            <Box component={Paper} style={{ padding: 10, marginBottom: 10 }}>
+              <Typography variant="h6">
+                REGRAS DA TEMPORADA
+                <IconButton onClick={handleCollapseToggle}>
+                  <ExpandMoreIcon />
+                </IconButton>
+              </Typography>
+            </Box>
+
+            <Collapse in={collapseOpen}>
+              <div style={{ marginTop: '20px', padding: '20px' }}>
+                <Typography variant="h6">{getSeasonContent()?.name}</Typography>
+                <div
+                  style={{ marginTop: '20px' }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(getSeasonContent()?.description),
+                  }}
+                />
+              </div>
+            </Collapse>
+          </>
+        )}
+      </Grid>
       <Grid container spacing={4} gap={0}>
-        <Grid item xs={8}>
+        <Grid item xs={gridSize}>
           <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
             {seasons.map((season) => (
               <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
@@ -87,16 +127,19 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
           </Tabs>
           <RankingTable rows={rows} />
         </Grid>
-        <Grid item xs={4}>
+
+        {!isMobile && (
           <div style={{ marginTop: '50px' }}>
             <Typography variant="h6">{getSeasonContent()?.name}</Typography>
-            <div style={{ marginTop: '20px', padding: '20px' }} dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(getSeasonContent()?.description)
-            }} />
+            <div
+              style={{ marginTop: '20px', padding: '20px' }}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(getSeasonContent()?.description),
+              }}
+            />
           </div>
-        </Grid>
+        )}
       </Grid>
-
     </Box>
   )
 }
