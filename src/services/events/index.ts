@@ -73,14 +73,20 @@ export const getEventsByType = async (callback: any, type: string) => {
       limit(20)
     )
     return onSnapshot(eventsQuery, (eventsSnapshot) => {
+      const currentDate = new Date()
       callback(
-        eventsSnapshot.docs.map((document) => {
-          const data = document.data()
-          return {
-            id: document.id,
-            ...data,
-          }
-        })
+        eventsSnapshot.docs
+          .filter((document) => {
+            const data = document.data()
+            return new Date(data.dates[0].endDate.toDate()) >= currentDate
+          })
+          .map((document) => {
+            const data = document.data()
+            return {
+              id: document.id,
+              ...data,
+            }
+          })
       )
     })
   } catch (err) {

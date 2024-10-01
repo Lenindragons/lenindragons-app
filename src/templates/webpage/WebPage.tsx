@@ -10,9 +10,10 @@ const MainContainer = styled.main`
   padding: 0 2.5em;
   font-family: Roboto, sans-serif;
   display: flex;
-  justify-content: center;
+  justify-content: top;
   align-items: center;
   flex-direction: column;
+  min-height: 100vh;
 
   header {
     margin: 50px 0;

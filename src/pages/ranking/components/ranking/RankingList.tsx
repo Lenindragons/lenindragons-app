@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable prettier/prettier */
 import { ReactNode, useEffect, useState } from 'react'
-import { Box, Collapse, Grid, IconButton, Paper, Tab, Tabs, Typography, useMediaQuery } from '@mui/material'
+import { Box, Collapse, Grid, IconButton, Paper, Tab, Tabs, Typography } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DOMPurify from 'dompurify'
 import { getEventsByType } from '@/services/events'
@@ -13,6 +13,7 @@ import { Loading } from '@/components/commons/loading/Loading'
 
 export const RankingList = ({ type = 'season' }: { type: string }) => {
   const [seasons, setSeasons] = useState<{
+    dates: { endDate: string }[]
     name: ReactNode
     id: string
   }[]>([])
@@ -20,13 +21,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
   const [challenges, setChallenges] = useState([])
   const [rows, setRows] = useState([])
   const [value, setValue] = useState(0)
-  const [collapseOpen, setCollapseOpen] = useState(false);
-  const isMobile = useMediaQuery((theme: any) => {
-    console.log(theme)
-    return theme.breakpoints.down('sm')
-  });
-
-
+  const [collapseOpen, setCollapseOpen] = useState(false)
 
   useEffect(() => {
     const fetchSeasons = async () => {
@@ -88,59 +83,43 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
     )
   }
 
-  const gridSize = isMobile ? 12 : 8
+  const gridSize = 12
+  const currentDate = new Date()
 
   return (
     <Box style={{ width: '100%', marginTop: '50px' }}>
       <Grid item xs={12} sm={4}>
-        {isMobile && (
-          <>
-            <Box component={Paper} style={{ padding: 10, marginBottom: 10 }}>
-              <Typography variant="h6">
-                REGRAS DA TEMPORADA
-                <IconButton onClick={handleCollapseToggle}>
-                  <ExpandMoreIcon />
-                </IconButton>
-              </Typography>
-            </Box>
 
-            <Collapse in={collapseOpen}>
-              <div style={{ marginTop: '20px', padding: '20px' }}>
-                <Typography variant="h6">{getSeasonContent()?.name}</Typography>
-                <div
-                  style={{ marginTop: '20px' }}
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(getSeasonContent()?.description),
-                  }}
-                />
-              </div>
-            </Collapse>
-          </>
-        )}
+        <Box component={Paper} style={{ padding: 10, marginBottom: 10 }}>
+          <Typography variant="h6">
+            REGRAS DA TEMPORADA
+            <IconButton onClick={handleCollapseToggle}>
+              <ExpandMoreIcon />
+            </IconButton>
+          </Typography>
+        </Box>
+
+        <Collapse in={collapseOpen}>
+          <div style={{ marginTop: '20px', padding: '20px' }}>
+            <Typography variant="h6">{getSeasonContent()?.name}</Typography>
+            <div
+              style={{ marginTop: '20px' }}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(getSeasonContent()?.description),
+              }}
+            />
+          </div>
+        </Collapse>
       </Grid>
       <Grid container spacing={4} gap={0}>
         <Grid item xs={gridSize}>
           <Tabs value={value} onChange={handleChange} aria-label='Rankings tabs'>
-            {seasons.map((season) => (
+            {seasons.filter((season: any) => season.dates[0].endDate.toDate() >= currentDate).map((season) => (
               <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
             ))}
           </Tabs>
           <RankingTable rows={rows} />
         </Grid>
-
-        {!isMobile && (
-          <Grid item xs={4}>
-            <div style={{ marginTop: '50px' }}>
-              <Typography variant="h6">{getSeasonContent()?.name}</Typography>
-              <div
-                style={{ marginTop: '20px', padding: '20px' }}
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(getSeasonContent()?.description),
-                }}
-              />
-            </div>
-          </Grid>
-        )}
       </Grid>
     </Box>
   )

@@ -22,6 +22,7 @@ import { getDate } from '@/helpers/format-date'
 import glcIcon from '@/assets/glc-logo-min.png'
 import lcIcon from '@/assets/league-challenge-min.png'
 import plIcon from '@/assets/pokemon-league-min.png'
+import limitless from '@/assets/limitless.png'
 
 export const EventList = () => {
   const { events, removeEvent, editEvent } = useEvents()
@@ -43,6 +44,8 @@ export const EventList = () => {
         return lcIcon
       case 'season':
         return plIcon
+      case 'season-online':
+        return limitless
       default:
         return ''
     }
