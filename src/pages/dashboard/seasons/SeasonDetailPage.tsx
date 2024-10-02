@@ -63,9 +63,9 @@ export const SeasonDetailPage = () => {
               </Typography>
               <div
                 style={{
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis'
+                  overflow: 'auto',
+                  height: 300,
+                  textOverflow: 'ellipsis',
                 }}
                 dangerouslySetInnerHTML={
                   { __html: DOMPurify.sanitize(event?.description) }
