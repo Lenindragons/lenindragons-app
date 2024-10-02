@@ -16,7 +16,17 @@ const RulesBox = styled.div`
   marginTop: 20px;
   padding: 20px;
 
-table {
+  ul {
+    padding-left: 20px;
+    list-style-type: disc;
+    margin: 10px 0;
+
+    li {
+      margin-bottom: 5px;
+    }
+  }
+
+  table {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #ddd !important;
