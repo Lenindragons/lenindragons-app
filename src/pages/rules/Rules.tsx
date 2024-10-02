@@ -67,11 +67,29 @@ export const RulesPage = () => {
                   <TableCell>Português, Espanhol e Inglês</TableCell>
                 </TableRow>
                 <TableRow>
+                  <TableCell>Pré Release</TableCell>
+                  <TableCell>45 min/Rodada</TableCell>
+                  <TableCell>Suíço md3</TableCell>
+                  <TableCell>
+                    Não applicável, cartas de coleções novas
+                  </TableCell>
+                  <TableCell>Português</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell>Off-meta</TableCell>
                   <TableCell>45 min/Rodada</TableCell>
-                  <TableCell>Suíço md3 (md1 por votação)</TableCell>
+                  <TableCell>Suíço md3</TableCell>
                   <TableCell>
                     F, G e H , respeitando a lista de cartas banidas
+                  </TableCell>
+                  <TableCell>Português, Espanhol e Inglês</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Baby</TableCell>
+                  <TableCell>45 min/Rodada</TableCell>
+                  <TableCell>Suíço md3</TableCell>
+                  <TableCell>
+                    F, G e H , permitido apenas cartas sem caixa de regras
                   </TableCell>
                   <TableCell>Português, Espanhol e Inglês</TableCell>
                 </TableRow>
