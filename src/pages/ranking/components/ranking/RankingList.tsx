@@ -5,11 +5,44 @@ import { ReactNode, useEffect, useState } from 'react'
 import { Box, Collapse, Grid, IconButton, Paper, Tab, Tabs, Typography } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DOMPurify from 'dompurify'
+import styled from 'styled-components'
 import { getEventsByType } from '@/services/events'
 import { getChallengeBySeasonId } from '@/services/challenge'
 import { getRanking } from './getRanking'
 import { RankingTable } from '../ranking-table'
 import { Loading } from '@/components/commons/loading/Loading'
+
+const RulesBox = styled.div`
+  marginTop: 20px;
+  padding: 20px;
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd !important;
+
+    th {
+      background-color: #f8f8f8;
+      color: #333;
+      text-align: left;
+      padding: 12px;
+      border-bottom: 2px solid #ddd;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  }
+`
 
 export const RankingList = ({ type = 'season' }: { type: string }) => {
   const [seasons, setSeasons] = useState<{
@@ -100,7 +133,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
         </Box>
 
         <Collapse in={collapseOpen}>
-          <div style={{ marginTop: '20px', padding: '20px' }}>
+          <RulesBox>
             <Typography variant="h6">{getSeasonContent()?.name}</Typography>
             <div
               style={{ marginTop: '20px' }}
@@ -108,7 +141,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
                 __html: DOMPurify.sanitize(getSeasonContent()?.description),
               }}
             />
-          </div>
+          </RulesBox>
         </Collapse>
       </Grid>
       <Grid container spacing={4} gap={0}>
