@@ -61,7 +61,7 @@ export const ProfilePage = () => {
 
   const isScoreMoreThan100 = score > 100
   const isUserInRanking = season?.ranking?.find(
-    (player: any) => player.email === `${user.email}--`
+    (player: any) => player.email === user.email
   )
 
   return (
