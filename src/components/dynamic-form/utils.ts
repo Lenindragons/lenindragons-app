@@ -7,6 +7,8 @@ export const mappingPlayers = (players: any) => {
   return players.map((value: PlayerItemDynamyc) => ({
     place: value.place,
     name: value.player.name,
+    id: value.player.id,
+    email: value.player.email,
     wins: value.wins,
     looses: value.looses,
     ties: value.ties,

@@ -14,11 +14,6 @@ function getPoints(place: any) {
 }
 
 export const getRanking = (challenges: any[]) => {
-  console.log({
-    challenges: challenges
-      .filter((c) => c.challenge)
-      .map((c) => ({ torneio: c.challenge.result })),
-  })
   const filtered = challenges.filter(
     (challenge: { challenge: any }) => challenge.challenge
   )
@@ -27,7 +22,7 @@ export const getRanking = (challenges: any[]) => {
   const players = filtered.reduce(
     (acc: any[], challenge: { challenge: { result: any[] } }) => {
       challenge.challenge.result.forEach(
-        (player: { name: any; place: any }, foreachIndex: any) => {
+        (player: { name: any; place: any; id: string }, foreachIndex: any) => {
           const index = acc.findIndex(
             (p: { name: any }) => p.name === player.name
           )
@@ -35,6 +30,7 @@ export const getRanking = (challenges: any[]) => {
             acc.push({
               ...player,
               points: getPoints(player.place),
+              playerId: player.id,
               id: foreachIndex,
             })
           } else {
@@ -49,10 +45,23 @@ export const getRanking = (challenges: any[]) => {
 
   return players
     .sort((a: { points: number }, b: { points: number }) => b.points - a.points)
-    .map((player: { name: any; points: any }, i: number) => ({
-      id: i,
-      place: i + 1,
-      name: player.name,
-      points: player.points,
-    }))
+    .map(
+      (
+        player: {
+          id: string
+          name: any
+          points: any
+          email: string
+          playerId: string
+        },
+        i: number
+      ) => ({
+        id: i,
+        place: i + 1,
+        name: player.name,
+        email: player.email,
+        points: player.points,
+        playerId: player.playerId,
+      })
+    )
 }

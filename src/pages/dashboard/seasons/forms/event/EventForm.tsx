@@ -32,7 +32,6 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
   const [pokemon, setPokemon] = useState<any>(null)
 
   const onSubmit = async (formData: any): Promise<any> => {
-    console.log({ formData })
     callback(formData)
   }
 

@@ -55,7 +55,7 @@ const DynamicForm = () => {
       players: [
         {
           place: 0,
-          player: { name: '' },
+          player: { name: '', id: '', email: '' },
           wins: 0,
           looses: 0,
           ties: 0,

@@ -17,7 +17,6 @@ export const ChallengeForm = ({ callback, data }: ChallengeFormProps) => {
   })
 
   const onSubmit = async (formData: any): Promise<any> => {
-    console.log({ formData })
     callback(formData)
   }
 

@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import { useEffect, useState } from 'react'
 import {
   Grid,
   Card,
@@ -8,17 +9,47 @@ import {
   Box,
   Paper,
   Button,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  FilledInput,
 } from '@mui/material'
 import { usePage } from '../../../context/PageContext'
 import { useAuth } from '../../../context/AuthContext'
+import { getSeasonResume } from '@/utils/getSeasonTotalValue'
+import { getDocSeasonByType } from '@/services/events'
 
 export const ProfilePage = () => {
   const { setTitle } = usePage()
   const { user } = useAuth()
+  const [total, setTotal] = useState(0)
+  const [score, setScore] = useState(0)
+  const [season, setSeason] = useState<any>({
+    season: { name: '', ranking: [] },
+  })
+
+  const getActualSeasonId = async () => {
+    const docSeason = await getDocSeasonByType('season')
+    return docSeason?.pop()?.id
+  }
 
   useEffect(() => {
     setTitle('Seu Perfil')
-  }, [setTitle])
+    const fetchTotal = async () => {
+      const id = await getActualSeasonId()
+      const seasonResume = await getSeasonResume(id)
+      setTotal(seasonResume.total)
+      setScore(
+        seasonResume.ranking.find((player: any) => {
+          return player.email === user.email
+        }).score
+      )
+      setSeason(seasonResume)
+    }
+    fetchTotal()
+  }, [setTitle, user.email])
+
   const users = {
     name: user.name,
     email: user.email,
@@ -27,6 +58,8 @@ export const ProfilePage = () => {
     lastSignInTime: user.lastSignInTime,
     joinedDate: user.creationTime,
   }
+
+  const isScoreMoreThan100 = score > 100
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -72,6 +105,92 @@ export const ProfilePage = () => {
                 </Button>
               </Box>
             </CardContent>
+          </Card>
+          <Card sx={{ mt: 2, p: 2 }}>
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                Resumo da {season?.season.name}
+              </Typography>
+              <Grid container>
+                <Grid item md={12}>
+                  <Typography variant="body1" gutterBottom>
+                    <strong>Posição Geral no Ranking:</strong>{' '}
+                    {JSON.stringify(
+                      season?.ranking?.find(
+                        (player: any) => player.email === user.email
+                      ).place
+                    )}{' '}
+                    lugar
+                  </Typography>
+                </Grid>
+                <Grid item md={4}>
+                  <FormControl sx={{ m: 1 }} variant="filled">
+                    <InputLabel htmlFor="filled-adornment-amount">
+                      Total acumulado da temporada
+                    </InputLabel>
+                    <FilledInput
+                      id="outlined-adornment-amount"
+                      disabled
+                      value={total.toFixed(2)}
+                      startAdornment={
+                        <InputAdornment position="start">R$</InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item md={4}>
+                  <FormControl sx={{ m: 1 }}>
+                    <InputLabel htmlFor="outlined-adornment-amount">
+                      Total acumulado do jogador (Geral)
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-amount"
+                      sx={{ width: '230px' }}
+                      disabled
+                      value={
+                        isScoreMoreThan100
+                          ? (score * 0.5).toFixed(2)
+                          : score.toFixed(2)
+                      }
+                      startAdornment={
+                        <InputAdornment position="start">R$</InputAdornment>
+                      }
+                      label="Total acumulado do jogador (Geral)"
+                    />
+                  </FormControl>
+                </Grid>
+                {isScoreMoreThan100 && (
+                  <Grid item md={4}>
+                    <FormControl sx={{ m: 1 }}>
+                      <InputLabel htmlFor="outlined-adornment-amount">
+                        Total acumulado do jogador (Produtos)
+                      </InputLabel>
+                      <OutlinedInput
+                        id="outlined-adornment-amount"
+                        disabled
+                        value={(score * 0.5).toFixed(2)}
+                        startAdornment={
+                          <InputAdornment position="start">R$</InputAdornment>
+                        }
+                        label="Total acumulado do jogador"
+                      />
+                    </FormControl>
+                  </Grid>
+                )}
+              </Grid>
+              * esses valores so podem ser utilizados apos o final da temporada
+              {/* <Grid md={12} sx={{ mt: 2 }}>
+                <ButtonGroup>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    startIcon={<AttachMoney />}
+                  >
+                    Adicionar Saldo
+                  </Button>
+                </ButtonGroup>
+              </Grid> */}
+            </Box>
           </Card>
         </Grid>
       </Grid>

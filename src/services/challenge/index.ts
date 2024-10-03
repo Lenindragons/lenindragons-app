@@ -11,7 +11,7 @@ import {
   deleteDoc,
   updateDoc,
 } from '@firebase/firestore'
-import { getDoc, where } from 'firebase/firestore'
+import { getDoc, getDocs, where } from 'firebase/firestore'
 import { Challenge, ChallengeResult } from '../../types/Challenge'
 import { db } from '../firebaseConfig'
 
@@ -146,6 +146,18 @@ export const getChallengeById = async (id: string) => {
   } catch (err) {
     console.error(err)
     return null
+  }
+}
+
+export const getDocChallengesBySeasonId = async (id: string) => {
+  try {
+    const challengeRef = collection(db, 'challenges')
+    const eventQuery = query(challengeRef, where('seasonId', '==', id))
+    const querySnapshot = await getDocs(eventQuery)
+    return querySnapshot.docs.map((doc) => doc.data()) || []
+  } catch (err) {
+    console.error(err)
+    return []
   }
 }
 
