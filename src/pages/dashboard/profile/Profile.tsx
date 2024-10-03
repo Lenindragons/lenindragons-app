@@ -60,6 +60,9 @@ export const ProfilePage = () => {
   }
 
   const isScoreMoreThan100 = score > 100
+  const isUserInRanking = season?.ranking?.find(
+    (player: any) => player.email === `${user.email}--`
+  )
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -90,12 +93,6 @@ export const ProfilePage = () => {
               <Typography variant="body2" color="textSecondary" gutterBottom>
                 Membro desde: {users.joinedDate}
               </Typography>
-              {/* <Typography variant="body2" color="textSecondary" gutterBottom>
-                Último login: {users.lastLoginAt}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" gutterBottom>
-                Logado desde: {users.lastSignInTime}
-              </Typography> */}
               <Box sx={{ display: 'flex', gap: 2, marginTop: 2 }}>
                 <Button variant="contained" color="primary">
                   Editar Perfil
@@ -106,80 +103,77 @@ export const ProfilePage = () => {
               </Box>
             </CardContent>
           </Card>
-          <Card sx={{ mt: 2, p: 2 }}>
-            <Box>
-              <Typography variant="h6" gutterBottom>
-                Resumo da {season?.season.name}
-              </Typography>
-              <Grid container>
-                <Grid item md={12}>
-                  <Typography variant="body1" gutterBottom>
-                    <strong>Posição Geral no Ranking:</strong>{' '}
-                    {JSON.stringify(
-                      season?.ranking?.find(
-                        (player: any) => player.email === user.email
-                      ).place
-                    )}{' '}
-                    lugar
-                  </Typography>
-                </Grid>
-                <Grid item md={4}>
-                  <FormControl sx={{ m: 1 }} variant="filled">
-                    <InputLabel htmlFor="filled-adornment-amount">
-                      Total acumulado da temporada
-                    </InputLabel>
-                    <FilledInput
-                      id="outlined-adornment-amount"
-                      disabled
-                      value={total.toFixed(2)}
-                      startAdornment={
-                        <InputAdornment position="start">R$</InputAdornment>
-                      }
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item md={4}>
-                  <FormControl sx={{ m: 1 }}>
-                    <InputLabel htmlFor="outlined-adornment-amount">
-                      Total acumulado do jogador (Geral)
-                    </InputLabel>
-                    <OutlinedInput
-                      id="outlined-adornment-amount"
-                      sx={{ width: '230px' }}
-                      disabled
-                      value={
-                        isScoreMoreThan100
-                          ? (score * 0.5).toFixed(2)
-                          : score.toFixed(2)
-                      }
-                      startAdornment={
-                        <InputAdornment position="start">R$</InputAdornment>
-                      }
-                      label="Total acumulado do jogador (Geral)"
-                    />
-                  </FormControl>
-                </Grid>
-                {isScoreMoreThan100 && (
+          {isUserInRanking && (
+            <Card sx={{ mt: 2, p: 2 }}>
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Resumo da {season?.season.name}
+                </Typography>
+                <Grid container>
+                  <Grid item md={12}>
+                    <Typography variant="body1" gutterBottom>
+                      <strong>Posição Geral no Ranking:</strong>{' '}
+                      {isUserInRanking.place} lugar
+                    </Typography>
+                  </Grid>
                   <Grid item md={4}>
-                    <FormControl sx={{ m: 1 }}>
-                      <InputLabel htmlFor="outlined-adornment-amount">
-                        Total acumulado do jogador (Produtos)
+                    <FormControl sx={{ m: 1 }} variant="filled">
+                      <InputLabel htmlFor="filled-adornment-amount">
+                        Total acumulado da temporada
                       </InputLabel>
-                      <OutlinedInput
+                      <FilledInput
                         id="outlined-adornment-amount"
                         disabled
-                        value={(score * 0.5).toFixed(2)}
+                        value={total.toFixed(2)}
                         startAdornment={
                           <InputAdornment position="start">R$</InputAdornment>
                         }
-                        label="Total acumulado do jogador"
                       />
                     </FormControl>
                   </Grid>
-                )}
-              </Grid>
-              * esses valores so podem ser utilizados apos o final da temporada
-              {/* <Grid md={12} sx={{ mt: 2 }}>
+                  <Grid item md={4}>
+                    <FormControl sx={{ m: 1 }}>
+                      <InputLabel htmlFor="outlined-adornment-amount">
+                        Total acumulado do jogador (Geral)
+                      </InputLabel>
+                      <OutlinedInput
+                        id="outlined-adornment-amount"
+                        sx={{ width: '230px' }}
+                        disabled
+                        value={
+                          isScoreMoreThan100
+                            ? (score * 0.5).toFixed(2)
+                            : score.toFixed(2)
+                        }
+                        startAdornment={
+                          <InputAdornment position="start">R$</InputAdornment>
+                        }
+                        label="Total acumulado do jogador (Geral)"
+                      />
+                    </FormControl>
+                  </Grid>
+                  {isScoreMoreThan100 && (
+                    <Grid item md={4}>
+                      <FormControl sx={{ m: 1 }}>
+                        <InputLabel htmlFor="outlined-adornment-amount">
+                          Total acumulado do jogador (Produtos)
+                        </InputLabel>
+                        <OutlinedInput
+                          id="outlined-adornment-amount"
+                          disabled
+                          value={(score * 0.5).toFixed(2)}
+                          startAdornment={
+                            <InputAdornment position="start">R$</InputAdornment>
+                          }
+                          label="Total acumulado do jogador"
+                        />
+                      </FormControl>
+                    </Grid>
+                  )}
+                </Grid>
+                * esses valores so podem ser utilizados apos o final da
+                temporada
+                {/* <Grid md={12} sx={{ mt: 2 }}>
                 <ButtonGroup>
                   <Button
                     variant="contained"
@@ -190,8 +184,9 @@ export const ProfilePage = () => {
                   </Button>
                 </ButtonGroup>
               </Grid> */}
-            </Box>
-          </Card>
+              </Box>
+            </Card>
+          )}
         </Grid>
       </Grid>
     </Box>
