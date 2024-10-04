@@ -44,7 +44,12 @@ export const getRanking = (challenges: any[]) => {
   )
 
   return players
-    .sort((a: { points: number }, b: { points: number }) => b.points - a.points)
+    .sort(
+      (
+        a: { points: number; name: string },
+        b: { points: number; name: string }
+      ) => b.points - a.points || a.name.localeCompare(b.name)
+    )
     .map(
       (
         player: {
