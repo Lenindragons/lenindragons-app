@@ -16,6 +16,7 @@ import DynamicForm from '@/components/dynamic-form'
 import PlayerList from './components/players-list/PlayerList'
 import { usePlayerItem } from './hooks/player-list/usePlayersList'
 import { getDate } from '@/helpers/format-date'
+import { MatchResume } from './components/match-resume'
 
 const initialTournament = {
   id: '',
@@ -92,6 +93,7 @@ const ChallengeDetailPage = () => {
                 {tournament?.rounds && `${tournament?.rounds} rodadas`}
               </p>
               <List />
+              <MatchResume players={playerItems} />
             </CardContent>
           </Card>
         </Grid>

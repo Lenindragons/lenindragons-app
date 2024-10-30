@@ -6,6 +6,18 @@ export type Pokemon = {
   type: string
 }
 
+interface Player {
+  id: string
+  name: string
+  email: string
+}
+
+interface Match {
+  round: number
+  opponent: Player
+  result: string
+}
+
 export interface PlayerItem {
   place: number
   name: string
@@ -17,6 +29,7 @@ export interface PlayerItem {
     name: string
     id: string
   }
+  matches: Match[]
 }
 
 type Challenge = {
