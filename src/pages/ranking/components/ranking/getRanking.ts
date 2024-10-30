@@ -1,15 +1,17 @@
-function getPoints(place: any) {
+function getPoints(place: any, challengeType: string) {
+  const weight = challengeType === 'special' ? 3 : 1
+
   switch (place) {
     case '1':
-      return 5
+      return 5 * weight
     case '2':
-      return 4
+      return 4 * weight
     case '3':
-      return 3
+      return 3 * weight
     case '4':
-      return 2
+      return 2 * weight
     default:
-      return 1
+      return 1 * weight
   }
 }
 
@@ -20,7 +22,7 @@ export const getRanking = (challenges: any[]) => {
   if (!filtered.length) return []
 
   const players = filtered.reduce(
-    (acc: any[], challenge: { challenge: { result: any[] } }) => {
+    (acc: any[], challenge: { challenge: { result: any[] }; type: string }) => {
       challenge.challenge.result.forEach(
         (player: { name: any; place: any; id: string }, foreachIndex: any) => {
           const index = acc.findIndex(
@@ -29,12 +31,12 @@ export const getRanking = (challenges: any[]) => {
           if (index === -1) {
             acc.push({
               ...player,
-              points: getPoints(player.place),
+              points: getPoints(player.place, challenge?.type || ''),
               playerId: player.id,
               id: foreachIndex,
             })
           } else {
-            acc[index].points += getPoints(player.place)
+            acc[index].points += getPoints(player.place, challenge?.type || '')
           }
         }
       )

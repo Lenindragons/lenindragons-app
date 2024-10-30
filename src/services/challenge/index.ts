@@ -29,6 +29,7 @@ export const createChallenge = async (data: Challenge): Promise<void> => {
       seasonStartDate: data.event.dates[0]?.startDate,
       season: data.event,
       dates: data.dates,
+      type: data.type,
     }
     await addDoc(getChallengeCollection(), {
       ...content,

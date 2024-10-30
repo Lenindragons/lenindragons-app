@@ -8,6 +8,7 @@ export type Challenge = {
   event: Event
   dates: EventDate[] | string | any
   created: Timestamp
+  type: string
 }
 
 export type ChallengeResult = {
