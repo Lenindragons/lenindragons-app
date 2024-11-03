@@ -40,7 +40,7 @@ export const App = () => {
                 <Route path="/dashboard/admin/users" element={<UserPage />} />
                 <Route path="/dashboard/admin/orders" element={<OrderPage />} />
                 <Route
-                  path="/dashboard/admin/orders/detail"
+                  path="/dashboard/admin/orders/detail/:id"
                   element={<OrderDetailPage />}
                 />
               </Route>
