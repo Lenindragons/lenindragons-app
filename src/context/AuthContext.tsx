@@ -11,12 +11,14 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { app, db } from '../services/firebaseConfig'
 import { ContextProps } from './ContextProps'
 import { useErrorHandling } from './ErrorContext'
+import { getUserByEmail } from '../services/user'
 
 const AuthContext = createContext({})
 
 const AuthProvider = ({ children }: ContextProps) => {
-  const [user, setUser] = useState<any | null>(null)
+  const [actualUser, setUser] = useState<any | null>(null)
   const [loading, setLoadingStatus] = useState(true)
+  const [isAdmin, setIsAdmin] = useState(false)
   const navigate = useNavigate()
   const { alertError } = useErrorHandling()
 
@@ -28,20 +30,31 @@ const AuthProvider = ({ children }: ContextProps) => {
         name: userInfo.displayName,
         email: userInfo.email,
         image: userInfo.photoURL,
+        role: 'customer',
       }
     )
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((userInfo) => {
-      if (userInfo) {
-        setUser(getUserInfo(userInfo))
+    const unsubscribe = auth.onAuthStateChanged(async (userInfoFromGoogle) => {
+      if (userInfoFromGoogle) {
+        const userInfoFromFirebase = await getUserByEmail(
+          userInfoFromGoogle?.email || ''
+        )
+        const info = userInfoFromFirebase || getUserInfo(userInfoFromGoogle)
+        setUser(info)
         setLoadingStatus(false)
       }
     })
 
     return () => unsubscribe()
   }, [auth, navigate])
+
+  useEffect(() => {
+    if (actualUser) {
+      setIsAdmin(actualUser.role === 'admin')
+    }
+  }, [actualUser])
 
   const logout = async () => {
     await signOut(auth)
@@ -62,7 +75,7 @@ const AuthProvider = ({ children }: ContextProps) => {
           name: user.displayName,
           email: user.email,
           image: user.photoURL,
-          type: 'customer',
+          role: 'customer',
         })
       }
       const userData = userSnapshot.data()
@@ -77,7 +90,9 @@ const AuthProvider = ({ children }: ContextProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, signInGoogle, loading, logout }}>
+    <AuthContext.Provider
+      value={{ user: actualUser, signInGoogle, loading, logout, isAdmin }}
+    >
       {children}
     </AuthContext.Provider>
   )

@@ -33,11 +33,13 @@ export const App = () => {
             <GlobalStyle />
             <Routes>
               <Route path="/" element={<MainPage />} />
-              <Route element={<PrivateRoutes />}>
+              <Route element={<PrivateRoutes roles={['customer', 'admin']} />}>
                 <Route path="/dashboard/open" element={<OpenPage />} />
                 <Route path="/dashboard/transit" element={<TransitPage />} />
                 <Route path="/dashboard/store" element={<StorePage />} />
                 <Route path="/dashboard/done" element={<DonePage />} />
+              </Route>
+              <Route element={<PrivateRoutes roles={['admin']} />}>
                 <Route path="/dashboard/admin/users" element={<UserPage />} />
                 <Route path="/dashboard/admin/orders" element={<OrderPage />} />
                 <Route

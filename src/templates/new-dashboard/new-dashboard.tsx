@@ -40,6 +40,7 @@ export const NewDashboard = ({ children }: { children: any }) => {
   const [open, setOpen] = useState(false)
   const [openCollapsed] = useState(true)
   const [value, setValue] = useState(0)
+  const { isAdmin } = useAuth()
   const theme = createTheme({
     palette: {
       mode: 'dark',
@@ -128,28 +129,35 @@ export const NewDashboard = ({ children }: { children: any }) => {
                 </ListItem>
               ))}
               <Divider />
-              <ListItem>Admin</ListItem>
-              <Divider />
-              <Collapse in={openCollapsed} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItem
-                    button
-                    component={Link}
-                    to="/dashboard/admin/orders"
-                  >
-                    <ListItemIcon>
-                      <ReceiptOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Pedidos" />
-                  </ListItem>
-                  <ListItem button component={Link} to="/dashboard/admin/users">
-                    <ListItemIcon>
-                      <PeopleAltOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Usuários" />
-                  </ListItem>
-                </List>
-              </Collapse>
+              {isAdmin && (
+                <>
+                  <ListItem>Admin</ListItem> <Divider />
+                  <Collapse in={openCollapsed} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItem
+                        button
+                        component={Link}
+                        to="/dashboard/admin/orders"
+                      >
+                        <ListItemIcon>
+                          <ReceiptOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Pedidos" />
+                      </ListItem>
+                      <ListItem
+                        button
+                        component={Link}
+                        to="/dashboard/admin/users"
+                      >
+                        <ListItemIcon>
+                          <PeopleAltOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Usuários" />
+                      </ListItem>
+                    </List>
+                  </Collapse>
+                </>
+              )}
             </List>
           </Box>
         </Drawer>

@@ -33,6 +33,12 @@ export const getUser = async (uid: string): Promise<User | undefined> => {
   return snapshot.exists() ? (snapshot.data() as User) : undefined
 }
 
+export const getUserByEmail = async (email: string): Promise<User | null> => {
+  const q = query(usersCollection, where('email', '==', email))
+  const querySnapshot = await getDocs(q)
+  return !querySnapshot.empty ? (querySnapshot.docs[0].data() as User) : null
+}
+
 export const updateUser = async (
   uid: string,
   user: Partial<User>
