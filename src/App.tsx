@@ -16,6 +16,7 @@ import {
   UserPage,
 } from './pages/dashboard'
 import { NotFoundPage } from './pages/404/not-found'
+import { CreateOrderPage } from './pages/dashboard/admin/order-page/order-create'
 
 export const App = () => {
   const darkTheme: any = createTheme({
@@ -42,6 +43,10 @@ export const App = () => {
                 <Route
                   path="/dashboard/admin/orders/detail/:id"
                   element={<OrderDetailPage />}
+                />
+                <Route
+                  path="/dashboard/admin/orders/create"
+                  element={<CreateOrderPage />}
                 />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
