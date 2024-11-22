@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
 import { ProgressBar } from 'react-progressbar-fancy'
-import { Box, keyframes, Paper, Typography } from '@mui/material'
+import { Box, Divider, keyframes, Paper, Typography } from '@mui/material'
 import styled from 'styled-components'
 import { Key, useEffect, useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
@@ -84,14 +84,29 @@ export const MainPage = () => {
     fetchChallenges()
   }, [])
 
+  const getTimestampByWeek = (weeks: number) => {
+    const actualDate = Timestamp.now()
+    const secondsInAWeek = 604800
+
+    const secondsInWeeks = weeks * secondsInAWeek
+    return new Timestamp(
+      actualDate.seconds - secondsInWeeks,
+      actualDate.nanoseconds
+    )
+  }
+
   const calculateScore = (challenges: any) => {
     if (!challenges || !challenges.length) {
       return []
     }
 
-    const challengesFiltered = challenges.filter(
-      (challenge: any) => challenge.challenge
-    )
+    const initialTimestamp = getTimestampByWeek(2)
+
+    const challengesFiltered = challenges
+      .filter((challenge: any) => challenge.challenge)
+      .filter(
+        (challenge: any) => challenge.dates[0].startDate >= initialTimestamp
+      )
 
     const challengeMapped = challengesFiltered.map(
       (challenge: { challenge: { result: any[] | any } }) => {
@@ -118,6 +133,7 @@ export const MainPage = () => {
         return acc
       }, [])
       .sort((acc: any, cur: any) => cur.score - acc.score)
+      .slice(0, 10)
 
     const totalScore = decksReduced.reduce(
       (acc: number, cur: any) => acc + cur.score,
@@ -132,13 +148,13 @@ export const MainPage = () => {
   }
 
   const getRandomColor = (score: number) => {
-    if (score < 20) {
+    if (score < 15) {
       return 'red'
     }
-    if (score >= 20 && score < 40) {
+    if (score >= 15 && score < 20) {
       return 'blue'
     }
-    if (score >= 40 && score < 60) {
+    if (score >= 20 && score < 50) {
       return 'green'
     }
     return 'purple'
@@ -174,6 +190,14 @@ export const MainPage = () => {
       >
         <Typography variant="h4">Meta Fantasia Geek Store</Typography>
       </Box>
+
+      <Typography variant="body1">
+        Nas ultimas <strong>duas semanas</strong> os <strong>10 decks</strong>{' '}
+        mais jogados na loja foram:
+      </Typography>
+
+      <Divider />
+      <br />
 
       <DeckScoreContainer>
         {calculateScore(challenges)
