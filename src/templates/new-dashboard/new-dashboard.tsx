@@ -20,6 +20,7 @@ import {
   ThemeProvider,
   Collapse,
   Divider,
+  Breadcrumbs,
 } from '@mui/material'
 import {
   Menu as MenuIcon,
@@ -33,6 +34,7 @@ import {
 } from '@mui/icons-material'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import BreadcrumbsNav from '../../components/commons/breadcrumbs'
 
 const drawerWidth = 240
 
@@ -62,17 +64,17 @@ export const NewDashboard = ({ children }: { children: any }) => {
       onClick: () => navigate('/dashboard/open'),
     },
     {
-      text: 'Em Transito',
-      icon: <AirplanemodeActiveOutlinedIcon />,
-      onClick: () => navigate('/dashboard/transit'),
-    },
-    {
       text: 'Em Estoque',
       icon: <InventoryOutlinedIcon />,
       onClick: () => navigate('/dashboard/store'),
     },
     {
-      text: 'Concluídos',
+      text: 'Em Trânsito',
+      icon: <AirplanemodeActiveOutlinedIcon />,
+      onClick: () => navigate('/dashboard/transit'),
+    },
+    {
+      text: 'Encerrados',
       icon: <ScheduleOutlinedIcon />,
       onClick: () => navigate('/dashboard/done'),
     },
@@ -169,6 +171,7 @@ export const NewDashboard = ({ children }: { children: any }) => {
           }}
         >
           <Toolbar />
+          <BreadcrumbsNav />
           {children}
         </Box>
         {isMobile && (

@@ -17,7 +17,7 @@ interface User {
   name: string
   email: string
   image: string
-  type: string
+  role: string
 }
 
 interface UserTableProps {
@@ -47,7 +47,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, onDelete }) => {
                 </TableCell>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{user.type}</TableCell>
+                <TableCell>{user.role}</TableCell>
                 <TableCell>
                   <Button onClick={() => onDelete(user.uid)}>Delete</Button>
                 </TableCell>

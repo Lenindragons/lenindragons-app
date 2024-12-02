@@ -1,8 +1,8 @@
 export const DonePage = () => {
   return (
     <div>
-      <h1>Concluidos</h1>
-      <p>Concluidos page content</p>
+      <h1>Encerrados</h1>
+      <p>Encerrados page content</p>
     </div>
   )
 }

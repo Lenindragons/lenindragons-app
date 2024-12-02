@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Container, Typography, Box, Button } from '@mui/material'
+import { Container, Typography, Button, Grid } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import OrderForm from './components/form'
 import OrderTable from './components/table'
 
@@ -16,6 +17,7 @@ export const OrderPage = () => {
   const [orders, setOrders] = useState<Order[]>([])
   const [editingOrder, setEditingOrder] = useState<Order | undefined>(undefined)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     // Fetch orders from your data source
@@ -74,11 +76,17 @@ export const OrderPage = () => {
       <Typography variant="h4" gutterBottom>
         Pedidos
       </Typography>
-      <Box mb={4}>
+      <Grid container mb={4} gap={2}>
         <Button variant="contained" onClick={handleOpenModal}>
           Adicionar Pedido
         </Button>
-      </Box>
+        <Button
+          variant="contained"
+          onClick={() => navigate('/dashboard/admin/orders/create')}
+        >
+          Criar Pedido
+        </Button>{' '}
+      </Grid>
       <OrderTable
         orders={orders}
         onEdit={handleEdit}
