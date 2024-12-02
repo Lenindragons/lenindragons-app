@@ -53,7 +53,7 @@ const useDeckStore = create<DeckStore>((set) => ({
     set({ decks })
   },
   getDecksByType: async (type: string) => {
-    const queryDecks = query(collection(db, 'decks'), where(type, '==', type))
+    const queryDecks = query(collection(db, 'decks'), where('type', '==', type))
     const querySnapshot = await getDocs(queryDecks)
     const decks: Deck[] = []
     querySnapshot.forEach((documment) => {

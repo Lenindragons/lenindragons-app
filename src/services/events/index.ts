@@ -10,7 +10,7 @@ import {
   deleteDoc,
   updateDoc,
 } from '@firebase/firestore'
-import { where } from 'firebase/firestore'
+import { getDocs, where } from 'firebase/firestore'
 import { Event } from '../../types/Event'
 import { db } from '../firebaseConfig'
 import { getSpriteByName } from '../sprites'
@@ -63,6 +63,31 @@ export const getEvents = async (callback: any) => {
   }
 }
 
+export const getDocSeasonByType = async (type: string) => {
+  try {
+    const eventsRef = getEventCollection()
+    const eventsQuery = query(
+      eventsRef,
+      where('type', '==', type),
+      orderBy('created'),
+      limit(10)
+    )
+    const snapshot = await getDocs(eventsQuery)
+    return (
+      snapshot.docs.map((document: any) => {
+        const data = document.data()
+        return {
+          id: document.id,
+          ...data,
+        }
+      }) || [{ id: '' }]
+    )
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
+
 export const getEventsByType = async (callback: any, type: string) => {
   try {
     const eventsRef = getEventCollection()
@@ -73,14 +98,20 @@ export const getEventsByType = async (callback: any, type: string) => {
       limit(20)
     )
     return onSnapshot(eventsQuery, (eventsSnapshot) => {
+      const currentDate = new Date()
       callback(
-        eventsSnapshot.docs.map((document) => {
-          const data = document.data()
-          return {
-            id: document.id,
-            ...data,
-          }
-        })
+        eventsSnapshot.docs
+          .filter((document) => {
+            const data = document.data()
+            return new Date(data.dates[0].endDate.toDate()) >= currentDate
+          })
+          .map((document) => {
+            const data = document.data()
+            return {
+              id: document.id,
+              ...data,
+            }
+          })
       )
     })
   } catch (err) {

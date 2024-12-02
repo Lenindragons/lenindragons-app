@@ -12,7 +12,6 @@ type Match = {
 }
 
 export const pairPlayers = (players: Player[]): Match[] => {
-  // Ordenar jogadores por pontuação
   players.sort((a, b) => b.score - a.score)
 
   const matches: Match[] = []
@@ -57,13 +56,3 @@ export const rankPlayers = (players: Player[]): Player[] => {
     return buchholzScores[b.id] - buchholzScores[a.id]
   })
 }
-
-const players: Player[] = [
-  { id: '1', name: 'Alice', score: 3, opponents: ['2', '3', '4'] },
-  { id: '2', name: 'Bob', score: 3, opponents: ['1', '3', '4'] },
-  { id: '3', name: 'Charlie', score: 2, opponents: ['1', '2', '4'] },
-  { id: '4', name: 'David', score: 1, opponents: ['1', '2', '3'] },
-]
-
-const rankedPlayers = rankPlayers(players)
-console.log(rankedPlayers)

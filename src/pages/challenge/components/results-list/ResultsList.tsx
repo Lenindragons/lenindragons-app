@@ -59,7 +59,6 @@ export const ResultsList = ({ type = 'season' }: { type: string }) => {
   useEffect(() => {
     if (seasonSelected) {
       fetchChallenges(seasonSelected)
-      console.log(challenges)
     }
   }, [challenges, seasonSelected])
 

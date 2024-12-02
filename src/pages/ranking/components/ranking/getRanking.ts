@@ -1,44 +1,42 @@
-function getPoints(place: any) {
+function getPoints(place: any, challengeType: string) {
+  const weight = challengeType === 'special' ? 3 : 1
+
   switch (place) {
     case '1':
-      return 5
+      return 5 * weight
     case '2':
-      return 4
+      return 4 * weight
     case '3':
-      return 3
+      return 3 * weight
     case '4':
-      return 2
+      return 2 * weight
     default:
-      return 1
+      return 1 * weight
   }
 }
 
 export const getRanking = (challenges: any[]) => {
-  console.log({
-    challenges: challenges
-      .filter((c) => c.challenge)
-      .map((c) => ({ torneio: c.challenge.result })),
-  })
   const filtered = challenges.filter(
     (challenge: { challenge: any }) => challenge.challenge
   )
   if (!filtered.length) return []
 
   const players = filtered.reduce(
-    (acc: any[], challenge: { challenge: { result: any[] } }) => {
+    (acc: any[], challenge: { challenge: { result: any[] }; type: string }) => {
       challenge.challenge.result.forEach(
-        (player: { name: any; place: any }, foreachIndex: any) => {
+        (player: { name: any; place: any; id: string }, foreachIndex: any) => {
           const index = acc.findIndex(
             (p: { name: any }) => p.name === player.name
           )
           if (index === -1) {
             acc.push({
               ...player,
-              points: getPoints(player.place),
+              points: getPoints(player.place, challenge?.type || ''),
+              playerId: player.id,
               id: foreachIndex,
             })
           } else {
-            acc[index].points += getPoints(player.place)
+            acc[index].points += getPoints(player.place, challenge?.type || '')
           }
         }
       )
@@ -48,11 +46,29 @@ export const getRanking = (challenges: any[]) => {
   )
 
   return players
-    .sort((a: { points: number }, b: { points: number }) => b.points - a.points)
-    .map((player: { name: any; points: any }, i: number) => ({
-      id: i,
-      place: i + 1,
-      name: player.name,
-      points: player.points,
-    }))
+    .sort(
+      (
+        a: { points: number; name: string },
+        b: { points: number; name: string }
+      ) => b.points - a.points || a.name.localeCompare(b.name)
+    )
+    .map(
+      (
+        player: {
+          id: string
+          name: any
+          points: any
+          email: string
+          playerId: string
+        },
+        i: number
+      ) => ({
+        id: i,
+        place: i + 1,
+        name: player.name,
+        email: player.email,
+        points: player.points,
+        playerId: player.playerId,
+      })
+    )
 }

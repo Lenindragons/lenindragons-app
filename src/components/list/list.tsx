@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import { Timestamp } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
 import {
@@ -21,12 +22,18 @@ import { getDate } from '@/helpers/format-date'
 import glcIcon from '@/assets/glc-logo-min.png'
 import lcIcon from '@/assets/league-challenge-min.png'
 import plIcon from '@/assets/pokemon-league-min.png'
+import limitless from '@/assets/limitless.png'
 
 export const EventList = () => {
   const { events, removeEvent, editEvent } = useEvents()
 
   const handleDelete = async (id: string) => {
-    removeEvent(id)
+    const confirmed = window.confirm(
+      'Você tem certeza que quer deletar esse temporada?'
+    )
+    if (confirmed) {
+      removeEvent(id)
+    }
   }
 
   const getIcon = (type: string) => {
@@ -37,6 +44,8 @@ export const EventList = () => {
         return lcIcon
       case 'season':
         return plIcon
+      case 'season-online':
+        return limitless
       default:
         return ''
     }

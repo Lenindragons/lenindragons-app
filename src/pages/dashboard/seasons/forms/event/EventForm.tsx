@@ -32,7 +32,6 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
   const [pokemon, setPokemon] = useState<any>(null)
 
   const onSubmit = async (formData: any): Promise<any> => {
-    console.log({ formData })
     callback(formData)
   }
 
@@ -144,11 +143,13 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
               ;
             </Box>
           </div>
-          <DateRange
-            label="Data de Inicio e Fim da Temporada:"
-            name="dates"
-            control={control}
-          />
+          <div>
+            <DateRange
+              label="Data de Inicio e Fim da Temporada:"
+              name="dates"
+              control={control}
+            />
+          </div>
         </div>
         <Button>Cadastrar Temporada</Button>
       </FormControl>
