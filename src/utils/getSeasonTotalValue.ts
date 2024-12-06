@@ -19,8 +19,11 @@ export const getSeasonResume = async (seasonId: string) => {
   const season = await getDocChallengesBySeasonId(seasonId)
 
   const mappedSeason = season.map((challenges) => ({
-    totalPlayers: challenges.challenge.result.length,
+    totalPlayers: challenges.challenge.result.filter(
+      (res) => !res.deck.name.toLowerCase().includes('não compareceu')
+    ).length,
   }))
+
   const ranking = getRanking(season)
   const totalPlayers = mappedSeason.reduce(
     (acc, cur) => acc + cur.totalPlayers,
