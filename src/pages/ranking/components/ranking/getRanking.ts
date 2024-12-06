@@ -1,7 +1,14 @@
-function getPoints(place: any, challengeType: string) {
+const isPenalized = (player: any) =>
+  player.deck.name.toLowerCase().includes('não compareceu')
+
+function getPoints(player: any, challengeType: string) {
   const weight = challengeType === 'special' ? 3 : 1
 
-  switch (place) {
+  if (isPenalized(player)) {
+    return -1
+  }
+
+  switch (player.place) {
     case '1':
       return 5 * weight
     case '2':
@@ -31,12 +38,12 @@ export const getRanking = (challenges: any[]) => {
           if (index === -1) {
             acc.push({
               ...player,
-              points: getPoints(player.place, challenge?.type || ''),
+              points: getPoints(player, challenge?.type || ''),
               playerId: player.id,
               id: foreachIndex,
             })
           } else {
-            acc[index].points += getPoints(player.place, challenge?.type || '')
+            acc[index].points += getPoints(player, challenge?.type || '')
           }
         }
       )
