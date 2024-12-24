@@ -1,6 +1,5 @@
 import { Outlet, Navigate } from 'react-router-dom'
 import React from 'react'
-import { Dashboard } from '../templates/dashboard/Dashboard'
 import { useAuth } from '../context/AuthContext'
 import { Loading } from '../components/commons/loading/Loading'
 import NewDashboard from '@/templates/new-dashboard/NewDashboard'
