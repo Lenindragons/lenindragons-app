@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable prettier/prettier */
-import { Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
@@ -19,7 +19,6 @@ const ModalOverlay = styled.div`
 `
 
 const ModalContent = styled.div`
-  background-color: white;
   min-width: 300px;
   min-height: 200px;
   padding: 20px;
@@ -40,6 +39,7 @@ type ModalProps = {
   children: React.ReactNode
   variant?: 'contained' | 'outlined' | 'text'
   color?: 'primary' | 'secondary' | 'default'
+  title?: string
 }
 
 export const Modal = ({
@@ -49,6 +49,7 @@ export const Modal = ({
   children,
   variant = 'contained',
   color = 'primary',
+  title = ''
 }: ModalProps) => {
   const [modalOpen, setModalOpen] = useState(isOpen)
 
@@ -76,8 +77,11 @@ export const Modal = ({
       </Button>
       <ModalOverlay>
         <ModalContent>
+          <Box  sx={{ backgroundColor: (theme) => theme.palette.background.default }}>  
+          <Typography variant='body1'>{title}</Typography>
           <CloseButton onClick={handleClose}>Fechar</CloseButton>
           <div>{children}</div>
+          </Box>
         </ModalContent>
       </ModalOverlay>
     </>

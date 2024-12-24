@@ -25,7 +25,7 @@ export const SeasonsPage = () => {
   return (
     <Box>
       <Header>
-        <Modal label="Criar temporada">
+        <Modal label="Criar temporada" title="Criar temporada">
           <EventForm callback={createEvent} data={[]} />
         </Modal>
       </Header>

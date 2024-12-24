@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Avatar, Box, Divider, Paper, Typography } from '@mui/material'
+import { Avatar, Box, Chip, Divider, Paper, Typography } from '@mui/material'
 import { getAllChallenges } from '@/services/challenge'
 
 export const ReportPage = () => {
@@ -16,11 +16,9 @@ export const ReportPage = () => {
 
   useEffect(() => {
     const challengesChanges = () => {
-      const filtered = challenges.filter((challenge) =>
-        ['Temporada Umbreon', 'Temporada Gengar'].includes(
-          challenge.season.name
-        )
-      )
+      const filtered = challenges
+        .filter((challenge) => challenge.challenge)
+        .filter((challenge) => ['season'].includes(challenge.season.type))
 
       const grouped = filtered.reduce((acc, challenge) => {
         const seasonName = challenge.season.name
@@ -59,6 +57,8 @@ export const ReportPage = () => {
         return {
           name: key.split('-').join(' '),
           image: grouped[key][0].season.image.url,
+          startDate: grouped[key][0].season.dates[0].startDate,
+          endDate: grouped[key][0].season.dates[0].endDate,
           challenges: grouped[key],
           totalPlayers,
           count: grouped[key].length,
@@ -76,6 +76,14 @@ export const ReportPage = () => {
 
   const getMediaPlayers = (challengeCount: number, totalPlayers: number) => {
     return totalPlayers / challengeCount
+  }
+
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    })
   }
 
   return (
@@ -105,12 +113,22 @@ export const ReportPage = () => {
                   background: (theme) => theme.palette.background.default,
                 }}
               />
-              <Typography
-                variant="h5"
-                sx={{ textTransform: 'capitalize', marginBottom: 2 }}
-              >
+              <Typography variant="h5" sx={{ textTransform: 'capitalize' }}>
                 {season.name}
               </Typography>
+
+              <Box sx={{ display: 'flex', gap: 2, marginTop: 2 }}>
+                <Chip
+                  label={`Início: ${formatDate(season.startDate.toDate())}`}
+                  color="primary"
+                  variant="outlined"
+                />
+                <Chip
+                  label={`Final: ${formatDate(season.endDate.toDate())}`}
+                  color="secondary"
+                  variant="outlined"
+                />
+              </Box>
             </div>
 
             <Box component="ul" sx={{ listStyleType: 'none', padding: 0 }}>
