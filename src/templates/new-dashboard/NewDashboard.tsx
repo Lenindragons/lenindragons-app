@@ -24,9 +24,9 @@ import {
   Menu as MenuIcon,
   Notifications as NotificationsIcon,
   AccountCircle as AccountCircleIcon,
-  SportsEsports as SportsEsportsIcon,
-  Deck as DeckIcon,
-  People as PeopleIcon,
+  EventNote as EventNoteIcon,
+  Style as StyleIcon,
+  CatchingPokemon as CatchingPokemonIcon,
   ChevronLeft as ChevronLeftIcon,
   Brightness4 as Brightness4Icon,
   Brightness7 as Brightness7Icon,
@@ -54,9 +54,9 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
 
   const menuItems = [
     { text: 'Perfil', icon: <AccountCircleIcon />, url: 'profile' },
-    { text: 'Torneios', icon: <SportsEsportsIcon />, url: 'seasons' },
-    { text: 'Decks', icon: <DeckIcon />, url: 'decks' },
-    { text: 'Jogadores', icon: <PeopleIcon />, url: 'players' },
+    { text: 'Torneios', icon: <EventNoteIcon />, url: 'seasons' },
+    { text: 'Decks', icon: <StyleIcon />, url: 'decks' },
+    { text: 'Jogadores', icon: <CatchingPokemonIcon />, url: 'players' },
   ]
 
   const handleThemeToggle = () => {
@@ -64,11 +64,25 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
     localStorage.setItem('isDarkTheme', JSON.stringify(!darkMode))
   }
 
-  const appliedTheme = createTheme({
+  const lightTheme = createTheme({
     palette: {
-      mode: darkMode ? 'dark' : 'light',
+      mode: 'light',
+      text: {
+        primary: '#000',
+      },
     },
   })
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      text: {
+        primary: '#f5f5f5',
+      },
+    },
+  })
+
+  const appliedTheme = darkMode ? darkTheme : lightTheme
 
   return (
     <ThemeProvider theme={appliedTheme}>
@@ -109,10 +123,10 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
           variant="permanent"
           open={open}
           sx={{
-            width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
+            width: open ? drawerWidth : `calc(${theme.spacing(9)} + 1px)`,
             flexShrink: 0,
             [`& .MuiDrawer-paper`]: {
-              width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
+              width: open ? drawerWidth : `calc(${theme.spacing(9)} + 1px)`,
               transition: (theme) =>
                 theme.transitions.create('width', {
                   easing: theme.transitions.easing.sharp,
@@ -127,11 +141,36 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
           <Box sx={{ overflow: 'auto' }}>
             <List>
               {menuItems.map((item, index) => (
-                <Link to={`/${item.url}`} key={index}>
-                  <ListItem>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    {open && <ListItemText primary={item.text} />}
+                <Link
+                  to={`/${item.url}`}
+                  key={index}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <ListItem
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      ':hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                      },
+                    }}
+                  >
+                    <ListItemIcon sx={{ svg: { fontSize: '38px' } }}>
+                      {item.icon}
+                    </ListItemIcon>
+                    {open && (
+                      <ListItemText
+                        disableTypography
+                        sx={{
+                          color: (theme) => theme.palette.text.primary,
+                          fontSize: '18px',
+                          textTransform: 'uppercase',
+                        }}
+                        primary={item.text}
+                      />
+                    )}
                   </ListItem>
+                  <Divider />
                 </Link>
               ))}
             </List>
