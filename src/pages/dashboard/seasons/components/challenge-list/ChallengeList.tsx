@@ -17,8 +17,10 @@ import { useChallenges } from '@/context/ChallengeContext'
 import { Modal } from '@/components/commons/modal/Modal'
 import { ChallengeForm } from '../../forms/event/ChallengeForm'
 import { getDate } from '@/helpers/format-date'
+import { useAuth } from '@/context/AuthContext'
 
 export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
+  const { user } = useAuth()
   const {
     challenges = [],
     removeChallenge,
@@ -82,16 +84,18 @@ export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
               </TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', gap: 2 }}>
-                  <Modal label="Editar Torneio">
-                    <ChallengeForm
-                      callback={(data) => editChallenge(challenge.id, data)}
-                      data={challenge}
-                    />
-                  </Modal>
-
+                  {['admin', 'judge'].includes(user.type) && (
+                    <Modal label="Editar Torneio">
+                      <ChallengeForm
+                        callback={(data) => editChallenge(challenge.id, data)}
+                        data={challenge}
+                      />
+                    </Modal>
+                  )}
                   <Button
                     variant="contained"
                     color="error"
+                    disabled={!['admin', 'judge'].includes(user.type)}
                     onClick={() => handleDelete(challenge.id)}
                   >
                     Excluir

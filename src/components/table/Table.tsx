@@ -13,6 +13,7 @@ import {
   Typography,
 } from '@mui/material'
 import { deletePlayer } from '../../services/players'
+import { useAuth } from '@/context/AuthContext'
 
 export const Table = ({
   rows,
@@ -26,6 +27,7 @@ export const Table = ({
   }[]
   setPlayers: React.Dispatch<React.SetStateAction<any[]>>
 }) => {
+  const { user } = useAuth()
   const removePlayer = (id: string) => {
     const confirmed = window.confirm(
       'Você tem certeza que quer deletar esse jogador?'
@@ -85,10 +87,11 @@ export const Table = ({
                 <TableCell>
                   <Button
                     variant="contained"
+                    disabled={user.type !== 'admin'}
                     color="error"
                     onClick={() => removePlayer(player.id)}
                   >
-                    Remover
+                    Excluir
                   </Button>
                 </TableCell>
               </TableRow>

@@ -273,7 +273,7 @@ const DynamicForm = () => {
                       disabled={hasFinished}
                       color="error"
                     >
-                      Remover
+                      Excluir
                     </Button>
                   </TableCell>
                 </TableRow>

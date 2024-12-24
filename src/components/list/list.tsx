@@ -23,8 +23,10 @@ import glcIcon from '@/assets/glc-logo-min.png'
 import lcIcon from '@/assets/league-challenge-min.png'
 import plIcon from '@/assets/pokemon-league-min.png'
 import limitless from '@/assets/limitless.png'
+import { useAuth } from '@/context/AuthContext'
 
 export const EventList = () => {
+  const { user } = useAuth()
   const { events, removeEvent, editEvent } = useEvents()
 
   const handleDelete = async (id: string) => {
@@ -37,6 +39,7 @@ export const EventList = () => {
   }
 
   const getIcon = (type: string) => {
+    console.log({ type })
     switch (type) {
       case 'GLC':
         return glcIcon
@@ -158,16 +161,18 @@ export const EventList = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  <Modal label="Editar Evento">
-                    <EventForm
-                      callback={(data) => editEvent(event.id, data)}
-                      data={event}
-                    />
-                  </Modal>
-
+                  {['admin', 'judge'].includes(user.type) && (
+                    <Modal label="Editar Evento">
+                      <EventForm
+                        callback={(data) => editEvent(event.id, data)}
+                        data={event}
+                      />
+                    </Modal>
+                  )}
                   <Button
                     variant="contained"
                     color="error"
+                    disabled={!['admin', 'judge'].includes(user.type)}
                     onClick={() => handleDelete(event.id)}
                   >
                     Excluir

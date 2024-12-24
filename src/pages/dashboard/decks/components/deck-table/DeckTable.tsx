@@ -27,6 +27,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import useDeckStore, { Deck, PokemonIcon } from '@/services/decks/useDeckStore'
 import { PokemonSelect } from '@/components/commons/pokemon-select/PokemonSelect'
 import { Pokemon } from '@/pages/challenge/hooks/player-list/types'
+import { useAuth } from '@/context/AuthContext'
 
 type DeckValues = {
   id: string
@@ -36,6 +37,7 @@ type DeckValues = {
 }
 
 export const DeckTable: React.FC = () => {
+  const { user } = useAuth()
   const { decks, getDecks, deleteDeck, updateDeck } = useDeckStore()
   const { control, handleSubmit } = useForm<DeckValues>()
   const [editDialogOpen, setEditDialogOpen] = useState(false)
@@ -123,6 +125,7 @@ export const DeckTable: React.FC = () => {
                   <Button
                     variant="contained"
                     color="primary"
+                    disabled={!['admin', 'judge'].includes(user.type)}
                     onClick={() => handleEdit(deck)}
                   >
                     Editar deck
@@ -130,9 +133,10 @@ export const DeckTable: React.FC = () => {
                   <Button
                     variant="contained"
                     color="error"
+                    disabled={user.type !== 'admin'}
                     onClick={() => handleDelete(deck.id)}
                   >
-                    Remover
+                    Excluir
                   </Button>
                 </Grid>
               </TableCell>
