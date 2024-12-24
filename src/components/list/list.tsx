@@ -87,8 +87,20 @@ export const EventList = () => {
                 />
               </TableCell>
               <TableCell>
-                <Link to={`/seasons/${event.id}`}>
-                  <Typography variant="body1">{event.name}</Typography>
+                <Link
+                  to={`/seasons/${event.id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: (theme) => theme.palette.text.primary,
+                      textDecoration: 'underline',
+                      textUnderlineOffset: '4px',
+                    }}
+                  >
+                    {event.name}
+                  </Typography>
                 </Link>
               </TableCell>
               <TableCell style={{ textAlign: 'center' }}>

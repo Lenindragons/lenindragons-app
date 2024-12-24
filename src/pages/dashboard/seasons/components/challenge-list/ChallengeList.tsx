@@ -55,8 +55,18 @@ export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
           {challenges.map((challenge: any) => (
             <TableRow key={challenge.id}>
               <TableCell>
-                <Link to={`/challenges/${challenge.id}`}>
-                  <Typography variant="body1">
+                <Link
+                  to={`/challenges/${challenge.id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: (theme) => theme.palette.text.primary,
+                      textDecoration: 'underline',
+                      textUnderlineOffset: '4px',
+                    }}
+                  >
                     {getDate(challenge.dates[0].startDate)}
                   </Typography>
                 </Link>
