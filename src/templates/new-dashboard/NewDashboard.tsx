@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-key */
 import React, { useState } from 'react'
@@ -30,6 +31,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
   Brightness4 as Brightness4Icon,
   Brightness7 as Brightness7Icon,
+  BarChart as BarChartIcon,
 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
@@ -57,20 +59,31 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
       text: 'Perfil',
       icon: <AccountCircleIcon />,
       url: 'profile',
-      permission: ['player', 'admin'],
+      permission: ['player', 'admin', 'judge', 'organizer'],
+    },
+    {
+      text: 'Relatório',
+      icon: <BarChartIcon />,
+      url: 'analytics-report',
+      permission: ['admin', 'organizer'],
     },
     {
       text: 'Torneios',
       icon: <EventNoteIcon />,
       url: 'seasons',
-      permission: ['admin'],
+      permission: ['admin', 'judge', 'organizer'],
     },
-    { text: 'Decks', icon: <StyleIcon />, url: 'decks', permission: ['admin'] },
+    {
+      text: 'Decks',
+      icon: <StyleIcon />,
+      url: 'decks',
+      permission: ['admin', 'judge'],
+    },
     {
       text: 'Jogadores',
       icon: <CatchingPokemonIcon />,
       url: 'players',
-      permission: ['admin'],
+      permission: ['admin', 'judge'],
     },
   ]
 

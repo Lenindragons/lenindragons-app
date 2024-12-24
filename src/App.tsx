@@ -11,6 +11,7 @@ import { ProfilePage } from './pages/dashboard/profile'
 import { EventProvider } from './context/EventContext'
 import { SeasonsPage, SeasonDetailPage } from './pages/dashboard/seasons'
 import { PlayersPage } from './pages/dashboard/players/PlayersPage'
+import { ReportPage } from './pages/dashboard/report/ReportPage'
 import ChallengeDetailPage from './pages/challenge/ChallengeDetailPage'
 import { PageProvider } from './context/PageContext'
 import { ChallengeProvider } from './context/ChallengeContext'
@@ -19,6 +20,11 @@ import { ChallengeListPage } from './pages/challenge/ChallengeListPage'
 import { ChallengeListDetailPage } from './pages/challenge/ChallengeListDetailPage'
 import { DeckPage } from './pages/dashboard/decks/DeckPage'
 import { LeagueChallengePage } from './pages/league-challenge'
+
+const allowedAll = ['admin', 'organizer', 'judge', 'player']
+const allowedAdmin = ['admin', 'organizer', 'judge']
+const allowedAdminOrganizer = ['admin', 'organizer']
+const allowedAdminJudge = ['admin', 'judge']
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -44,22 +50,34 @@ export const App = () => {
                     path="/challenge/:id"
                     element={<ChallengeListDetailPage />}
                   />
-                  <Route
-                    element={
-                      <PrivateRoutes allowedTypes={['player', 'admin']} />
-                    }
-                  >
+
+                  <Route element={<PrivateRoutes allowedTypes={allowedAll} />}>
                     <Route path="/profile" element={<ProfilePage />} />
                   </Route>
-                  <Route element={<PrivateRoutes allowedTypes={['admin']} />}>
+                  <Route
+                    element={
+                      <PrivateRoutes allowedTypes={allowedAdminOrganizer} />
+                    }
+                  >
+                    <Route path="/analytics-report" element={<ReportPage />} />
+                  </Route>
+
+                  <Route
+                    element={<PrivateRoutes allowedTypes={allowedAdmin} />}
+                  >
                     <Route path="/seasons" element={<SeasonsPage />} />
-                    <Route path="/players" element={<PlayersPage />} />
-                    <Route path="/decks" element={<DeckPage />} />
                     <Route path="/seasons/:id" element={<SeasonDetailPage />} />
                     <Route
                       path="/challenges/:id"
                       element={<ChallengeDetailPage />}
                     />
+                  </Route>
+
+                  <Route
+                    element={<PrivateRoutes allowedTypes={allowedAdminJudge} />}
+                  >
+                    <Route path="/players" element={<PlayersPage />} />
+                    <Route path="/decks" element={<DeckPage />} />
                   </Route>
                 </Routes>
               </EventProvider>
