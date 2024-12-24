@@ -67,6 +67,9 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
   const lightTheme = createTheme({
     palette: {
       mode: 'light',
+      background: {
+        default: '#f1f1f1',
+      },
       text: {
         primary: '#000',
       },
@@ -79,6 +82,9 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
       text: {
         primary: '#f5f5f5',
       },
+      primary: {
+        main: '#1976d2',
+      },
     },
   })
 
@@ -86,7 +92,11 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
 
   return (
     <ThemeProvider theme={appliedTheme}>
-      <Box sx={{ display: 'flex' }}>
+      <Box
+        sx={{
+          display: 'flex',
+        }}
+      >
         <CssBaseline />
         <AppBar
           position="fixed"
