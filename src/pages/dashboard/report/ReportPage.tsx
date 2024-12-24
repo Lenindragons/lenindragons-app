@@ -37,18 +37,37 @@ export const ReportPage = () => {
         return acc
       }, {}) as any
 
-      const groupedArray = Object.keys(grouped).map((key) => ({
-        name: key,
-        image: grouped[key][0].season.image.url,
-        challenges: grouped[key],
-        totalPlayers: grouped[key]
+      const groupedArray = Object.keys(grouped).map((key) => {
+        const totalPlayers = grouped[key]
           .map(
             (challenge: { challenge: { result: string | any[] } }) =>
               challenge.challenge.result.length
           )
-          .reduce((acc: any, curr: any) => acc + curr, 0),
-        count: grouped[key].length,
-      }))
+          .reduce((acc: any, curr: any) => acc + curr, 0)
+
+        const values = grouped[key]
+          .map(
+            (challenge: {
+              challenge: { result: string | any[] }
+              type: string
+            }) =>
+              challenge.challenge.result.length *
+              (challenge.type !== 'special' ? 25 : 35)
+          )
+          .reduce((acc: any, curr: any) => acc + curr, 0)
+
+        return {
+          name: key.split('-').join(' '),
+          image: grouped[key][0].season.image.url,
+          challenges: grouped[key],
+          totalPlayers,
+          count: grouped[key].length,
+          values,
+          specialEvents: grouped[key].filter(
+            (group: any) => group.type === 'special'
+          ).length,
+        }
+      })
 
       setFilteredChallenges(groupedArray)
     }
@@ -90,7 +109,7 @@ export const ReportPage = () => {
                 variant="h5"
                 sx={{ textTransform: 'capitalize', marginBottom: 2 }}
               >
-                {season.name.split('-').join(' ')}
+                {season.name}
               </Typography>
             </div>
 
@@ -101,8 +120,8 @@ export const ReportPage = () => {
                   component="span"
                   sx={{ fontWeight: 'bold' }}
                 >
-                  Média de Jogadores por torneio:
-                </Typography>{' '}
+                  Média de Jogadores por torneio:{' '}
+                </Typography>
                 <Typography variant="body1" component="span">
                   {getMediaPlayers(season.count, season.totalPlayers).toFixed(
                     2
@@ -110,14 +129,29 @@ export const ReportPage = () => {
                 </Typography>
               </Box>
               <Divider sx={{ marginY: 1 }} />
+
               <Box component="li" sx={{ marginBottom: 1 }}>
                 <Typography
                   variant="body1"
                   component="span"
                   sx={{ fontWeight: 'bold' }}
                 >
-                  Quantidade de Torneios na temporada:
-                </Typography>{' '}
+                  Quantidade de Eventos especiais:{' '}
+                </Typography>
+                <Typography variant="body1" component="span">
+                  {season.specialEvents}
+                </Typography>
+              </Box>
+              <Divider sx={{ marginY: 1 }} />
+
+              <Box component="li" sx={{ marginBottom: 1 }}>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={{ fontWeight: 'bold' }}
+                >
+                  Quantidade de Torneios na temporada:{' '}
+                </Typography>
                 <Typography variant="body1" component="span">
                   {season.count}
                 </Typography>
@@ -129,10 +163,31 @@ export const ReportPage = () => {
                   component="span"
                   sx={{ fontWeight: 'bold' }}
                 >
-                  Valor arrecadado:
-                </Typography>{' '}
+                  Valor arrecadado:{' '}
+                </Typography>
+
                 <Typography variant="body1" component="span">
-                  R$ 0,00
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(season.values)}
+                </Typography>
+              </Box>
+
+              <Box component="li" sx={{ marginBottom: 1 }}>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={{ fontWeight: 'bold' }}
+                >
+                  Valor destinado para premiação:{' '}
+                </Typography>
+
+                <Typography variant="body1" component="span">
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(season.totalPlayers * 5)}
                 </Typography>
               </Box>
             </Box>
