@@ -22,12 +22,13 @@ export const Table = ({
   setPlayers: React.Dispatch<React.SetStateAction<any[]>>
 }) => {
   const removePlayer = (id: string) => {
+    console.log({ id })
     const confirmed = window.confirm(
       'Você tem certeza que quer deletar esse jogador?'
     )
     if (confirmed) {
-      deletePlayer(id)
-      setPlayers((prev: any) => prev.filter((player: any) => player.id !== id))
+      // deletePlayer(id)
+      // setPlayers((prev: any) => prev.filter((player: any) => player.id !== id))
     }
   }
 

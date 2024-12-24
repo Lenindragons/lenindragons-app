@@ -53,10 +53,25 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
   }
 
   const menuItems = [
-    { text: 'Perfil', icon: <AccountCircleIcon />, url: 'profile' },
-    { text: 'Torneios', icon: <EventNoteIcon />, url: 'seasons' },
-    { text: 'Decks', icon: <StyleIcon />, url: 'decks' },
-    { text: 'Jogadores', icon: <CatchingPokemonIcon />, url: 'players' },
+    {
+      text: 'Perfil',
+      icon: <AccountCircleIcon />,
+      url: 'profile',
+      permission: ['player', 'admin'],
+    },
+    {
+      text: 'Torneios',
+      icon: <EventNoteIcon />,
+      url: 'seasons',
+      permission: ['admin'],
+    },
+    { text: 'Decks', icon: <StyleIcon />, url: 'decks', permission: ['admin'] },
+    {
+      text: 'Jogadores',
+      icon: <CatchingPokemonIcon />,
+      url: 'players',
+      permission: ['admin'],
+    },
   ]
 
   const handleThemeToggle = () => {
@@ -150,39 +165,41 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
           <Divider />
           <Box sx={{ overflow: 'auto' }}>
             <List>
-              {menuItems.map((item, index) => (
-                <Link
-                  to={`/${item.url}`}
-                  key={index}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <ListItem
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      ':hover': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                      },
-                    }}
+              {menuItems
+                .filter((item) => item.permission.includes(user.type))
+                .map((item, index) => (
+                  <Link
+                    to={`/${item.url}`}
+                    key={index}
+                    style={{ textDecoration: 'none' }}
                   >
-                    <ListItemIcon sx={{ svg: { fontSize: '38px' } }}>
-                      {item.icon}
-                    </ListItemIcon>
-                    {open && (
-                      <ListItemText
-                        disableTypography
-                        sx={{
-                          color: (theme) => theme.palette.text.primary,
-                          fontSize: '18px',
-                          textTransform: 'uppercase',
-                        }}
-                        primary={item.text}
-                      />
-                    )}
-                  </ListItem>
-                  <Divider />
-                </Link>
-              ))}
+                    <ListItem
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        ':hover': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                        },
+                      }}
+                    >
+                      <ListItemIcon sx={{ svg: { fontSize: '38px' } }}>
+                        {item.icon}
+                      </ListItemIcon>
+                      {open && (
+                        <ListItemText
+                          disableTypography
+                          sx={{
+                            color: (theme) => theme.palette.text.primary,
+                            fontSize: '18px',
+                            textTransform: 'uppercase',
+                          }}
+                          primary={item.text}
+                        />
+                      )}
+                    </ListItem>
+                    <Divider />
+                  </Link>
+                ))}
             </List>
           </Box>
         </Drawer>
