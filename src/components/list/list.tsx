@@ -51,13 +51,25 @@ export const EventList = () => {
     }
   }
 
-  const getStatus = (date: Timestamp) => {
+  const getStatus = (startDate: Timestamp, endDate: Timestamp) => {
     const now = new Date()
-    const eventDate = date.toDate()
-    if (eventDate < now) {
+    const eventEndDate = endDate.toDate()
+    const eventStartDate = startDate.toDate()
+    if (eventEndDate < now) {
       return 'Encerrado'
     }
+
+    if (eventStartDate > now) {
+      return 'Agendado'
+    }
+
     return 'Em andamento'
+  }
+
+  const color: { [key: string]: 'error' | 'warning' | 'success' } = {
+    Encerrado: 'error',
+    Agendado: 'warning',
+    'Em andamento': 'success',
   }
 
   return (
@@ -122,12 +134,18 @@ export const EventList = () => {
               </TableCell>
               <TableCell style={{ textAlign: 'center' }}>
                 <Chip
-                  label={getStatus(event.dates[0].endDate)}
+                  label={getStatus(
+                    event.dates[0].startDate,
+                    event.dates[0].endDate
+                  )}
                   variant="outlined"
                   color={
-                    getStatus(event.dates[0].endDate) === 'Encerrado'
-                      ? 'error'
-                      : 'success'
+                    color[
+                      getStatus(
+                        event.dates[0].startDate,
+                        event.dates[0].endDate
+                      )
+                    ]
                   }
                 />
               </TableCell>
