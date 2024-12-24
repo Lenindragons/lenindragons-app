@@ -32,6 +32,7 @@ import {
   Brightness7 as Brightness7Icon,
 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
 
 const drawerWidth = 240
 
@@ -40,8 +41,11 @@ interface NewDashboardProps {
 }
 
 const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
+  const { user } = useAuth()
   const [open, setOpen] = useState(true)
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem('isDarkTheme') === 'true'
+  )
   const theme = useTheme()
 
   const handleDrawerToggle = () => {
@@ -57,6 +61,7 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
 
   const handleThemeToggle = () => {
     setDarkMode(!darkMode)
+    localStorage.setItem('isDarkTheme', JSON.stringify(!darkMode))
   }
 
   const appliedTheme = createTheme({
@@ -84,7 +89,7 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
               {open ? <ChevronLeftIcon /> : <MenuIcon />}
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Dashboard
+              Fantasia Geek Store
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <IconButton color="inherit" onClick={handleThemeToggle}>
@@ -96,7 +101,7 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
               </Badge>
             </IconButton>
             <IconButton color="inherit">
-              <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" />
+              <Avatar alt={user.name} src={user.image} />
             </IconButton>
           </Toolbar>
         </AppBar>
