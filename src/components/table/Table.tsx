@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 import {
   Button,
@@ -12,13 +13,17 @@ import {
   Typography,
 } from '@mui/material'
 import { deletePlayer } from '../../services/players'
-import { UserType } from '../../types/Player'
 
 export const Table = ({
   rows,
   setPlayers,
 }: {
-  rows: any
+  rows: {
+    id: string
+    name: string
+    email: string
+    type: 'admin' | 'player' | 'judge' | 'organizer'
+  }[]
   setPlayers: React.Dispatch<React.SetStateAction<any[]>>
 }) => {
   const removePlayer = (id: string) => {
@@ -29,6 +34,19 @@ export const Table = ({
       deletePlayer(id)
       setPlayers((prev: any) => prev.filter((player: any) => player.id !== id))
     }
+  }
+
+  const color: {
+    [key in 'admin' | 'player' | 'judge' | 'organizer']:
+      | 'warning'
+      | 'primary'
+      | 'secondary'
+      | 'success'
+  } = {
+    admin: 'warning',
+    player: 'primary',
+    judge: 'secondary',
+    organizer: 'success',
   }
 
   return (
@@ -43,32 +61,39 @@ export const Table = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((player: any) => (
-            <TableRow key={player.id}>
-              <TableCell>
-                <Typography variant="body2">{player.name}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="body2">{player.email}</Typography>
-              </TableCell>
-              <TableCell>
-                <Chip
-                  label={`${player.type}`}
-                  color={player.type === UserType.ADMIN ? 'error' : 'primary'}
-                  variant="outlined"
-                />
-              </TableCell>
-              <TableCell>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={() => removePlayer(player.id)}
-                >
-                  Remover
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {rows.map(
+            (player: {
+              id: string
+              name: string
+              email: string
+              type: 'admin' | 'player' | 'judge' | 'organizer'
+            }) => (
+              <TableRow key={player.id}>
+                <TableCell>
+                  <Typography variant="body2">{player.name}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body2">{player.email}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Chip
+                    label={`${player.type}`}
+                    color={color[player.type]}
+                    variant={player.type !== 'player' ? 'filled' : 'outlined'}
+                  />
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => removePlayer(player.id)}
+                  >
+                    Remover
+                  </Button>
+                </TableCell>
+              </TableRow>
+            )
+          )}
         </TableBody>
       </TableUi>
     </TableContainer>
