@@ -117,7 +117,12 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
                 ...getBall(player.place)?.style,
               }}
             >
-              <TableCell style={{ textAlign: 'center' }}>
+              <TableCell
+                sx={{
+                  textAlign: 'center',
+                  color: index < 4 ? 'black' : null,
+                }}
+              >
                 {player.place}
               </TableCell>
               <TableCell style={{ textAlign: 'center' }}>
@@ -128,12 +133,21 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
                   alignItems="center"
                 >
                   {getPlaceBall(player.place) && (
-                    <Grid item>{getPlaceBall(player.place)}</Grid>
+                    <Grid item sx={{ color: index < 4 ? 'black' : null }}>
+                      {getPlaceBall(player.place)}
+                    </Grid>
                   )}
-                  <Grid item>{player.name}</Grid>
+                  <Grid item sx={{ color: index < 4 ? 'black' : null }}>
+                    {player.name}
+                  </Grid>
                 </Grid>
               </TableCell>
-              <TableCell style={{ textAlign: 'center' }}>
+              <TableCell
+                sx={{
+                  textAlign: 'center',
+                  color: index < 4 ? 'black' : null,
+                }}
+              >
                 {player.points}
               </TableCell>
             </TableRow>

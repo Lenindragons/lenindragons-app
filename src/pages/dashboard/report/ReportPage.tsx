@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Avatar, Box, Chip, Divider, Paper, Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
 import { getAllChallenges } from '@/services/challenge'
 
 export const ReportPage = () => {
@@ -55,6 +56,7 @@ export const ReportPage = () => {
           .reduce((acc: any, curr: any) => acc + curr, 0)
 
         return {
+          id: grouped[key][0].season.id,
           name: key.split('-').join(' '),
           image: grouped[key][0].season.image.url,
           startDate: grouped[key][0].season.dates[0].startDate,
@@ -206,6 +208,25 @@ export const ReportPage = () => {
                     style: 'currency',
                     currency: 'BRL',
                   }).format(season.totalPlayers * 5)}
+                </Typography>
+              </Box>
+
+              <Box component="li" sx={{ marginBottom: 1 }}>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={{
+                    color: (theme) => theme.palette.primary.main,
+                    textUnderlineOffset: '4px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  <Link
+                    to={`/analytics-report/${season.id}`}
+                    style={{ color: 'inherit' }}
+                  >
+                    Ver mais detalhes
+                  </Link>
                 </Typography>
               </Box>
             </Box>

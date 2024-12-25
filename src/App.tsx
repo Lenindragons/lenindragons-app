@@ -20,6 +20,7 @@ import { ChallengeListPage } from './pages/challenge/ChallengeListPage'
 import { ChallengeListDetailPage } from './pages/challenge/ChallengeListDetailPage'
 import { DeckPage } from './pages/dashboard/decks/DeckPage'
 import { LeagueChallengePage } from './pages/league-challenge'
+import { ReportDetailPage } from './pages/dashboard/report/ReportDetailPage'
 
 const allowedAll = ['admin', 'organizer', 'judge', 'player']
 const allowedAdmin = ['admin', 'organizer', 'judge']
@@ -60,6 +61,10 @@ export const App = () => {
                     }
                   >
                     <Route path="/analytics-report" element={<ReportPage />} />
+                    <Route
+                      path="/analytics-report/:id"
+                      element={<ReportDetailPage />}
+                    />
                   </Route>
 
                   <Route
