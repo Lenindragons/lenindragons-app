@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { createContext, useContext, useEffect, useState } from 'react'
 import { GridSelectionModel } from '@material-ui/data-grid'
@@ -7,14 +8,18 @@ import {
   getChallenges,
   deleteChallenge,
   updateChallenge,
+  getAllChallenges,
 } from '../services/challenge'
 import { Challenge } from '../types/Challenge'
+import { getSeasonResume } from '@/pages/dashboard/report/utils/getSeasonResume'
 
 const ChallengeContext = createContext({})
 
 export const ChallengeProvider = ({ children }: ContextProps) => {
   const [seasonId, setSeasonId] = useState('')
   const [challenges, setChallenges] = useState<Challenge[]>([])
+  const [allChallenges, setAllChallenges] = useState<Challenge[]>([])
+  const [mappedChallenges, setMappedChallenges] = useState<any[]>([])
   const [items, setItems] = useState<GridSelectionModel>([])
 
   const onSelectionModelChange = (ids: GridSelectionModel) => {
@@ -35,8 +40,27 @@ export const ChallengeProvider = ({ children }: ContextProps) => {
   }
 
   useEffect(() => {
-    getChallenges(setChallenges, seasonId)
+    seasonId && getChallenges(setChallenges, seasonId)
   }, [seasonId])
+
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      await getAllChallenges(setAllChallenges)
+    }
+
+    fetchChallenges()
+  }, [])
+
+  useEffect(() => {
+    const challengesChanges = () => {
+      setMappedChallenges(getSeasonResume(allChallenges))
+    }
+    challengesChanges()
+  }, [allChallenges, setMappedChallenges])
+
+  const getMappedChallengeById = (id: string) => {
+    return mappedChallenges.find((challenge: any) => challenge?.id === id)
+  }
 
   return (
     <ChallengeContext.Provider
@@ -48,6 +72,9 @@ export const ChallengeProvider = ({ children }: ContextProps) => {
         removeChallenge,
         editChallenge,
         setSeasonId,
+        mappedChallenges,
+        setMappedChallenges,
+        getMappedChallengeById,
       }}
     >
       {children}

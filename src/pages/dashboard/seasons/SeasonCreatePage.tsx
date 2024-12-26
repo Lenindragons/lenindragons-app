@@ -428,7 +428,7 @@ export const SeasonCreatePage = () => {
                   label="Valor Máximo:"
                   variant="outlined"
                   sx={{ flexGrow: 1 }}
-                  defaultValue={800}
+                  defaultValue={839.99}
                   {...register('top6MaxValue')}
                 />
               </Box>
@@ -520,7 +520,7 @@ export const SeasonCreatePage = () => {
                   label="Valor Mínimo:"
                   variant="outlined"
                   sx={{ width: '100%' }}
-                  defaultValue={800.01}
+                  defaultValue={840}
                   {...register('top8MinValue')}
                 />
               </Box>

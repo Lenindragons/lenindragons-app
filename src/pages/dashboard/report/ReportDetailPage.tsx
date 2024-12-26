@@ -12,21 +12,16 @@ import {
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { RankingTable } from '@/pages/ranking/components/ranking-table'
-import { getChallengeBySeasonId } from '@/services/challenge'
 import { getRanking } from '@/pages/ranking/components/ranking/getRanking'
+import { useChallenges } from '@/context/ChallengeContext'
+import { ValuesAndPercentage } from './components/ValuesAndPercentage'
 
 export const ReportDetailPage = () => {
   const { id } = useParams()
-  const [challenges, setChallenges] = useState<any>([])
+  const { getMappedChallengeById } = useChallenges()
+  const mappedChallengeById = getMappedChallengeById(id)
+  const [challenges] = useState<any>(mappedChallengeById.challenges)
   const [frenquency, setFrenquency] = useState<any>([])
-
-  useEffect(() => {
-    const getSeasonFromFirebase = () => {
-      getChallengeBySeasonId(id || '', setChallenges)
-    }
-
-    getSeasonFromFirebase()
-  }, [id])
 
   useEffect(() => {
     const players = challenges
@@ -49,7 +44,9 @@ export const ReportDetailPage = () => {
       )
 
     setFrenquency(players)
-  }, [challenges, setChallenges])
+  }, [challenges, getMappedChallengeById, id, mappedChallengeById.challenges])
+
+  const seasonValues = mappedChallengeById.seasonChallengeValues
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -103,6 +100,15 @@ export const ReportDetailPage = () => {
                 Resultado
               </Typography>
               <RankingTable rows={getRanking(challenges).slice(0, 4)} />
+            </Grid>
+            <Grid item>
+              <Typography variant="h5" mb={2}>
+                Valores e Porcentagens
+              </Typography>
+              <ValuesAndPercentage
+                seasonValues={seasonValues}
+                seasonResume={mappedChallengeById}
+              />
             </Grid>
           </Grid>
         </Grid>

@@ -1,80 +1,9 @@
-import { useEffect, useState } from 'react'
 import { Avatar, Box, Chip, Divider, Paper, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { getAllChallenges } from '@/services/challenge'
+import { useChallenges } from '@/context/ChallengeContext'
 
 export const ReportPage = () => {
-  const [challenges, setChallenges] = useState<any[]>([])
-  const [filteredChallenges, setFilteredChallenges] = useState<any[]>([])
-
-  useEffect(() => {
-    const fetchChallenges = async () => {
-      await getAllChallenges(setChallenges)
-    }
-
-    fetchChallenges()
-  }, [])
-
-  useEffect(() => {
-    const challengesChanges = () => {
-      const filtered = challenges
-        .filter((challenge) => challenge.challenge)
-        .filter((challenge) => ['season'].includes(challenge.season.type))
-
-      const grouped = filtered.reduce((acc, challenge) => {
-        const seasonName = challenge.season.name
-          .split(' ')
-          .join('-')
-          .toLowerCase()
-
-        if (!acc[seasonName]) {
-          acc[seasonName] = []
-        }
-
-        acc[seasonName].push(challenge)
-
-        return acc
-      }, {}) as any
-
-      const groupedArray = Object.keys(grouped).map((key) => {
-        const totalPlayers = grouped[key]
-          .map(
-            (challenge: { challenge: { result: string | any[] } }) =>
-              challenge.challenge.result.length
-          )
-          .reduce((acc: any, curr: any) => acc + curr, 0)
-
-        const values = grouped[key]
-          .map(
-            (challenge: {
-              challenge: { result: string | any[] }
-              type: string
-            }) =>
-              challenge.challenge.result.length *
-              (challenge.type !== 'special' ? 25 : 35)
-          )
-          .reduce((acc: any, curr: any) => acc + curr, 0)
-
-        return {
-          id: grouped[key][0].season.id,
-          name: key.split('-').join(' '),
-          image: grouped[key][0].season.image.url,
-          startDate: grouped[key][0].season.dates[0].startDate,
-          endDate: grouped[key][0].season.dates[0].endDate,
-          challenges: grouped[key],
-          totalPlayers,
-          count: grouped[key].length,
-          values,
-          specialEvents: grouped[key].filter(
-            (group: any) => group.type === 'special'
-          ).length,
-        }
-      })
-
-      setFilteredChallenges(groupedArray)
-    }
-    challengesChanges()
-  }, [challenges])
+  const { mappedChallenges } = useChallenges()
 
   const getMediaPlayers = (challengeCount: number, totalPlayers: number) => {
     return totalPlayers / challengeCount
@@ -94,7 +23,7 @@ export const ReportPage = () => {
         Relatório de Temporadas
       </Typography>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 15 }}>
-        {filteredChallenges.map((season) => (
+        {mappedChallenges.map((season: any) => (
           <Box component={Paper} key={season.id} p={2}>
             <div
               style={{
