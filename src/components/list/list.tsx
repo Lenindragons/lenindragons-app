@@ -39,7 +39,6 @@ export const EventList = () => {
   }
 
   const getIcon = (type: string) => {
-    console.log({ type })
     switch (type) {
       case 'GLC':
         return glcIcon

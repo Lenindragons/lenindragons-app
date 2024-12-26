@@ -21,6 +21,7 @@ import { ChallengeListDetailPage } from './pages/challenge/ChallengeListDetailPa
 import { DeckPage } from './pages/dashboard/decks/DeckPage'
 import { LeagueChallengePage } from './pages/league-challenge'
 import { ReportDetailPage } from './pages/dashboard/report/ReportDetailPage'
+import { SeasonCreatePage } from './pages/dashboard/seasons/SeasonCreatePage'
 
 const allowedAll = ['admin', 'organizer', 'judge', 'player']
 const allowedAdmin = ['admin', 'organizer', 'judge']
@@ -71,6 +72,10 @@ export const App = () => {
                     element={<PrivateRoutes allowedTypes={allowedAdmin} />}
                   >
                     <Route path="/seasons" element={<SeasonsPage />} />
+                    <Route
+                      path="/seasons/create"
+                      element={<SeasonCreatePage />}
+                    />
                     <Route path="/seasons/:id" element={<SeasonDetailPage />} />
                     <Route
                       path="/challenges/:id"

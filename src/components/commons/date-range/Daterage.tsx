@@ -9,27 +9,10 @@ import 'react-date-range/dist/theme/default.css'
 import { getTimeStampInMiliseconds } from '../../../helpers/format-date'
 
 const DateRangeContainer = styled.div`
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  color: rgba(0, 0, 0, 0.87);
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  label {
-    margin-bottom: 8px;
-    text-align: left;
-    width: 100%;
-    padding: 0 8px;
-  }
-
-  &:hover {
-    border-color: #000;
-  }
 `
 
 const getDate = (key: string, control: Control<FieldValues, any>) => {
@@ -38,7 +21,7 @@ const getDate = (key: string, control: Control<FieldValues, any>) => {
     : ''
 }
 
-const DateRangeComponent = ({ label, name, control }: DatePickerProps) => {
+const DateRangeComponent = ({ name, control }: DatePickerProps) => {
   const theme = useTheme()
 
   const start = getDate('startDate', control)
@@ -68,7 +51,6 @@ const DateRangeComponent = ({ label, name, control }: DatePickerProps) => {
 
   return (
     <DateRangeContainer>
-      <label>{label}</label>
       <Controller
         name={name}
         control={control}

@@ -31,6 +31,7 @@ export const createEvent = async (data: Event): Promise<void> => {
         url: sprite?.image,
       },
       dates: data.dates,
+      values: data.values,
     }
     await addDoc(getEventCollection(), {
       ...content,

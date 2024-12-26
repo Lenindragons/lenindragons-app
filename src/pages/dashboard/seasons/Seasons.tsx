@@ -1,10 +1,9 @@
 import styled from 'styled-components'
 import { useEffect } from 'react'
-import { EventForm } from './forms/event/EventForm'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { usePage } from '@/context/PageContext'
 import { EventList } from '@/components/list/list'
-import { Modal } from '@/components/commons/modal/Modal'
-import { createEvent } from '@/services/events'
 
 export const Box = styled.section`
   padding: 16px;
@@ -17,6 +16,7 @@ const Header = styled.header`
 
 export const SeasonsPage = () => {
   const { setTitle } = usePage()
+  const navigate = useNavigate()
 
   useEffect(() => {
     setTitle('Temporadas')
@@ -25,9 +25,9 @@ export const SeasonsPage = () => {
   return (
     <Box>
       <Header>
-        <Modal label="Criar temporada" title="Criar temporada">
-          <EventForm callback={createEvent} data={[]} />
-        </Modal>
+        <Button variant="contained" onClick={() => navigate('/seasons/create')}>
+          Criar Temporada
+        </Button>
       </Header>
       <EventList />
     </Box>

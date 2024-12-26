@@ -19,7 +19,6 @@ type ChallengeFormProps = {
 }
 
 export const ChallengeForm = ({ callback, data }: ChallengeFormProps) => {
-  console.log({ data })
   const { handleSubmit, register, control } = useForm({
     defaultValues: data,
   })
