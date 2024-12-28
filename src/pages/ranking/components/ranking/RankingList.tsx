@@ -16,6 +16,10 @@ const RulesBox = styled.div`
   marginTop: 20px;
   padding: 20px;
 
+  h2, h3, h4, h5, h6 {
+    margin: 20px 0;
+  }
+
   ul {
     padding-left: 20px;
     list-style-type: disc;
@@ -28,8 +32,9 @@ const RulesBox = styled.div`
 
   table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
     border: 1px solid #ddd !important;
+    margin: 20px 0;
 
     th {
       background-color: #f8f8f8;
@@ -144,9 +149,8 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
 
         <Collapse in={collapseOpen}>
           <RulesBox>
-            <Typography variant="h6">{getSeasonContent()?.name}</Typography>
             <div
-              style={{ marginTop: '20px' }}
+              style={{ marginTop: '5px' }}
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(getSeasonContent()?.description),
               }}
