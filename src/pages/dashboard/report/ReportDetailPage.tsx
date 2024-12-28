@@ -1,8 +1,10 @@
+/* eslint-disable react/no-array-index-key */
 import {
   Box,
   Grid,
   Paper,
   Table,
+  TableBody,
   TableCell,
   TableContainer,
   TableHead,
@@ -20,11 +22,12 @@ export const ReportDetailPage = () => {
   const { id } = useParams()
   const { getMappedChallengeById } = useChallenges()
   const mappedChallengeById = getMappedChallengeById(id)
-  const [challenges] = useState<any>(mappedChallengeById.challenges)
+  const [challenges] = useState<any>(mappedChallengeById?.challenges || [])
+  const [rankedPlayers, setRankedPlayers] = useState<any>([])
   const [frenquency, setFrenquency] = useState<any>([])
 
   useEffect(() => {
-    const players = challenges
+    const players = mappedChallengeById?.challenges
       .map((challenge: any) => challenge.challenge.result)
       .flat()
       .reduce((acc: any[], player: any) => {
@@ -44,9 +47,10 @@ export const ReportDetailPage = () => {
       )
 
     setFrenquency(players)
-  }, [challenges, getMappedChallengeById, id, mappedChallengeById.challenges])
+    setRankedPlayers(getRanking(mappedChallengeById?.challenges || []))
+  }, [mappedChallengeById])
 
-  const seasonValues = mappedChallengeById.seasonChallengeValues
+  const seasonValues = mappedChallengeById?.seasonChallengeValues || null
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -82,16 +86,18 @@ export const ReportDetailPage = () => {
                       </TableCell>
                     </TableRow>
                   </TableHead>
-                  {frenquency.map((player: any) => (
-                    <TableRow key={player.id}>
-                      <TableCell style={{ textAlign: 'center' }}>
-                        {player.count}
-                      </TableCell>
-                      <TableCell style={{ textAlign: 'center' }}>
-                        {player.name}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  <TableBody>
+                    {frenquency?.map((player: any, index: number) => (
+                      <TableRow key={`${player.id}-${index}`}>
+                        <TableCell style={{ textAlign: 'center' }}>
+                          {player.count}
+                        </TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>
+                          {player.name}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
                 </Table>
               </TableContainer>
             </Grid>
@@ -99,15 +105,16 @@ export const ReportDetailPage = () => {
               <Typography variant="h5" mb={2}>
                 Resultado
               </Typography>
-              <RankingTable rows={getRanking(challenges).slice(0, 4)} />
+              <RankingTable rows={rankedPlayers?.slice(0, 8)} />
             </Grid>
             <Grid item>
               <Typography variant="h5" mb={2}>
                 Valores e Porcentagens
               </Typography>
               <ValuesAndPercentage
-                seasonValues={seasonValues}
+                seasonValues={seasonValues || null}
                 seasonResume={mappedChallengeById}
+                rankedPlayers={rankedPlayers}
               />
             </Grid>
           </Grid>
