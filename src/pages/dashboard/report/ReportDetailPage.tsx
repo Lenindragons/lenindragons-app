@@ -103,7 +103,7 @@ export const ReportDetailPage = () => {
             </Grid>
             <Grid item>
               <Typography variant="h5" mb={2}>
-                Resultado
+                Ranking Geral
               </Typography>
               <RankingTable rows={rankedPlayers?.slice(0, 8)} />
             </Grid>
