@@ -6,13 +6,11 @@ import { DefaultThemeProvider } from './context/DefaultThemeContext'
 import { PlayerItemsProvider } from './pages/challenge/hooks/player-list/usePlayersList'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <DefaultThemeProvider>
-      <BrowserRouter>
-        <PlayerItemsProvider>
-          <App />
-        </PlayerItemsProvider>
-      </BrowserRouter>
-    </DefaultThemeProvider>
-  </React.StrictMode>
+  <DefaultThemeProvider>
+    <BrowserRouter>
+      <PlayerItemsProvider>
+        <App />
+      </PlayerItemsProvider>
+    </BrowserRouter>
+  </DefaultThemeProvider>
 )
