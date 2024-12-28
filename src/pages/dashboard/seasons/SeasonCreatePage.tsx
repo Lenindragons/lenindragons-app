@@ -16,6 +16,8 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Divider,
+  InputAdornment,
 } from '@mui/material'
 
 import { Controller, useForm, useWatch } from 'react-hook-form'
@@ -76,6 +78,12 @@ export const SeasonCreatePage = () => {
     }
 
     return {
+      season: {
+        normalChallenge: parseFloat(data.normalChallenge),
+        normalChallengeTop: parseFloat(data.normalChallengeTop),
+        specialChallenge: parseFloat(data.specialChallenge),
+        specialChallengeTop: parseFloat(data.specialChallengeTOP),
+      },
       top4: getTopValues(4),
       top6: getTopValues(6),
       top8: getTopValues(8),
@@ -304,6 +312,100 @@ export const SeasonCreatePage = () => {
             <Typography>Valores e Porcentagens</Typography>
           </AccordionSummary>
           <AccordionDetails>
+            <Typography variant="h6">Inscrições</Typography>
+
+            <Box
+              mt={2}
+              mb={2}
+              sx={{
+                display: 'flex',
+                padding: 2,
+                justifyContent: 'space-between',
+              }}
+              gap={2}
+            >
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flexWrap: 'wrap',
+                  gap: 2,
+                }}
+              >
+                <TextField
+                  label="Torneio Normal:"
+                  variant="outlined"
+                  color="info"
+                  focused
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
+                  sx={{ flexGrow: 1 }}
+                  defaultValue={25}
+                  {...register('normalChallenge')}
+                />
+                <TextField
+                  label="Valor para o TOP:"
+                  variant="outlined"
+                  color="info"
+                  focused
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
+                  sx={{ flexGrow: 1 }}
+                  defaultValue={5}
+                  {...register('normalChallengeTop')}
+                />
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flexWrap: 'wrap',
+                  gap: 2,
+                }}
+              >
+                <TextField
+                  label="Torneio Especial:"
+                  variant="outlined"
+                  sx={{ flexGrow: 1 }}
+                  color="warning"
+                  focused
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
+                  defaultValue={35}
+                  {...register('specialChallenge')}
+                />
+                <TextField
+                  label="Valor para o TOP:"
+                  variant="outlined"
+                  color="warning"
+                  focused
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
+                  sx={{ flexGrow: 1 }}
+                  defaultValue={10}
+                  {...register('specialChallengeTOP')}
+                />
+              </Box>
+            </Box>
+
+            <br />
+            <Divider />
+            <br />
+
             <Typography variant="h6">TOP 4</Typography>
             <Box mt={2} mb={2} sx={{ display: 'flex' }} gap={2}>
               <Box
@@ -320,16 +422,30 @@ export const SeasonCreatePage = () => {
               >
                 <TextField
                   label="Valor Mínimo:"
+                  color="info"
+                  focused
                   variant="outlined"
                   sx={{ flexGrow: 1 }}
                   defaultValue={0}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
                   {...register('top4MinValue')}
                 />
                 <TextField
                   label="Valor Máximo:"
+                  color="warning"
+                  focused
                   variant="outlined"
                   sx={{ flexGrow: 1 }}
                   defaultValue={640}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
                   {...register('top4MaxValue')}
                 />
               </Box>
@@ -419,13 +535,27 @@ export const SeasonCreatePage = () => {
               >
                 <TextField
                   label="Valor Mínimo:"
+                  color="info"
+                  focused
                   variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
                   sx={{ flexGrow: 1 }}
                   defaultValue={640.01}
                   {...register('top6MinValue')}
                 />
                 <TextField
                   label="Valor Máximo:"
+                  color="warning"
+                  focused
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
                   variant="outlined"
                   sx={{ flexGrow: 1 }}
                   defaultValue={839.99}
@@ -518,6 +648,13 @@ export const SeasonCreatePage = () => {
               >
                 <TextField
                   label="Valor Mínimo:"
+                  color="info"
+                  focused
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">R$</InputAdornment>
+                    ),
+                  }}
                   variant="outlined"
                   sx={{ width: '100%' }}
                   defaultValue={840}

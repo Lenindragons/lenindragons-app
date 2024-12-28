@@ -136,7 +136,7 @@ export const ReportPage = () => {
                   {new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',
-                  }).format(season.totalPlayers * 5)}
+                  }).format(season.playersValues)}
                 </Typography>
               </Box>
 

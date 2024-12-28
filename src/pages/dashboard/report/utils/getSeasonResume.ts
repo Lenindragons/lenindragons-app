@@ -23,13 +23,27 @@ export const getSeasonResume = (challenges: any) => {
       )
       .reduce((acc: any, curr: any) => acc + curr, 0)
 
-    const values = grouped[key]
-      .map(
-        (challenge: { challenge: { result: string | any[] }; type: string }) =>
-          challenge.challenge.result.length *
-          (challenge.type !== 'special' ? 25 : 35)
-      )
-      .reduce((acc: any, curr: any) => acc + curr, 0)
+    const result = grouped[key].reduce(
+      (acc: any, challenge: any) => {
+        const challengeResultLength = challenge.challenge.result.length
+
+        const normalValue =
+          challenge.type !== 'special'
+            ? challenge?.season?.values?.season?.normalChallenge || 25
+            : challenge?.season?.values?.season?.specialChallenge || 35
+
+        const normalPlayerValue =
+          challenge.type !== 'special'
+            ? challenge?.season?.values?.season?.normalChallengeTop || 5
+            : challenge?.season?.values?.season?.specialChallengeTop || 5
+
+        acc.values += challengeResultLength * normalValue
+        acc.playersValues += challengeResultLength * normalPlayerValue
+
+        return acc
+      },
+      { values: 0, playersValues: 0 }
+    )
 
     return {
       id: grouped[key][0].season.id,
@@ -40,7 +54,8 @@ export const getSeasonResume = (challenges: any) => {
       challenges: grouped[key],
       totalPlayers,
       count: grouped[key].length,
-      values,
+      values: result.values,
+      playersValues: result.playersValues,
       seasonChallengeValues: grouped[key][0].season.values,
       specialEvents: grouped[key].filter(
         (group: any) => group.type === 'special'
