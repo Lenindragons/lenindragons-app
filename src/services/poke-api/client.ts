@@ -16,8 +16,6 @@ export const getPokemons = async () => {
         url: pokemon.url,
       }
 
-      createSprite(dataPokemon)
-
       return dataPokemon
     })
   }

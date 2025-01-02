@@ -28,7 +28,7 @@ export const createEvent = async (data: Event): Promise<void> => {
       type: data.type || 'season',
       image: {
         name: data.icon.name,
-        url: sprite?.image,
+        url: sprite?.url,
       },
       dates: data.dates,
       values: data.values,
