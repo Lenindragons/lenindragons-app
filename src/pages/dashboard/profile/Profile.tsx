@@ -83,15 +83,16 @@ export const ProfilePage = () => {
                 <Button variant="outlined" color="secondary">
                   Configurações
                 </Button>
-                {user.type === 'admin' && (
-                  <Button
-                    onClick={handleImportSprites}
-                    variant="outlined"
-                    color="warning"
-                  >
-                    Importar Sprites
-                  </Button>
-                )}
+                {user.type === 'admin' &&
+                  user.email === 'jucienyds@gmail.com' && (
+                    <Button
+                      onClick={handleImportSprites}
+                      variant="outlined"
+                      color="warning"
+                    >
+                      Importar Sprites
+                    </Button>
+                  )}
               </Box>
             </CardContent>
           </Card>
