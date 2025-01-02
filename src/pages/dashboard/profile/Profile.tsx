@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { useEffect } from 'react'
 import {
@@ -12,6 +13,8 @@ import {
 } from '@mui/material'
 import { usePage } from '../../../context/PageContext'
 import { useAuth } from '../../../context/AuthContext'
+import { getPokemons } from '@/services/poke-api/client'
+import { createSprite } from '@/services/sprites'
 
 export const ProfilePage = () => {
   const { setTitle } = usePage()
@@ -28,6 +31,20 @@ export const ProfilePage = () => {
     lastLoginAt: user.lastSignInTime,
     lastSignInTime: user.lastSignInTime,
     joinedDate: user.creationTime,
+  }
+
+  const handleImportSprites = async () => {
+    const pkm = localStorage.getItem('pokemons')
+    let pokemons = pkm ? JSON.parse(pkm) : []
+
+    if (pokemons.length === 0) {
+      pokemons = await getPokemons()
+      localStorage.setItem('pokemons', JSON.stringify(pokemons))
+    }
+
+    pokemons.map((pokemon: any) => {
+      createSprite(pokemon)
+    })
   }
 
   return (
@@ -66,6 +83,15 @@ export const ProfilePage = () => {
                 <Button variant="outlined" color="secondary">
                   Configurações
                 </Button>
+                {user.type === 'admin' && (
+                  <Button
+                    onClick={handleImportSprites}
+                    variant="outlined"
+                    color="warning"
+                  >
+                    Importar Sprites
+                  </Button>
+                )}
               </Box>
             </CardContent>
           </Card>
