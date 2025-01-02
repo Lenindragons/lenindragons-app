@@ -13,7 +13,12 @@ export const Dashboard = ({ children }: any) => {
       <HeaderComponent />
       <SideBar>
         <section>
-          <img src={logo} alt="Fantasia Geek Store" width={150} height={150} />
+          <img
+            src={logo}
+            alt={import.meta.env.VITE_SITE_NAME}
+            width={150}
+            height={150}
+          />
         </section>
 
         <SideMenu

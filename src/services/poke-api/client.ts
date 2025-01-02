@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import axios from 'axios'
+import { createSprite } from '../sprites'
 
 export const client = axios.create({
   baseURL: 'https://pokeapi.co/api/v2',
@@ -9,10 +10,16 @@ export const getPokemons = async () => {
   const db = localStorage.getItem('pokemons')
 
   if (db) {
-    return JSON.parse(db).map((pokemon: any) => ({
-      name: pokemon.name,
-      url: pokemon.url,
-    }))
+    return JSON.parse(db).map((pokemon: any) => {
+      const dataPokemon = {
+        name: pokemon.name,
+        url: pokemon.url,
+      }
+
+      createSprite(dataPokemon)
+
+      return dataPokemon
+    })
   }
 
   const response = await client.get(`/pokemon`, {

@@ -33,14 +33,14 @@ const CopyrightFooter = () => {
           color="textSecondary"
           className={classes.copyright}
         >
-          &copy; {new Date().getFullYear()} Fantasia Geek Store.
+          &copy; {new Date().getFullYear()} {import.meta.env.VITE_SITE_NAME}.
         </Typography>
         <Typography
           variant="body2"
           color="textSecondary"
           className={classes.address}
         >
-          Av. Liberdade, 1925 - Santa Isabel, Viamão - RS, 94480-500
+          {import.meta.env.VITE_SITE_ADDRESS}
         </Typography>
         <Typography
           variant="body2"

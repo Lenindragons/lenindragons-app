@@ -141,7 +141,7 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
               {open ? <ChevronLeftIcon /> : <MenuIcon />}
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Fantasia Geek Store
+              {import.meta.env.VITE_SITE_NAME}
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <IconButton color="inherit" onClick={handleThemeToggle}>

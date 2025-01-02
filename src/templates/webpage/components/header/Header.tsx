@@ -75,7 +75,7 @@ const PlataformLogo = ({ width = 60 }: PlataformProps) => {
   return (
     <PlataformLogoContainer>
       <Link to="/">
-        <img width={width} src={logo} alt="Fantasia Geek Store" />
+        <img width={width} src={logo} alt={import.meta.env.VITE_SITE_NAME} />
       </Link>
     </PlataformLogoContainer>
   )

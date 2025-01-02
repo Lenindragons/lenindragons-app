@@ -188,7 +188,9 @@ export const MainPage = () => {
           marginTop: '20px',
         }}
       >
-        <Typography variant="h4">Meta Fantasia Geek Store</Typography>
+        <Typography variant="h4">
+          Meta {import.meta.env.VITE_SITE_NAME}
+        </Typography>
       </Box>
 
       <Typography variant="body1">

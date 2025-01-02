@@ -160,7 +160,7 @@ const MobileHeader = () => {
             </IconButton>
             <Grid container justifyContent="space-between" alignItems="center">
               <Typography variant="h6" className={classes.title}>
-                Fantasia Geek Store
+                {import.meta.env.VITE_SITE_NAME}
               </Typography>
               <Typography
                 variant="h6"
