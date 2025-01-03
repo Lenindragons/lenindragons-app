@@ -23,6 +23,7 @@ type Challenge = {
   challenge: {
     result: PlayerItem[]
   }
+  matches: any[]
   dates: EventDate[]
   season: {
     name: string

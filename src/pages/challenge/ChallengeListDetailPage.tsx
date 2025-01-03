@@ -10,6 +10,7 @@ import { getDate } from '@/helpers/format-date'
 import { PlayerItemsContextType } from './hooks/player-list/types'
 
 const PlayerList = lazy(() => import('./components/players-list/PlayerList'))
+const MatchesList = lazy(() => import('./components/matches-list/MatchesList'))
 
 const LoadingTableSkeleton = () => {
   return <Skeleton variant="rectangular" width="100%" height="100%" />
@@ -31,6 +32,9 @@ export const ChallengeListDetailPage = () => {
       </header>
       <Suspense fallback={<LoadingTableSkeleton />}>
         <PlayerList />
+      </Suspense>
+      <Suspense fallback={<LoadingTableSkeleton />}>
+        <MatchesList matches={challenge?.matches || []} />
       </Suspense>
     </WebPageTemplate>
   )
