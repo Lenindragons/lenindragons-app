@@ -175,9 +175,8 @@ const getNumberOfMatches = (numberOfPlayers: number) => {
     : (numberOfPlayers + 1) / 2
 }
 
-export const MatchesPage = ({ players }: any) => {
+export const MatchesPage = ({ players, numberOfRounds }: any) => {
   const { id } = useParams<{ id: string }>()
-  const numberOfRounds = 3
   const rounds = createArray(numberOfRounds).map(
     (_, index) => `Round ${index + 1}`
   )
@@ -222,7 +221,11 @@ export const MatchesPage = ({ players }: any) => {
   }
 
   const sendMatches = () => {
-    const matchData = organizeData(selectedValues, 3, 3)
+    const matchData = organizeData(
+      selectedValues,
+      numberOfRounds,
+      matches.length
+    )
     updateChallenge(id || '', { matches: matchData })
   }
 

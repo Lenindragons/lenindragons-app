@@ -70,6 +70,8 @@ const ChallengeDetailPage = () => {
     setTitle('Torneio')
   }, [setTitle])
 
+  console.log('tournament', tournament)
+
   const [value, setValue] = useState(0)
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
@@ -93,7 +95,10 @@ const ChallengeDetailPage = () => {
         <Typography variant="body1" gutterBottom>
           Aqui você pode configurar todas as rodadas do torneio.
         </Typography>
-        <MatchesPage players={playerItems} />
+        <MatchesPage
+          players={playerItems}
+          numberOfRounds={parseInt(tournament.rounds, 10)}
+        />
       </TabPanel>
       <TabPanel value={value} index={0}>
         <Grid container spacing={3}>
