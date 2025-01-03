@@ -73,7 +73,8 @@ const DynamicForm = () => {
     if (
       type === 'season' ||
       type === 'league_challenge' ||
-      type === 'league_cup'
+      type === 'league_cup' ||
+      type === 'others'
     ) {
       return 'standard'
     }

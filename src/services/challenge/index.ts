@@ -12,7 +12,7 @@ import {
   updateDoc,
 } from '@firebase/firestore'
 import { getDoc, getDocs, where } from 'firebase/firestore'
-import { Challenge, ChallengeResult } from '../../types/Challenge'
+import { Challenge } from '../../types/Challenge'
 import { db } from '../firebaseConfig'
 
 const getChallengeCollection = () => {
@@ -98,10 +98,7 @@ export const deleteChallenge = async (id: string) => {
   }
 }
 
-export const updateChallenge = (
-  id: string,
-  newChallengeData: ChallengeResult
-) => {
+export const updateChallenge = (id: string, newChallengeData: any) => {
   try {
     const eventDoc = doc(db, 'challenges', id)
     updateDoc(eventDoc, newChallengeData)

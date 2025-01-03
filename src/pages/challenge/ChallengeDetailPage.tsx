@@ -7,6 +7,8 @@ import {
   Typography,
   List,
   Button,
+  Tabs,
+  Tab,
 } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { Timestamp } from 'firebase/firestore'
@@ -16,6 +18,8 @@ import DynamicForm from '@/components/dynamic-form'
 import PlayerList from './components/players-list/PlayerList'
 import { usePlayerItem } from './hooks/player-list/usePlayersList'
 import { getDate } from '@/helpers/format-date'
+import { MatchesPage } from '../dashboard/matches'
+import { TabPanel } from '@/components/tab-panel'
 
 const initialTournament = {
   id: '',
@@ -66,56 +70,78 @@ const ChallengeDetailPage = () => {
     setTitle('Torneio')
   }, [setTitle])
 
+  const [value, setValue] = useState(0)
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue)
+  }
+
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom>
         Torneio em {tournament.season.name}
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h6" gutterBottom>
-            Resumo das rodadas
-          </Typography>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                <strong>Data do Torneio:</strong>{' '}
-                {tournament?.dates[0].startDate &&
-                  getDate(tournament?.dates[0].startDate)}
-              </Typography>
-              <p>
-                <strong>Tempo de Rodada:</strong>{' '}
-                {tournament?.roundTime && `${tournament?.roundTime} minutos`}
-              </p>
-              <p>
-                <strong>Quantidade de Rodadas:</strong>{' '}
-                {tournament?.rounds && `${tournament?.rounds} rodadas`}
-              </p>
-              <List />
-            </CardContent>
-          </Card>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="basic tabs example"
+      >
+        <Tab label="Geral" />
+        <Tab label="Rodadas" />
+      </Tabs>
+      <TabPanel value={value} index={1}>
+        <Typography variant="body1" gutterBottom>
+          Aqui você pode configurar todas as rodadas do torneio.
+        </Typography>
+        <MatchesPage players={playerItems} />
+      </TabPanel>
+      <TabPanel value={value} index={0}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6" gutterBottom>
+              Resumo das rodadas
+            </Typography>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  <strong>Data do Torneio:</strong>{' '}
+                  {tournament?.dates[0].startDate &&
+                    getDate(tournament?.dates[0].startDate)}
+                </Typography>
+                <p>
+                  <strong>Tempo de Rodada:</strong>{' '}
+                  {tournament?.roundTime && `${tournament?.roundTime} minutos`}
+                </p>
+                <p>
+                  <strong>Quantidade de Rodadas:</strong>{' '}
+                  {tournament?.rounds && `${tournament?.rounds} rodadas`}
+                </p>
+                <List />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6" gutterBottom>
+              Resumo do resultado
+            </Typography>
+            <PlayerList />
+            {hasFinished && (
+              <Button
+                variant="contained"
+                style={{ marginTop: 15 }}
+                onClick={() => {
+                  updateChallenge(id, { challenge: { result: playerItems } })
+                }}
+              >
+                <Typography variant="button">Salvar resultado</Typography>
+              </Button>
+            )}
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <DynamicForm />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h6" gutterBottom>
-            Resumo do resultado
-          </Typography>
-          <PlayerList />
-          {hasFinished && (
-            <Button
-              variant="contained"
-              style={{ marginTop: 15 }}
-              onClick={() => {
-                updateChallenge(id, { challenge: { result: playerItems } })
-              }}
-            >
-              <Typography variant="button">Salvar resultado</Typography>
-            </Button>
-          )}
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <DynamicForm />
-        </Grid>
-      </Grid>
+      </TabPanel>
     </Box>
   )
 }

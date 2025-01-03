@@ -11,9 +11,17 @@ export type Challenge = {
   type: string
 }
 
+type Match = {
+  round: number
+  table: number
+  result: any
+  players: any[]
+}
+
 export type ChallengeResult = {
   challenge: {
-    result: PlayerItem[]
+    result?: PlayerItem[]
+    matches?: Match[]
   }
 }
 
