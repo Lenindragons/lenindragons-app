@@ -70,7 +70,7 @@ export const getRanking = (challenges: any[]) => {
         },
         i: number
       ) => ({
-        id: i,
+        id: i.id,
         place: i + 1,
         name: player.name,
         email: player.email,

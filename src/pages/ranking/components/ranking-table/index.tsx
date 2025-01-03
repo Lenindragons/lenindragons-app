@@ -9,6 +9,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
+import { Link } from 'react-router-dom'
 import MasterBall from '@/assets/masterball.png'
 import GreatBall from '@/assets/greatball.png'
 import UltraBall from '@/assets/ultraball.png'
@@ -138,7 +139,12 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
                     </Grid>
                   )}
                   <Grid item sx={{ color: index < 4 ? 'black' : null }}>
-                    {player.name}
+                    <Link
+                      style={{ color: 'black' }}
+                      to={`/profile/player/${player.playerId}`}
+                    >
+                      {player.name}
+                    </Link>
                   </Grid>
                 </Grid>
               </TableCell>

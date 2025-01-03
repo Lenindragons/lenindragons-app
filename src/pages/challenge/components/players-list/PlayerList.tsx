@@ -8,7 +8,7 @@ import {
   TableRow,
   Paper,
 } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { usePlayerItem } from '../../hooks/player-list/usePlayersList'
 import { PlayerItem, Pokemon } from '../../hooks/player-list/types'
 
@@ -43,7 +43,9 @@ const PlayerList = () => {
             return (
               <TableRow key={index}>
                 <TableCell>{row.place}</TableCell>
-                <TableCell>{row.name}</TableCell>
+                <TableCell>
+                  <Link to={`/profile/player/${row.id}`}>{row.name}</Link>
+                </TableCell>
                 <TableCell>{row.wins}</TableCell>
                 <TableCell>{row.looses}</TableCell>
                 <TableCell>{row.ties}</TableCell>

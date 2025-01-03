@@ -16,6 +16,15 @@ export const getPlayers = async () => {
   return []
 }
 
+export const getPlayerById = async (id: string) => {
+  try {
+    const playerDoc = await doc(db, 'players', id)
+    return playerDoc
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const deletePlayer = async (id: string) => {
   try {
     const eventDoc = doc(db, 'players', id)

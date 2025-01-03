@@ -22,6 +22,7 @@ import { DeckPage } from './pages/dashboard/decks/DeckPage'
 import { LeagueChallengePage } from './pages/league-challenge'
 import { ReportDetailPage } from './pages/dashboard/report/ReportDetailPage'
 import { SeasonCreatePage } from './pages/dashboard/seasons/SeasonCreatePage'
+import { PlayerPage } from './pages/player/PlayerPage'
 
 const allowedAll = ['admin', 'organizer', 'judge', 'player']
 const allowedAdmin = ['admin', 'organizer', 'judge']
@@ -42,6 +43,7 @@ export const App = () => {
                 <Routes>
                   <Route path="/" element={<MainPage />} />
                   <Route path="/ranking" element={<RankingPage />} />
+                  <Route path="/profile/player/:id" element={<PlayerPage />} />
                   <Route
                     path="/league-challenge"
                     element={<LeagueChallengePage />}
