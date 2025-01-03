@@ -72,7 +72,7 @@ const ChallengeDetailPage = () => {
 
   const [value, setValue] = useState(0)
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
 

@@ -186,7 +186,7 @@ export const MatchesPage = ({ players }: any) => {
   const [value, setValue] = useState(0)
   const [selectedValues, setSelectedValues] = useState<any>({})
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
 
