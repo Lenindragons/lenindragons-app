@@ -3,11 +3,13 @@
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
-import { Avatar, Box, Grid, Paper, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Grid, Paper, Typography } from '@mui/material'
 import { WebPageTemplate } from '@/templates/webpage/WebPage'
 import { getChallengeByDate } from '@/services/challenge'
 import { getPlayers } from '@/services/players'
 import { ProgressBar } from 'react-progressbar-fancy'
+import ScoreBoard from './components/score-bar/ScoreBar'
+import MatchList from './components/match-list/MatchList'
 
 export const PlayerPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -16,11 +18,13 @@ export const PlayerPage = () => {
   const [players, setPlayers] = useState<any[]>([])
 
   useEffect(() => {
+    // busca os ultimos challenges existentes de temporadas vigentes
     const fetchChallenges = async () => {
       const actualDate = Timestamp.now()
       getChallengeByDate(actualDate, setChallenges)
     }
 
+    // busca todos os jogadores cadastrados
     const fetchPlayers = async () => {
       const allPlayers = (await getPlayers()) || []
       setPlayers(allPlayers)
@@ -30,6 +34,7 @@ export const PlayerPage = () => {
     fetchPlayers()
   }, [])
 
+  // filtra para que apenas existam challenges de temporada
   const getSeasonChallenges = (challenges: any) => {
     if (!challenges || !challenges.length) {
       return []
@@ -40,6 +45,32 @@ export const PlayerPage = () => {
       .filter((challenge: any) => challenge.season.type === 'season')
   }
 
+  const filterByPlayerName = (obj: any, index: number, self: any) => {
+    const normalizedPlayers = JSON.stringify(
+      obj.players.map((player: any) =>
+        typeof player === "string" ? player : player.name
+      ).sort()
+    )
+
+    return index === self.findIndex((o: any) => {
+      const normalized = JSON.stringify(
+        o.players.map((player: any) =>
+          typeof player === "string" ? player : player.name
+        ).sort()
+      )
+      return normalized === normalizedPlayers
+    })
+  }
+
+  const filterByPlayerId = (playerId: string) => (match: any) =>
+    match?.players?.some((player: any) => player.id === playerId)
+
+  const filterSameMatch = (playerId: string, profileId: string) => (match: any) =>
+    match?.players?.some((player: any) => player.id === playerId) &&
+    match?.players?.some((player: any) => player.id === profileId)
+
+
+
   const getMatchesByPlayerId = (challenges: any, playerId: string) => {
     if (!challenges || !challenges.length) {
       return []
@@ -47,30 +78,19 @@ export const PlayerPage = () => {
 
     const seasonChallenges = getSeasonChallenges(challenges)
 
-    const matches = seasonChallenges
-      .map((challenge: any) => challenge.matches)
-
-    return matches
-      .flat()
-      .filter((obj: any, index: number, self: any) => {
-        const normalizedPlayers = JSON.stringify(
-          obj.players.map((player: any) =>
-            typeof player === "string" ? player : player.name
-          ).sort()
-        )
-
-        return index === self.findIndex((o: any) => {
-          const normalized = JSON.stringify(
-            o.players.map((player: any) =>
-              typeof player === "string" ? player : player.name
-            ).sort()
-          )
-          return normalized === normalizedPlayers
+    const seasonMatches = seasonChallenges
+      .map((challenge: any) => {
+        const dates = challenge.dates
+        const matches = challenge.matches.map((match: any) => {
+          return { ...match, dates }
         })
+        return matches
       })
-      .filter((match: any) =>
-        match?.players?.some((player: any) => player.id === playerId)
-      )
+
+    return seasonMatches
+      .flat()
+      .filter(filterByPlayerName)
+      .filter(filterByPlayerId(playerId))
   }
 
   const getPlayerImageById = (players: any, id: string) => {
@@ -83,12 +103,15 @@ export const PlayerPage = () => {
     }
 
     return challenges
-      .map((challenge: any) => challenge.matches)
+      .map((challenge: any) => {
+        const date = challenge.dates[0].startDate
+        const matches = challenge.matches.map((match: any) => {
+          return { ...match, date }
+        })
+        return matches
+      })
       .flat()
-      .filter((match: any) =>
-        match?.players?.some((player: any) => player.id === playerId) &&
-        match?.players?.some((player: any) => player.id === profileId)
-      )
+      .filter(filterSameMatch(playerId, profileId))
   }
 
   const calculatePerformance = ({ wins, looses, ties }: any) => {
@@ -108,7 +131,11 @@ export const PlayerPage = () => {
     return result
   }
 
-  const player = players.find((p) => p.id === playerId)
+  const profilePlayer = players.find((p) => p.id === playerId)
+
+  const getResult = (challenges: any, player: any, id: string, callback: any) =>
+    getMatchesWithPlayerId(challenges, player.id, id || '')
+      .filter(callback).length
 
   return (
     <WebPageTemplate>
@@ -123,59 +150,70 @@ export const PlayerPage = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar src={player?.image} sx={{ width: 150, height: 150 }} />
-            <Typography variant="h3">{player?.name}</Typography>
+            <Avatar src={profilePlayer?.image} sx={{ width: 150, height: 150 }} />
+            <Typography variant="h3">{profilePlayer?.name}</Typography>
           </Grid>
         </Grid>
 
         <Grid container spacing={2} sx={{ marginTop: 2, width: '100%' }}>
-          <Typography variant="h5">Ultimas matches</Typography>
-
           {getMatchesByPlayerId(challenges, playerId).map((match: any) => {
             return (
               <Grid item xs={12} key={match.id}>
                 {getMatches(match)
                   .map((player: any) => (
-                    <Paper key={player.id} sx={{ padding: 1 }}>
-                      <Grid container>
-                        <Grid
-                          item
-                          xs={12}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-between',
-                          }}
-                        >
-                          <Grid container xs={6} sx={{ alignItems: 'center', gap: 2 }}>
-                            <Avatar
-                              src={getPlayerImageById(players, player.id)}
-                              sx={{ width: 50, height: 50 }}
+
+                    <Grid container>
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          flexWrap: 'wrap',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <Accordion sx={{ width: '100%' }}>
+                          <AccordionSummary>
+                            <Grid container xs={6} sx={{ alignItems: 'center', gap: 2 }}>
+                              <Avatar
+                                src={getPlayerImageById(players, player.id)}
+                                sx={{ width: 50, height: 50 }}
+                              />
+                              <Typography>
+                                <Link style={{ color: 'black' }} to={`/profile/player/${player?.id}`}>
+                                  {player.name}
+                                </Link>
+                              </Typography>
+                            </Grid>
+                            <Grid xs={6}>
+                              <ProgressBar
+                                label={`Total de partidas na temporada: ${getMatchesWithPlayerId(challenges, player.id, id || '').length}`}
+                                score={calculatePerformance({
+                                  looses: getResult(challenges, player, id || '', (m: any) => m.result?.name === player.name),
+                                  ties: getResult(challenges, player, id || '', (m: any) => m.result === "tie"),
+                                  wins: getResult(challenges, player, id || '', (m: any) => (m.result?.name !== player.name) && (m.result !== "tie"))
+                                })}
+                                progressColor={"red"}
+                              />
+                            </Grid>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            <ScoreBoard {...{
+                              losses: getResult(challenges, player, id || '', (m: any) => m.result?.name === player.name),
+                              draws: getResult(challenges, player, id || '', (m: any) => m.result === "tie"),
+                              wins: getResult(challenges, player, id || '', (m: any) => (m.result?.name !== player.name) && (m.result !== "tie"))
+                            }} />
+
+                            <MatchList
+                              profilePlayerName={profilePlayer.name}
+                              playerName={player?.name}
+                              matches={getMatchesWithPlayerId(challenges, player.id, id || '')}
                             />
-                            <Typography>
-                              <Link style={{ color: 'black' }} to={`/profile/player/${player?.id}`}>
-                                {player.name}
-                              </Link>
-                            </Typography>
-                          </Grid>
-                          <Grid xs={6}>
-                            <ProgressBar
-                              label={`Total de partidas na temporada: ${getMatchesWithPlayerId(challenges, player.id, id || '').length}`}
-                              score={calculatePerformance({
-                                looses: getMatchesWithPlayerId(challenges, player.id, id || '')
-                                  .filter((m: any) => m.result?.name === player.name).length,
-                                ties: getMatchesWithPlayerId(challenges, player.id, id || '')
-                                  .filter((m: any) => m.result === "tie").length,
-                                wins: getMatchesWithPlayerId(challenges, player.id, id || '')
-                                  .filter((m: any) => (m.result?.name !== player.name) && (m.result !== "tie")).length
-                              })}
-                              progressColor={"red"}
-                            />
-                          </Grid>
-                        </Grid>
+                          </AccordionDetails>
+                        </Accordion>
                       </Grid>
-                    </Paper>
+                    </Grid>
                   ))}
               </Grid>
             )
