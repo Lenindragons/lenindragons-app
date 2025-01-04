@@ -66,7 +66,7 @@ export const ValuesAndPercentage = ({
   ]
 
   const getPrizeValue = (total: number, place: number) => {
-    return total * (getTopRanking(total)?.percentages[place].value / 100)
+    return total * (getTopRanking(total)?.percentages[place]?.value / 100)
   }
 
   const total = seasonResume?.playersValues || 0
@@ -134,7 +134,7 @@ export const ValuesAndPercentage = ({
                         {player.name}
                       </TableCell>
                       <TableCell style={{ textAlign: 'center' }}>
-                        R$ {getPrizeValue(total, player?.id).toFixed(2)}
+                        R$ {getPrizeValue(total, player?.place).toFixed(2)}
                       </TableCell>
                     </TableRow>
                   ))}
