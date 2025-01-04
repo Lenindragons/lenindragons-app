@@ -206,7 +206,7 @@ export const PlayerPage = () => {
                             }} />
 
                             <MatchList
-                              profilePlayerName={profilePlayer.name}
+                              profilePlayerName={profilePlayer?.name}
                               playerName={player?.name}
                               matches={getMatchesWithPlayerId(challenges, player.id, id || '')}
                             />
