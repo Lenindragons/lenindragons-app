@@ -10,6 +10,7 @@ import { getPlayers } from '@/services/players'
 import { ProgressBar } from 'react-progressbar-fancy'
 import ScoreBoard from './components/score-bar/ScoreBar'
 import MatchList from './components/match-list/MatchList'
+import { ChallengeHistory } from './components/challenge-history/ChallengeHistory'
 
 export const PlayerPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -104,8 +105,8 @@ export const PlayerPage = () => {
 
     return challenges
       .map((challenge: any) => {
-        const date = challenge.dates[0].startDate
-        const matches = challenge.matches.map((match: any) => {
+        const date = challenge?.dates[0].startDate
+        const matches = challenge?.matches?.map((match: any) => {
           return { ...match, date }
         })
         return matches
@@ -155,7 +156,25 @@ export const PlayerPage = () => {
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} sx={{ marginTop: 2, width: '100%' }}>
+        <Grid container spacing={2} sx={{ mt: 3 }}>
+          <Grid item xs={6}>
+            <Typography variant='h5' sx={{ margin: '10px 0' }}>
+              Ultimos Decks
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant='h5' sx={{ margin: '10px 0' }}>
+              Historico de partidas
+            </Typography>
+            <ChallengeHistory challenges={challenges || []} playerId={profilePlayer?.id} />
+          </Grid>
+        </Grid>
+
+
+        <Typography variant='h5' sx={{ margin: '10px 0' }}>
+          Ultimas Matches
+        </Typography>
+        <Grid container spacing={2} sx={{ width: '100%' }}>
           {getMatchesByPlayerId(challenges, playerId).map((match: any) => {
             return (
               <Grid item xs={12} key={match.id}>
@@ -173,7 +192,7 @@ export const PlayerPage = () => {
                           justifyContent: 'space-between',
                         }}
                       >
-                        <Accordion sx={{ width: '100%' }}>
+                        <Accordion sx={{ width: '100%' }} elevation={3}>
                           <AccordionSummary>
                             <Grid container xs={6} sx={{ alignItems: 'center', gap: 2 }}>
                               <Avatar

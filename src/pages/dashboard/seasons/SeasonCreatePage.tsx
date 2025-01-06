@@ -30,6 +30,7 @@ import DateRange from '@/components/commons/date-range/Daterage'
 import { getPokemons } from '@/services/poke-api/client'
 import 'react-quill/dist/quill.snow.css'
 import Dialog from '@/components/simple-dialog'
+import { formatDate } from '@/helpers/format-date'
 
 export const SeasonCreatePage = () => {
   const [options, setOptions] = useState<any[]>([])
@@ -128,14 +129,6 @@ export const SeasonCreatePage = () => {
   }
 
   const formValues = useWatch({ control })
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    })
-  }
 
   useEffect(() => {
     if (formValues.dates) {

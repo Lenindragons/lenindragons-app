@@ -21,7 +21,6 @@ const getEventCollection = () => {
 
 export const createEvent = async (data: Event): Promise<void> => {
   const sprite = await getSpriteByName(data.icon.name)
-  console.log({ sprite })
   try {
     const content = {
       name: data.name,
@@ -34,8 +33,6 @@ export const createEvent = async (data: Event): Promise<void> => {
       dates: data.dates,
       values: data.values,
     }
-
-    console.log({ content })
     await addDoc(getEventCollection(), {
       ...content,
       created: Timestamp.now(),

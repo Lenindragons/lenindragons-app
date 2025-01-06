@@ -25,7 +25,7 @@ const MatchList = ({ matches, playerName, profilePlayerName }: any) => {
       <Typography variant="h5" gutterBottom>
         Lista de Partidas
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} elevation={4}>
         <Table>
           <TableHead>
             <TableRow>

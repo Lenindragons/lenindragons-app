@@ -1,20 +1,13 @@
 import { Avatar, Box, Chip, Divider, Paper, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useChallenges } from '@/context/ChallengeContext'
+import { formatDate } from '@/helpers/format-date'
 
 export const ReportPage = () => {
   const { mappedChallenges } = useChallenges()
 
   const getMediaPlayers = (challengeCount: number, totalPlayers: number) => {
     return totalPlayers / challengeCount
-  }
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    })
   }
 
   return (

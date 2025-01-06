@@ -10,7 +10,7 @@ const ScoreBoard = ({ wins, draws, losses }: ScoreBoardProps) => {
   return (
     <Grid container spacing={2} style={{ padding: "10px" }}>
       <Grid item xs={3}>
-        <Card>
+        <Card elevation={5}>
           <CardContent>
             <Typography variant="h6" component="div">
               Total
@@ -20,7 +20,7 @@ const ScoreBoard = ({ wins, draws, losses }: ScoreBoardProps) => {
         </Card>
       </Grid>
       <Grid item xs={3}>
-        <Card>
+        <Card elevation={5}>
           <CardContent>
             <Typography variant="h6" component="div">
               🏆 Vitórias
@@ -30,7 +30,7 @@ const ScoreBoard = ({ wins, draws, losses }: ScoreBoardProps) => {
         </Card>
       </Grid>
       <Grid item xs={3}>
-        <Card>
+        <Card elevation={5}>
           <CardContent>
             <Typography variant="h6" component="div">
               🤝 Empates
@@ -40,7 +40,7 @@ const ScoreBoard = ({ wins, draws, losses }: ScoreBoardProps) => {
         </Card>
       </Grid>
       <Grid item xs={3}>
-        <Card>
+        <Card elevation={5}>
           <CardContent>
             <Typography variant="h6" component="div">
               ❌ Derrotas

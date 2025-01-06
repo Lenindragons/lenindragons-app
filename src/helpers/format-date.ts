@@ -33,6 +33,8 @@ export const getDate = (
   return ''
 }
 
+
+
 export interface UserMetadata {
   createdAt: string
   creationTime: string
@@ -40,8 +42,16 @@ export interface UserMetadata {
   lastSignInTime: string
 }
 
+export const formatDate = (date: Date) => {
+  return date.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+}
+
 export const formatUserMetadata = (metadata: UserMetadata) => {
-  const formatDate = (timestamp: string) => {
+  const formatDateInside = (timestamp: string) => {
     const date = new Date(parseInt(timestamp, 10))
     return date.toLocaleDateString('pt-BR', {
       day: 'numeric',
@@ -53,7 +63,7 @@ export const formatUserMetadata = (metadata: UserMetadata) => {
   }
 
   return {
-    createdAt: formatDate(metadata.createdAt),
+    createdAt: formatDateInside(metadata.createdAt),
     creationTime: new Date(metadata.creationTime).toLocaleDateString('pt-BR', {
       day: 'numeric',
       month: 'long',
@@ -61,7 +71,7 @@ export const formatUserMetadata = (metadata: UserMetadata) => {
       hour: 'numeric',
       minute: 'numeric',
     }),
-    lastLoginAt: formatDate(metadata.lastLoginAt),
+    lastLoginAt: formatDateInside(metadata.lastLoginAt),
     lastSignInTime: new Date(metadata.lastSignInTime).toLocaleDateString(
       'pt-BR',
       {
