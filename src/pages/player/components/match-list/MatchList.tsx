@@ -1,3 +1,4 @@
+import { formatDate } from "@/helpers/format-date";
 import {
   Table,
   TableBody,
@@ -62,7 +63,7 @@ const MatchList = ({ matches, playerName, profilePlayerName }: any) => {
                     {getDeck(match.players, profilePlayerName).name}
                   </div>
                 </TableCell>
-                <TableCell sx={{ textAlign: 'center' }}>{match.date.toDate().toLocaleDateString()}</TableCell>
+                <TableCell sx={{ textAlign: 'center' }}>{formatDate(match.date.toDate())}</TableCell>
                 <TableCell sx={{ textAlign: 'center' }}>{match.result?.name || "Empate"}</TableCell>
               </TableRow>
             ))}
