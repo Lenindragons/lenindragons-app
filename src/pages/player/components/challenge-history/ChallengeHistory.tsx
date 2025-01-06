@@ -12,14 +12,21 @@ export const ChallengeHistory = ({ challenges = [], playerId }: any) => {
     challenge.challenge?.result?.flat()?.some((history: any) => history.id === playerId))
 
   const challengesHistoryMapped = challengesHistory.map((history: any) => {
+    let name = history?.name
+
+    if (name === "default" || !name) {
+      name = history?.season?.name
+    }
+
     return {
+      name,
       date: formatDate(history?.dates[0]?.startDate?.toDate()),
       place: history?.challenge?.result?.flat()?.find((player: any) => player.id === playerId)?.place,
       id: history.id
     }
   })
 
-  return <>{challengesHistoryMapped?.map((playerHistory: { date: string, place: number, id: string }) => (
+  return <>{challengesHistoryMapped?.map((playerHistory: { date: string, place: number, id: string, name: string }) => (
 
     <div style={{ display: 'flex', marginBottom: '10px' }}>
       <div style={{
@@ -45,7 +52,7 @@ export const ChallengeHistory = ({ challenges = [], playerId }: any) => {
         justifyContent: 'center',
         gap: 3,
         borderRadius: '0 5px 5px 0',
-      }}> {getPlaceBall(playerHistory.place.toString())} <strong>{playerHistory.place}º lugar</strong></div>
+      }}> {getPlaceBall(playerHistory.place.toString())} <strong>{playerHistory.place}º lugar (em {playerHistory?.name})</strong></div>
     </div >
   )
   )}
