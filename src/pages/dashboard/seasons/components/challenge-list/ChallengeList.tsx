@@ -100,6 +100,7 @@ export const ChallengeList = ({ seasonId, challengeType }: { seasonId: string, c
                       <ChallengeForm
                         callback={(data) => editChallenge(challenge.id, data)}
                         data={challenge}
+                        challengeType={challengeType}
                       />
                     </Modal>
                   )}
