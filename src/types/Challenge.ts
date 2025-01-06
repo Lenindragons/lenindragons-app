@@ -3,6 +3,7 @@ import { Event, EventDate } from './Event'
 import { PlayerItem } from '../pages/challenge/hooks/player-list/types'
 
 export type Challenge = {
+  name: string
   rounds: number
   roundTime: number
   event: Event
