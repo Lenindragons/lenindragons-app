@@ -70,8 +70,6 @@ const ChallengeDetailPage = () => {
     setTitle('Torneio')
   }, [setTitle])
 
-  console.log('tournament', tournament)
-
   const [value, setValue] = useState(0)
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {

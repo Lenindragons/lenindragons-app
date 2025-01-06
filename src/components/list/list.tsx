@@ -25,7 +25,7 @@ import plIcon from '@/assets/pokemon-league-min.png'
 import limitless from '@/assets/limitless.png'
 import { useAuth } from '@/context/AuthContext'
 
-export const EventList = () => {
+export const EventList = ({ status }: { status: string }) => {
   const { user } = useAuth()
   const { events, removeEvent, editEvent } = useEvents()
 
@@ -75,7 +75,7 @@ export const EventList = () => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ paddingTop: 0 }}>
       <Table>
         <TableHead>
           <TableRow>
@@ -91,7 +91,10 @@ export const EventList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {events.map((event: any) => (
+          {events.filter((event: any) => getStatus(
+            event.dates[0].startDate,
+            event.dates[0].endDate
+          ).toLocaleLowerCase() === status).map((event: any) => (
             <TableRow key={event.id}>
               <TableCell>
                 <Avatar
@@ -143,10 +146,10 @@ export const EventList = () => {
                   variant="outlined"
                   color={
                     color[
-                      getStatus(
-                        event.dates[0].startDate,
-                        event.dates[0].endDate
-                      )
+                    getStatus(
+                      event.dates[0].startDate,
+                      event.dates[0].endDate
+                    )
                     ]
                   }
                 />
