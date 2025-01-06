@@ -23,6 +23,7 @@ import glcIcon from '@/assets/glc-logo-min.png'
 import lcIcon from '@/assets/league-challenge-min.png'
 import plIcon from '@/assets/pokemon-league-min.png'
 import limitless from '@/assets/limitless.png'
+import others from '@/assets/others.webp'
 import { useAuth } from '@/context/AuthContext'
 
 export const EventList = ({ status }: { status: string }) => {
@@ -48,6 +49,8 @@ export const EventList = ({ status }: { status: string }) => {
         return plIcon
       case 'season-online':
         return limitless
+      case 'others':
+        return others
       default:
         return ''
     }
