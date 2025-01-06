@@ -40,10 +40,10 @@ export const Table = ({
 
   const color: {
     [key in 'admin' | 'player' | 'judge' | 'organizer']:
-      | 'warning'
-      | 'primary'
-      | 'secondary'
-      | 'success'
+    | 'warning'
+    | 'primary'
+    | 'secondary'
+    | 'success'
   } = {
     admin: 'warning',
     player: 'primary',
