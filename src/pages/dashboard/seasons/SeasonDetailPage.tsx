@@ -21,6 +21,7 @@ import { Modal } from '@/components/commons/modal/Modal'
 import { ChallengeForm } from './forms/event/ChallengeForm'
 import { createChallenge } from '@/services/challenge'
 import { ChallengeList } from './components/challenge-list/ChallengeList'
+import BasicModal from '@/components/commons/modal/ModalMUI'
 
 export const SeasonDetailPage = () => {
   const { id = '' } = useParams()
@@ -92,9 +93,9 @@ export const SeasonDetailPage = () => {
             <Typography variant="h5" gutterBottom>
               Torneios da Temporada
             </Typography>
-            <Modal label="Adicionar torneio">
+            <BasicModal label="Adicionar torneio">
               <ChallengeForm callback={createChallenge} data={{ event }} challengeType={event?.type} />
-            </Modal>
+            </BasicModal>
           </Paper>
           <ChallengeList seasonId={id} challengeType={event?.type} />
         </Grid>

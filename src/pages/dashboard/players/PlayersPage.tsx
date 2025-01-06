@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Tab, TableContainer, Tabs } from '@mui/material'
 import { Table } from '@/components/table/Table'
-import { Modal } from '@/components/commons/modal/Modal'
 import { PlayerForm } from './forms/PlayerForm'
 import { usePage } from '@/context/PageContext'
 import { getPlayers } from '@/services/players'
 import { Box } from '../seasons/Seasons'
 import { TabPanel } from '@/components/tab-panel'
+import BasicModal from '@/components/commons/modal/ModalMUI'
 
 export const PlayersPage = () => {
   const { setTitle } = usePage()
@@ -45,9 +45,9 @@ export const PlayersPage = () => {
   return (
     <Box>
       <div style={{ marginBottom: 15 }}>
-        <Modal label="Adicionar jogador" isOpen={isOpen}>
+        <BasicModal label="Adicionar jogador">
           <PlayerForm callback={handleAddPlayer} closeModal={setIsOpen} />
-        </Modal>
+        </BasicModal>
       </div>
 
       <Tabs value={value} onChange={handleChange}>
