@@ -16,9 +16,10 @@ import { ChallengeFormContainer } from './challenge-form-style'
 type ChallengeFormProps = {
   callback: (data: any) => void
   data?: any
+  challengeType: string
 }
 
-export const ChallengeForm = ({ callback, data }: ChallengeFormProps) => {
+export const ChallengeForm = ({ callback, data, challengeType }: ChallengeFormProps) => {
   const { handleSubmit, register, control } = useForm({
     defaultValues: data,
   })
@@ -32,6 +33,16 @@ export const ChallengeForm = ({ callback, data }: ChallengeFormProps) => {
       <FormControl fullWidth sx={{ m: 1 }} style={{ display: 'flex', gap: 5 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+
+            <TextField
+              sx={{ display: challengeType !== 'others' ? 'none' : 'inherit' }}
+              label="Nome"
+              type="text"
+              variant="outlined"
+              defaultValue={challengeType !== 'others' ? "default" : ""}
+              {...register('name', { required: true })}
+            />
+
             <TextField
               label="Quantidade de rodadas"
               type="number"

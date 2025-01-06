@@ -28,6 +28,7 @@ export const SeasonDetailPage = () => {
     name: '',
     description: '',
     dates: [{ startDate: null, endDate: null }],
+    type: '',
     image: {
       name: '',
       url: '',
@@ -92,10 +93,10 @@ export const SeasonDetailPage = () => {
               Torneios da Temporada
             </Typography>
             <Modal label="Adicionar torneio">
-              <ChallengeForm callback={createChallenge} data={{ event }} />
+              <ChallengeForm callback={createChallenge} data={{ event }} challengeType={event?.type} />
             </Modal>
           </Paper>
-          <ChallengeList seasonId={id} />
+          <ChallengeList seasonId={id} challengeType={event?.type} />
         </Grid>
       </Grid>
     </Box>

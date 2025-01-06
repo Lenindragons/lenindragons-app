@@ -22,6 +22,7 @@ const getChallengeCollection = () => {
 export const createChallenge = async (data: Challenge): Promise<void> => {
   try {
     const content = {
+      name: data.name,
       rounds: data.rounds,
       roundTime: data.roundTime,
       seasonId: data.event.id,

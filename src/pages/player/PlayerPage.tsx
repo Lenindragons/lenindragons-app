@@ -109,14 +109,15 @@ export const PlayerPage = () => {
         const matches = challenge?.matches?.map((match: any) => {
           return { ...match, date }
         })
+
         return matches
       })
       .flat()
       .filter(filterSameMatch(playerId, profileId))
   }
 
-  const calculatePerformance = ({ wins, looses, ties }: any) => {
-    const totalGames = wins + looses + ties
+  const calculatePerformance = ({ wins, losses, ties }: any) => {
+    const totalGames = wins + losses + ties
 
     if (totalGames === 0) return 50
 
@@ -209,7 +210,7 @@ export const PlayerPage = () => {
                               <ProgressBar
                                 label={`Total de partidas na temporada: ${getMatchesWithPlayerId(challenges, player.id, id || '').length}`}
                                 score={calculatePerformance({
-                                  looses: getResult(challenges, player, id || '', (m: any) => m.result?.name === player.name),
+                                  losses: getResult(challenges, player, id || '', (m: any) => m.result?.name === player.name),
                                   ties: getResult(challenges, player, id || '', (m: any) => m.result === "tie"),
                                   wins: getResult(challenges, player, id || '', (m: any) => (m.result?.name !== player.name) && (m.result !== "tie"))
                                 })}

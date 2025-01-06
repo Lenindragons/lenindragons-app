@@ -19,7 +19,7 @@ import { ChallengeForm } from '../../forms/event/ChallengeForm'
 import { getDate } from '@/helpers/format-date'
 import { useAuth } from '@/context/AuthContext'
 
-export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
+export const ChallengeList = ({ seasonId, challengeType }: { seasonId: string, challengeType: string }) => {
   const { user } = useAuth()
   const {
     challenges = [],
@@ -46,6 +46,7 @@ export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
       <Table>
         <TableHead>
           <TableRow>
+            {challengeType === 'others' && <TableCell>Nome</TableCell>}
             <TableCell>Data</TableCell>
             <TableCell>Rodadas</TableCell>
             <TableCell>Tempo da Rodada</TableCell>
@@ -56,6 +57,16 @@ export const ChallengeList = ({ seasonId }: { seasonId: string }) => {
         <TableBody>
           {challenges.map((challenge: any) => (
             <TableRow key={challenge.id}>
+              {challengeType === 'others' && (
+                <TableCell>
+                  <Link
+                    to={`/challenges/${challenge.id}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Typography variant="body2">{challenge.name}</Typography>
+                  </Link>
+                </TableCell>
+              )}
               <TableCell>
                 <Link
                   to={`/challenges/${challenge.id}`}

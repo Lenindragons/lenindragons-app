@@ -87,7 +87,7 @@ const TableMatches = ({
                       <Radio
                         checked={
                           selectedValues[
-                            `result_match_player_${round}_${index}`
+                          `result_match_player_${round}_${index}`
                           ] === `match_player1_${round}_${index}`
                         }
                         onChange={handleOptionsSelect}
@@ -131,7 +131,7 @@ const TableMatches = ({
                       <Radio
                         checked={
                           selectedValues[
-                            `result_match_player_${round}_${index}`
+                          `result_match_player_${round}_${index}`
                           ] === `match_player2_${round}_${index}`
                         }
                         onChange={handleOptionsSelect}
@@ -150,7 +150,7 @@ const TableMatches = ({
                     <Radio
                       checked={
                         selectedValues[
-                          `result_match_player_${round}_${index}`
+                        `result_match_player_${round}_${index}`
                         ] === `match_tie_${round}_${index}`
                       }
                       onChange={handleOptionsSelect}
@@ -206,7 +206,7 @@ export const MatchesPage = ({ players, numberOfRounds }: any) => {
         const resultMatch =
           resultMatchPlayer === `match_tie_round${round}_${table - 1}`
             ? 'tie'
-            : player1
+            : data[resultMatchPlayer]
 
         result.push({
           round,
