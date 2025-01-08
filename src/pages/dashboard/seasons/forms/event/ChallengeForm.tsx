@@ -89,7 +89,7 @@ export const ChallengeForm = ({ callback, data, challengeType }: ChallengeFormPr
               {...register('roundTime', { required: true })}
             />
           </div>
-          <DateRange label="Data do torneio:" name="dates" control={control} />
+          <DateRange name="dates" control={control} />
         </div>
         <Button>Cadastrar Torneio</Button>
       </FormControl>

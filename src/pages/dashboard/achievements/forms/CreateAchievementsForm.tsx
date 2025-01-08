@@ -1,20 +1,23 @@
 import { useForm, Controller } from "react-hook-form";
-import { TextField, Button, Box } from "@mui/material";
+import { TextField, Button, Box, Select, MenuItem, FormControl, FormHelperText } from "@mui/material";
+import DateRange from "@/components/commons/date-range/Daterage";
 
 interface FormData {
   name: string;
   points: number;
   description: string;
   dates: Date | null;
+  type: string;
 }
 
 const CreateAchievementsForm = ({ values, callback }: any) => {
   const { handleSubmit, control, reset } = useForm<FormData>({
     defaultValues: values || {
       name: "",
+      type: "",
       points: 0,
       description: "",
-      dates: null,
+      dates: [{ startDate: "", endDate: "" }],
     },
   });
 
@@ -49,6 +52,32 @@ const CreateAchievementsForm = ({ values, callback }: any) => {
           />
         )}
       />
+
+      <Controller
+        name="type"
+        control={control}
+        rules={{ required: "O tipo é obrigatório" }}
+        render={({ field, fieldState }) => (
+          <FormControl>
+            <Select
+              {...field}
+              label="Tipo"
+              variant="outlined"
+              error={!!fieldState.error}
+              fullWidth
+            >
+
+              <MenuItem value="remove">Remover</MenuItem>
+              <MenuItem value="add">Adicionar</MenuItem>
+              <MenuItem value="multiply">Multiplicar</MenuItem>
+              <MenuItem value="divide">Dividir</MenuItem>
+            </Select>
+            <FormHelperText>{fieldState.error?.message}</FormHelperText>
+          </FormControl>
+        )}
+      />
+
+      <DateRange name="dates" control={control} />
 
       <Controller
         name="points"

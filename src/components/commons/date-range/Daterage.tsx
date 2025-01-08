@@ -60,7 +60,9 @@ const DateRangeComponent = ({ name, control }: DatePickerProps) => {
             <DateRange
               onChange={(item) => field.onChange([item.selection])}
               moveRangeOnFirstSelection={false}
-              rangeColors={[theme.colors.primary]}
+              rangeColors={[theme?.colors?.primary, theme?.colors?.secondary]}
+              color={theme?.colors?.primary}
+              onRangeFocusChange={(x) => { console.log(x) }}
               ranges={[getFieldValues(field)[0] || field.value[0]]}
             />
           )

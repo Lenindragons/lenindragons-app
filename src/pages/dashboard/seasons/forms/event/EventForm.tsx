@@ -145,7 +145,6 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
           </div>
           <div>
             <DateRange
-              label="Data de Inicio e Fim da Temporada:"
               name="dates"
               control={control}
             />

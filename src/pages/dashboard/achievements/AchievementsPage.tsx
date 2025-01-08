@@ -31,6 +31,12 @@ export const AchievementsPage = () => {
     updateAchievement(id, newAchievementsData)
   }
 
+  const achievementsTypes = {
+    'add': 'Adição de pontos',
+    'remove': 'Remoção de pontos',
+    'multiply': 'Multiplicação de pontos',
+    'divide': 'Divisão de pontos'
+  }
 
   return <Box sx={{ p: "16px", m: "16px" }}>
 
@@ -43,8 +49,10 @@ export const AchievementsPage = () => {
         <TableHead>
           <TableRow>
             <TableCell sx={{ width: "30%", fontWeight: "bold" }}>Nome</TableCell>
-            <TableCell sx={{ width: "50%", fontWeight: "bold", textAlign: 'center' }}>Atividade</TableCell>
-            <TableCell sx={{ width: "10%", fontWeight: "bold", textAlign: 'center' }}>Pontuação</TableCell>
+
+            <TableCell sx={{ width: "40%", fontWeight: "bold", textAlign: 'center' }}>Atividade</TableCell>
+            <TableCell sx={{ width: "15%", fontWeight: "bold", textAlign: 'center' }}>Tipo</TableCell>
+            <TableCell sx={{ width: "5%", fontWeight: "bold", textAlign: 'center' }}>Pontuação</TableCell>
             <TableCell sx={{ width: "10%", fontWeight: "bold", textAlign: 'center' }}>Ações</TableCell>
           </TableRow>
         </TableHead>
@@ -53,6 +61,7 @@ export const AchievementsPage = () => {
             <TableRow key={achievement.id}>
               <TableCell><strong>{achievement.name}</strong></TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{achievement.description}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{achievementsTypes[achievement?.type || 'undefined']}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{achievement.points}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>
                 <div style={{ display: 'flex', gap: 10, width: '100%' }}>
