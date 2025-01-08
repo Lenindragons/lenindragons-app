@@ -66,7 +66,7 @@ export const ValuesAndPercentage = ({
   ]
 
   const getPrizeValue = (total: number, place: number) => {
-    return total * (getTopRanking(total)?.percentages[place]?.value / 100)
+    return total * (getTopRanking(total)?.percentages[place - 1]?.value / 100)
   }
 
   const total = seasonResume?.playersValues || 0

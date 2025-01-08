@@ -32,6 +32,7 @@ import {
   Brightness4 as Brightness4Icon,
   Brightness7 as Brightness7Icon,
   BarChart as BarChartIcon,
+  NoteAdd as NoteAddIcon,
 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
@@ -84,6 +85,12 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
       icon: <CatchingPokemonIcon />,
       url: 'players',
       permission: ['admin', 'judge'],
+    },
+    {
+      text: 'Atividades',
+      icon: <NoteAddIcon />,
+      url: 'achievements',
+      permission: ['admin', 'organizer'],
     },
   ]
 

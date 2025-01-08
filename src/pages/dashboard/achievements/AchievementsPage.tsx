@@ -1,0 +1,69 @@
+import BasicModal from "@/components/commons/modal/ModalMUI"
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { useEffect, useState } from "react"
+import CreateAchievementsForm from "./forms/CreateAchievementsForm"
+import { createAchievement, deleteAchievement, getAchievements, updateAchievement } from "@/services/achievements"
+
+export const AchievementsPage = () => {
+  const [achievements, setAchievements] = useState<any>([])
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      setAchievements(await getAchievements());
+    }
+
+    fetchAchievements();
+  }, []);
+
+  const createItem = (newAchievementsData: any) => {
+    setAchievements([...achievements, newAchievementsData])
+    createAchievement(newAchievementsData)
+  }
+
+  const deleteItem = (id: string) => () => {
+    const newAchievements = achievements.filter((achievement: any) => achievement.id !== id)
+    setAchievements(newAchievements)
+    deleteAchievement(id)
+  }
+
+  const editItem = (id: string) => (newAchievementsData: any) => {
+    console.log('Editando item', id)
+    updateAchievement(id, newAchievementsData)
+  }
+
+
+  return <Box sx={{ p: "16px", m: "16px" }}>
+
+    <BasicModal label="Criar Atividade">
+      <CreateAchievementsForm callback={createItem} />
+    </BasicModal>
+
+    <TableContainer component={Paper} sx={{ mt: 2 }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ width: "30%", fontWeight: "bold" }}>Nome</TableCell>
+            <TableCell sx={{ width: "50%", fontWeight: "bold", textAlign: 'center' }}>Atividade</TableCell>
+            <TableCell sx={{ width: "10%", fontWeight: "bold", textAlign: 'center' }}>Pontuação</TableCell>
+            <TableCell sx={{ width: "10%", fontWeight: "bold", textAlign: 'center' }}>Ações</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {achievements.map((achievement: any) => (
+            <TableRow key={achievement.id}>
+              <TableCell>{achievement.name}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{achievement.description}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{achievement.points}</TableCell>
+              <TableCell sx={{ textAlign: 'center', display: 'flex', gap: 2 }}>
+                <BasicModal label="Editar">
+                  <CreateAchievementsForm values={achievement} callback={editItem(achievement.id)} />
+                </BasicModal>
+                <Button variant="contained" color="error" onClick={deleteItem(achievement.id)}>Excluir</Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Box>
+}
