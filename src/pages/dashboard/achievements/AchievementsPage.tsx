@@ -51,14 +51,16 @@ export const AchievementsPage = () => {
         <TableBody>
           {achievements.map((achievement: any) => (
             <TableRow key={achievement.id}>
-              <TableCell>{achievement.name}</TableCell>
+              <TableCell><strong>{achievement.name}</strong></TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{achievement.description}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{achievement.points}</TableCell>
-              <TableCell sx={{ textAlign: 'center', display: 'flex', gap: 2 }}>
-                <BasicModal label="Editar">
-                  <CreateAchievementsForm values={achievement} callback={editItem(achievement.id)} />
-                </BasicModal>
-                <Button variant="contained" color="error" onClick={deleteItem(achievement.id)}>Excluir</Button>
+              <TableCell sx={{ textAlign: 'center' }}>
+                <div style={{ display: 'flex', gap: 10, width: '100%' }}>
+                  <BasicModal label="Editar">
+                    <CreateAchievementsForm values={achievement} callback={editItem(achievement.id)} />
+                  </BasicModal>
+                  <Button variant="contained" color="error" onClick={deleteItem(achievement.id)}>Excluir</Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}
