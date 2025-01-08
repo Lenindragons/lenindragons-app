@@ -11,20 +11,23 @@ export const ChallengeHistory = ({ challenges = [], playerId }: any) => {
   const challengesHistory = challenges?.filter((challenge: any) =>
     challenge.challenge?.result?.flat()?.some((history: any) => history.id === playerId))
 
-  const challengesHistoryMapped = challengesHistory.map((history: any) => {
-    let name = history?.name
+  const challengesHistoryMapped = challengesHistory
+    .sort((a: any, b: any) => b.dates[0].startDate.toDate() - a.dates[0].startDate.toDate())
+    .map((history: any) => {
 
-    if (name === "default" || !name) {
-      name = history?.season?.name
-    }
+      let name = history?.name
 
-    return {
-      name,
-      date: formatDate(history?.dates[0]?.startDate?.toDate()),
-      place: history?.challenge?.result?.flat()?.find((player: any) => player.id === playerId)?.place,
-      id: history.id
-    }
-  })
+      if (name === "default" || !name) {
+        name = history?.season?.name
+      }
+
+      return {
+        name,
+        date: formatDate(history?.dates[0]?.startDate?.toDate()),
+        place: history?.challenge?.result?.flat()?.find((player: any) => player.id === playerId)?.place,
+        id: history.id
+      }
+    })
 
   return <>{challengesHistoryMapped?.map((playerHistory: { date: string, place: number, id: string, name: string }) => (
 

@@ -29,7 +29,7 @@ export const PlayersPage = () => {
     fetchPlayers()
   }, [])
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [setIsOpen] = useState(false)
 
   const handleAddPlayer = (data: any) => {
     setPlayers([

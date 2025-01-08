@@ -38,7 +38,7 @@ const MatchList = ({ matches, playerName, profilePlayerName }: any) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {matches.map((match: any, index: number) => (
+            {matches?.sort((a: any, b: any) => b.date.toDate() - a.date.toDate())?.map((match: any, index: number) => (
               <TableRow key={index}>
                 <TableCell>
                   <div style={{ display: 'flex', gap: 5, alignItems: 'center', justifyItems: 'center' }}>
