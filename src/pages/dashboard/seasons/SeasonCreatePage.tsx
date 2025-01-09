@@ -198,7 +198,6 @@ export const SeasonCreatePage = () => {
                   title={labelDate === '' ? 'Adicionar periodo' : labelDate}
                 >
                   <DateRange
-                    label="Data de Inicio e Fim da Temporada:"
                     name="dates"
                     control={control}
                   />

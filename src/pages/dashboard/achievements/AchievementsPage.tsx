@@ -1,8 +1,9 @@
 import BasicModal from "@/components/commons/modal/ModalMUI"
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import CreateAchievementsForm from "./forms/CreateAchievementsForm"
 import { createAchievement, deleteAchievement, getAchievements, updateAchievement } from "@/services/achievements"
+import { getDate } from "@/helpers/format-date"
 
 export const AchievementsPage = () => {
   const [achievements, setAchievements] = useState<any>([])
@@ -38,6 +39,11 @@ export const AchievementsPage = () => {
     'divide': 'Divisão de pontos'
   }
 
+  const getLabel = (type = null) => {
+    if (!type) return ''
+    return achievementsTypes[type]
+  }
+
   return <Box sx={{ p: "16px", m: "16px" }}>
 
     <BasicModal label="Criar Atividade">
@@ -53,6 +59,8 @@ export const AchievementsPage = () => {
             <TableCell sx={{ width: "40%", fontWeight: "bold", textAlign: 'center' }}>Atividade</TableCell>
             <TableCell sx={{ width: "15%", fontWeight: "bold", textAlign: 'center' }}>Tipo</TableCell>
             <TableCell sx={{ width: "5%", fontWeight: "bold", textAlign: 'center' }}>Pontuação</TableCell>
+            <TableCell sx={{ width: "5%", fontWeight: "bold", textAlign: 'center' }}>Data de Inicio</TableCell>
+            <TableCell sx={{ width: "5%", fontWeight: "bold", textAlign: 'center' }}>Data de Fim</TableCell>
             <TableCell sx={{ width: "10%", fontWeight: "bold", textAlign: 'center' }}>Ações</TableCell>
           </TableRow>
         </TableHead>
@@ -61,8 +69,18 @@ export const AchievementsPage = () => {
             <TableRow key={achievement.id}>
               <TableCell><strong>{achievement.name}</strong></TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{achievement.description}</TableCell>
-              <TableCell sx={{ textAlign: 'center' }}>{achievementsTypes[achievement?.type || 'undefined']}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{getLabel(achievement.type)}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{achievement.points}</TableCell>
+              <TableCell style={{ textAlign: 'center' }}>
+                <Typography variant="body2">
+                  {achievement?.dates && getDate(achievement?.dates[0]?.startDate)}
+                </Typography>
+              </TableCell>
+              <TableCell style={{ textAlign: 'center' }}>
+                <Typography variant="body2">
+                  {achievement?.dates && getDate(achievement?.dates[0]?.endDate)}
+                </Typography>
+              </TableCell>
               <TableCell sx={{ textAlign: 'center' }}>
                 <div style={{ display: 'flex', gap: 10, width: '100%' }}>
                   <BasicModal label="Editar">

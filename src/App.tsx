@@ -24,6 +24,7 @@ import { ReportDetailPage } from './pages/dashboard/report/ReportDetailPage'
 import { SeasonCreatePage } from './pages/dashboard/seasons/SeasonCreatePage'
 import { PlayerPage } from './pages/player/PlayerPage'
 import { AchievementsPage } from './pages/dashboard/achievements/AchievementsPage'
+import { PlayerDetailsPage } from './pages/dashboard/players/PlayerDetailsPage'
 
 const allowedAll = ['admin', 'organizer', 'judge', 'player']
 const allowedAdmin = ['admin', 'organizer', 'judge']
@@ -91,6 +92,7 @@ export const App = () => {
                     element={<PrivateRoutes allowedTypes={allowedAdminJudge} />}
                   >
                     <Route path="/players" element={<PlayersPage />} />
+                    <Route path="/players/:id" element={<PlayerDetailsPage />} />
                     <Route path="/decks" element={<DeckPage />} />
                   </Route>
                 </Routes>

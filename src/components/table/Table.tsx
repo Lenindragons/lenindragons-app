@@ -14,6 +14,8 @@ import {
 } from '@mui/material'
 import { deletePlayer } from '../../services/players'
 import { useAuth } from '@/context/AuthContext'
+import { Link } from 'react-router-dom'
+import { useTheme } from '@emotion/react'
 
 export const Table = ({
   rows,
@@ -28,6 +30,7 @@ export const Table = ({
   setPlayers: React.Dispatch<React.SetStateAction<any[]>>
 }) => {
   const { user } = useAuth()
+  const theme = useTheme() as any
   const removePlayer = (id: string) => {
     const confirmed = window.confirm(
       'Você tem certeza que quer deletar esse jogador?'
@@ -72,7 +75,10 @@ export const Table = ({
             }) => (
               <TableRow key={player.id}>
                 <TableCell>
-                  <Typography variant="body2">{player.name}</Typography>
+                  <Typography variant="body2">
+                    <Link to={`/players/${player.id}`} style={{
+                      color: theme?.palette?.primary?.main,
+                    }}>{player.name}</Link></Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2">{player.email}</Typography>
@@ -99,6 +105,6 @@ export const Table = ({
           )}
         </TableBody>
       </TableUi>
-    </TableContainer>
+    </TableContainer >
   )
 }
