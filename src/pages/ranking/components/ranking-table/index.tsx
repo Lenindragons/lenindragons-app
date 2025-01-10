@@ -34,7 +34,7 @@ const fadeIn = keyframes`
   }
 `
 
-export const RankingTable = ({ rows }: { rows: RankedPlayer[] }) => {
+export const RankingTable = ({ rows }: { rows: RankedPlayer[], players: any[] }) => {
   return (
     <TableContainer component={Paper}>
       <Table>

@@ -25,10 +25,6 @@ const MatchesList = ({ matches }: any) => {
     rodadas[match.round].push(match)
   })
 
-  rodadas.map((rodada) => {
-    console.log(JSON.stringify(rodada))
-  })
-
   const [value, setValue] = useState(0)
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {

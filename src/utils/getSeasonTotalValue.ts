@@ -15,7 +15,7 @@ const getTopPlayers = (value: number) => {
   return 8
 }
 
-export const getSeasonResume = async (seasonId: string) => {
+export const getSeasonResume = async (seasonId: string, players: any[]) => {
   const season = await getDocChallengesBySeasonId(seasonId)
 
   const mappedSeason = season.map((challenges) => ({
@@ -24,7 +24,7 @@ export const getSeasonResume = async (seasonId: string) => {
     ).length,
   }))
 
-  const ranking = getRanking(season)
+  const ranking = getRanking(season, players)
   const totalPlayers = mappedSeason.reduce(
     (acc, cur) => acc + cur.totalPlayers,
     0

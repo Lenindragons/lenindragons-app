@@ -28,7 +28,6 @@ export const AchievementsPage = () => {
   }
 
   const editItem = (id: string) => (newAchievementsData: any) => {
-    console.log('Editando item', id)
     updateAchievement(id, newAchievementsData)
   }
 

@@ -1,3 +1,5 @@
+import { formatDate } from "@/helpers/format-date"
+
 const isPenalized = (player: any) =>
   player.deck.name.toLowerCase().includes('não compareceu')
 
@@ -22,28 +24,59 @@ function getPoints(player: any, challengeType: string) {
   }
 }
 
-export const getRanking = (challenges: any[]) => {
+const applyAchievements = (achievements: any[], points: number) => {
+  if (achievements.length === 0) return points
+
+  let totalPoints = 0
+  achievements.forEach((achievement: any) => {
+    if (achievement.type === 'multiply') {
+      totalPoints = points * parseInt(achievement?.points)
+    }
+
+    if (achievement.type === 'add') {
+      totalPoints = points + parseInt(achievement?.points)
+    }
+
+    if (achievement.type === 'remove') {
+      totalPoints = points - parseInt(achievement?.points)
+    }
+  })
+
+  return totalPoints
+}
+
+export const getRanking = (challenges: any[], firebasePlayers: any[]) => {
   const filtered = challenges.filter(
     (challenge: { challenge: any }) => challenge.challenge
   )
   if (!filtered.length) return []
 
   const players = filtered.reduce(
-    (acc: any[], challenge: { challenge: { result: any[] }; type: string }) => {
+    (acc: any[], challenge: { challenge: { result: any[] }, dates: any, type: string }) => {
       challenge.challenge.result.forEach(
         (player: { name: any; place: any; id: string }, foreachIndex: any) => {
           const index = acc.findIndex(
             (p: { name: any }) => p.name === player.name
           )
+
+          const challengeDate = formatDate(challenge?.dates[0].startDate.toDate())
+          const achievements = firebasePlayers.find(fbPlayer => fbPlayer.id === player.id)?.achievements || []
+          const playerAchievements = achievements.filter((c: any) => {
+            return formatDate(c?.achievementDate.toDate()) === challengeDate
+          })
+
+          const dayPoints = getPoints(player, challenge?.type || '')
+          const total = applyAchievements(playerAchievements, dayPoints)
+
           if (index === -1) {
             acc.push({
               ...player,
-              points: getPoints(player, challenge?.type || ''),
+              points: total,
               playerId: player.id,
               id: foreachIndex,
             })
           } else {
-            acc[index].points += getPoints(player, challenge?.type || '')
+            acc[index].points += total
           }
         }
       )

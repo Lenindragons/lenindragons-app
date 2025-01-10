@@ -39,8 +39,6 @@ export const deleteAchievement = async (id: string) => {
 
 export const updateAchievement = (id: string, newAchievementData: any) => {
   try {
-    console.log('Updating achievement', id)
-    console.log('New data', newAchievementData)
     const eventDoc = doc(db, 'achievements', id)
     updateDoc(eventDoc, newAchievementData)
   } catch (err) {

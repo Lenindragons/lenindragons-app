@@ -11,6 +11,7 @@ import { getChallengeBySeasonId } from '@/services/challenge'
 import { getRanking } from './getRanking'
 import { RankingTable } from '../ranking-table'
 import { Loading } from '@/components/commons/loading/Loading'
+import { getPlayers } from '@/services/players';
 
 const RulesBox = styled.div`
   marginTop: 20px;
@@ -69,6 +70,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
   const [challenges, setChallenges] = useState([])
   const [rows, setRows] = useState([])
   const [value, setValue] = useState(0)
+  const [players, setPlayers] = useState<any>([])
   const [collapseOpen, setCollapseOpen] = useState(false)
 
   useEffect(() => {
@@ -84,6 +86,15 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
     }
   }, [seasons])
 
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      const storedPlayers = await getPlayers()
+      setPlayers(storedPlayers)
+    }
+
+    fetchPlayers()
+  }, [])
+
   const fetchChallenges = (seasonId: string) => {
     getChallengeBySeasonId(seasonId, setChallenges)
   }
@@ -98,7 +109,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
 
   useEffect(() => {
     if (challenges.length) {
-      setRows(getRanking(challenges || []))
+      setRows(getRanking(challenges || [], players))
     }
   }, [challenges])
 
@@ -165,7 +176,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
               <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
             ))}
           </Tabs>
-          <RankingTable rows={rows} />
+          <RankingTable rows={rows} players={players} />
         </Grid>
       </Grid>
     </Box>

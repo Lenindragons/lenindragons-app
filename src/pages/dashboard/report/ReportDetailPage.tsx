@@ -17,6 +17,7 @@ import { RankingTable } from '@/pages/ranking/components/ranking-table'
 import { getRanking } from '@/pages/ranking/components/ranking/getRanking'
 import { useChallenges } from '@/context/ChallengeContext'
 import { ValuesAndPercentage } from './components/ValuesAndPercentage'
+import { getPlayers } from '@/services/players'
 
 export const ReportDetailPage = () => {
   const { id } = useParams()
@@ -24,7 +25,17 @@ export const ReportDetailPage = () => {
   const mappedChallengeById = getMappedChallengeById(id)
   const [challenges] = useState<any>(mappedChallengeById?.challenges || [])
   const [rankedPlayers, setRankedPlayers] = useState<any>([])
+  const [firebasePlayers, setFirebasePlayers] = useState<any>([])
   const [frenquency, setFrenquency] = useState<any>([])
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      const storedPlayers = await getPlayers()
+      setFirebasePlayers(storedPlayers)
+    }
+
+    fetchPlayers()
+  }, [])
 
   useEffect(() => {
     const players = mappedChallengeById?.challenges
@@ -47,8 +58,8 @@ export const ReportDetailPage = () => {
       )
 
     setFrenquency(players)
-    setRankedPlayers(getRanking(mappedChallengeById?.challenges || []))
-  }, [mappedChallengeById])
+    setRankedPlayers(getRanking(mappedChallengeById?.challenges || [], firebasePlayers))
+  }, [mappedChallengeById, firebasePlayers])
 
   const seasonValues = mappedChallengeById?.seasonChallengeValues || null
 
@@ -105,7 +116,7 @@ export const ReportDetailPage = () => {
               <Typography variant="h5" mb={2}>
                 Ranking Geral
               </Typography>
-              <RankingTable rows={rankedPlayers?.slice(0, 8)} />
+              <RankingTable rows={rankedPlayers?.slice(0, 8)} players={firebasePlayers} />
             </Grid>
             <Grid item>
               <Typography variant="h5" mb={2}>
