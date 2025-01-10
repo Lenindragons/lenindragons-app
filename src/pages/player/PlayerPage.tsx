@@ -12,6 +12,7 @@ import ScoreBoard from './components/score-bar/ScoreBar'
 import MatchList from './components/match-list/MatchList'
 import { ChallengeHistory } from './components/challenge-history/ChallengeHistory'
 import { DeckListHistory } from './components/deck-list-history/DeckListHistory'
+import { AchievementHistory } from './components/achievement-history/AchievementHistory'
 
 export const PlayerPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -159,6 +160,12 @@ export const PlayerPage = () => {
         </Grid>
 
         <Grid container spacing={2} sx={{ mt: 3 }}>
+          <Grid item xs={12}>
+            <Typography variant='h5' sx={{ margin: '10px 0' }}>
+              Ultimas Atividades concluidas
+            </Typography>
+            <AchievementHistory playerId={profilePlayer?.id} />
+          </Grid>
           <Grid item xs={6}>
             <Typography variant='h5' sx={{ margin: '10px 0' }}>
               Ultimos Decks
