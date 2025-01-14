@@ -111,7 +111,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
     if (challenges.length) {
       setRows(getRanking(challenges || [], players))
     }
-  }, [challenges])
+  }, [challenges, players])
 
   const handleChange = (_e: React.SyntheticEvent, newValue: number) => {
     setSeasonSelected(seasons[newValue]?.id)
