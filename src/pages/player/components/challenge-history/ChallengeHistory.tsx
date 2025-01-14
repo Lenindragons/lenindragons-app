@@ -2,7 +2,7 @@ import { formatDate } from "@/helpers/format-date"
 import { getPlaceBall } from "@/utils/getPlaceBall"
 import { Link } from "react-router-dom"
 
-export const ChallengeHistory = ({ challenges = [], playerId }: any) => {
+const ChallengeHistory = ({ challenges = [], playerId }: any) => {
 
   if (!challenges.length) {
     return null
@@ -62,3 +62,5 @@ export const ChallengeHistory = ({ challenges = [], playerId }: any) => {
   </>
 
 }
+
+export default ChallengeHistory

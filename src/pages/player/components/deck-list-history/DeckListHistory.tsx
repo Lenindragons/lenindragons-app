@@ -1,4 +1,4 @@
-export const DeckListHistory = ({ challenges = [], playerId }: any) => {
+const DeckListHistory = ({ challenges = [], playerId }: any) => {
 
   if (!challenges.length) {
     return null
@@ -50,3 +50,5 @@ export const DeckListHistory = ({ challenges = [], playerId }: any) => {
       ))
   }</>
 }
+
+export default DeckListHistory
