@@ -25,6 +25,7 @@ export const ProfilePage = () => {
   }, [setTitle, user.email])
 
   const users = {
+    id: user.uid,
     name: user.name,
     email: user.email,
     avatarUrl: user.image,

@@ -89,7 +89,7 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
     {
       text: 'Atividades',
       icon: <NoteAddIcon />,
-      url: 'achievements',
+      url: 'achievements-manager',
       permission: ['admin', 'organizer'],
     },
   ]

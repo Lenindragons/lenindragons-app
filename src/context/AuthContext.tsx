@@ -41,7 +41,9 @@ const AuthProvider = ({ children }: ContextProps) => {
     const userSnapshot = await getDoc(userDoc)
 
     if (!userSnapshot.exists()) {
+
       const player = {
+        id: userInfo.uid,
         name: userInfo.displayName,
         email: userInfo.email,
         image: userInfo.photoURL,
@@ -51,7 +53,8 @@ const AuthProvider = ({ children }: ContextProps) => {
       await setDoc(userDoc, player)
       return player
     }
-    return userSnapshot.data() as User | null
+
+    return { ...userSnapshot.data(), id: userInfo.uid } as any | null
   }
 
   useEffect(() => {

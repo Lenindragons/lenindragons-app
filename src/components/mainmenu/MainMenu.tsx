@@ -106,7 +106,10 @@ export const MainMenu = ({ children }: MainMenuProps) => {
         </ul>
       </li>
       <li className="menu-item">
-        <Link to="/rules">Regras</Link>
+        <Link to="/achievements">Atividades</Link>
+      </li>
+      <li className="menu-item">
+        <Link to="/rules">Regras Gerais</Link>
       </li>
       {children}
     </MenuContainer>

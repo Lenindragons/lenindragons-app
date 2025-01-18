@@ -24,6 +24,7 @@ import { ReportDetailPage } from './pages/dashboard/report/ReportDetailPage'
 import { SeasonCreatePage } from './pages/dashboard/seasons/SeasonCreatePage'
 import { PlayerPage } from './pages/player/PlayerPage'
 import { AchievementsPage } from './pages/dashboard/achievements/AchievementsPage'
+import { AchievementsDetailPage } from './pages/achievements/AchievementsDetailPage'
 import { PlayerDetailsPage } from './pages/dashboard/players/PlayerDetailsPage'
 
 const allowedAll = ['admin', 'organizer', 'judge', 'player']
@@ -45,6 +46,7 @@ export const App = () => {
                 <Routes>
                   <Route path="/" element={<MainPage />} />
                   <Route path="/ranking" element={<RankingPage />} />
+                  <Route path="/achievements" element={<AchievementsDetailPage />} />
                   <Route path="/profile/player/:id" element={<PlayerPage />} />
                   <Route
                     path="/league-challenge"
@@ -66,7 +68,7 @@ export const App = () => {
                     }
                   >
                     <Route path="/analytics-report" element={<ReportPage />} />
-                    <Route path="/achievements" element={<AchievementsPage />} />
+                    <Route path="/achievements-manager" element={<AchievementsPage />} />
                     <Route
                       path="/analytics-report/:id"
                       element={<ReportDetailPage />}
