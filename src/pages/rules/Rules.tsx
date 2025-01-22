@@ -16,6 +16,7 @@ import {
   AlertTitle,
 } from '@mui/material'
 import { WebPageTemplate } from '../../templates/webpage/WebPage'
+import { Link } from 'react-router-dom'
 
 export const RulesPage = () => {
   return (
@@ -80,7 +81,7 @@ export const RulesPage = () => {
                   <TableCell>45 min/Rodada</TableCell>
                   <TableCell>Suíço md3</TableCell>
                   <TableCell>
-                    F, G e H , respeitando a lista de cartas banidas
+                    F, G e H , respeitando a <Link to="/off-meta/banlist">lista de cartas banidas</Link>
                   </TableCell>
                   <TableCell>Português, Espanhol e Inglês</TableCell>
                 </TableRow>

@@ -26,6 +26,7 @@ import { PlayerPage } from './pages/player/PlayerPage'
 import { AchievementsPage } from './pages/dashboard/achievements/AchievementsPage'
 import { AchievementsDetailPage } from './pages/achievements/AchievementsDetailPage'
 import { PlayerDetailsPage } from './pages/dashboard/players/PlayerDetailsPage'
+import { BanListPage } from './pages/banlist/BanList'
 
 const allowedAll = ['admin', 'organizer', 'judge', 'player']
 const allowedAdmin = ['admin', 'organizer', 'judge']
@@ -46,6 +47,7 @@ export const App = () => {
                 <Routes>
                   <Route path="/" element={<MainPage />} />
                   <Route path="/ranking" element={<RankingPage />} />
+                  <Route path="/off-meta/banlist" element={<BanListPage />} />
                   <Route path="/achievements" element={<AchievementsDetailPage />} />
                   <Route path="/profile/player/:id" element={<PlayerPage />} />
                   <Route
