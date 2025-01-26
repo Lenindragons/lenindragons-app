@@ -2,6 +2,7 @@
 import styled from 'styled-components'
 import { Header } from './components/header/Header'
 import { Footer } from './components/footer/Footer'
+import { MainSlide } from '@/components/main-slide'
 
 const MainContainer = styled.main`
   width: 100%;
@@ -47,6 +48,7 @@ export const WebPageTemplate = ({
   return (
     <>
       <Header />
+      <MainSlide />
       <MainContainer>{children}</MainContainer>
       <Footer />
     </>
