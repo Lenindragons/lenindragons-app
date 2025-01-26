@@ -8,6 +8,7 @@ import { Timestamp } from 'firebase/firestore'
 import { WebPageTemplate } from '../../templates/webpage/WebPage'
 import { getChallengeByDate } from '@/services/challenge'
 import { Loading } from '@/components/commons/loading/Loading'
+import PokemonCard from './components/pokemon-card'
 
 const fadeIn = keyframes`
   from {
@@ -216,15 +217,9 @@ export const MainPage = () => {
               },
               index: Key | null | undefined
             ) => (
-              <Box
+              <PokemonCard
                 key={index}
-                component={Paper}
-                sx={{
-                  opacity: 0,
-                  animation: `${fadeIn} 0.5s forwards`,
-                  animationDelay: `${(index as number) * 0.1}s`,
-                }}
-              >
+                fadeIn={fadeIn}>
                 <DeckRankingContainer>
                   <DeckIconContainer>
                     {deck.icons.map((icon, i) => (
@@ -247,7 +242,7 @@ export const MainPage = () => {
                     </Typography>
                   </DeckPercentageContainer>
                 </DeckRankingContainer>
-              </Box>
+              </PokemonCard>
             )
           )}
       </DeckScoreContainer>
