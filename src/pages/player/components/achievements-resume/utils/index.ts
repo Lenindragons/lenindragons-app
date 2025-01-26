@@ -42,9 +42,9 @@ export const getMatchesByPlayerId = (challenges: any, playerId: string) => {
   const seasonMatches = seasonChallenges
     .map((challenge: any) => {
       const dates = challenge.dates
-      const matches = challenge.matches.map((match: any) => {
+      const matches = challenge?.matches?.map((match: any) => {
         return { ...match, dates }
-      })
+      }) || []
       return matches
     })
 
