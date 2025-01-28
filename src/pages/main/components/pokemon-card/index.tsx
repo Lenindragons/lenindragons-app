@@ -1,15 +1,15 @@
 import { Card, CardContent, Box } from "@mui/material";
 
-const PokemonCard = ({ children, fadeIn, key, card }: any) => {
+const PokemonCard = ({ children, fadeIn, index, card }: any) => {
 
   const image = card || "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/OBF/OBF_125_R_PT.png"
   return (
     <Box
-      key={key}
+      key={index}
       sx={{
         opacity: 0,
         animation: `${fadeIn} 0.5s forwards`,
-        animationDelay: `${(key as number) * 0.1}s`,
+        animationDelay: `${(index as number) * 0.1}s`,
       }}
     >
       <Card

@@ -89,6 +89,10 @@ export const MainPage = () => {
     fetchChallenges()
   }, [])
 
+  useEffect(() => {
+    decksWithCards()
+  }, [challenges])
+
   const getTimestampByWeek = (weeks: number) => {
     const actualDate = Timestamp.now()
     const secondsInAWeek = 604800
@@ -180,8 +184,6 @@ export const MainPage = () => {
     setDecks(newDecks)
   }
 
-  decksWithCards()
-
   if (!decks.length) {
     return (
       <WebPageTemplate>
@@ -241,6 +243,7 @@ export const MainPage = () => {
             ) => (
               <PokemonCard
                 key={index}
+                index={index}
                 fadeIn={fadeIn}
                 card={deck.card}>
                 <DeckRankingContainer>
