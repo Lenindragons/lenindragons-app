@@ -6,9 +6,12 @@ import styled from 'styled-components'
 import { Key, useEffect, useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
 import { WebPageTemplate } from '../../templates/webpage/WebPage'
-import { getChallengeByDate } from '@/services/challenge'
 import { Loading } from '@/components/commons/loading/Loading'
 import PokemonCard from './components/pokemon-card'
+import { getChallengeByDate } from '@/services/challenge'
+import { getDeckById } from '@/services/decks'
+import axios from 'axios'
+import { Deck } from '@/services/decks/useDeckStore'
 
 const fadeIn = keyframes`
   from {
@@ -75,6 +78,7 @@ const DeckProgressContainer = styled.div`
 
 export const MainPage = () => {
   const [challenges, setChallenges] = useState([])
+  const [decks, setDecks] = useState([])
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -112,8 +116,10 @@ export const MainPage = () => {
     const challengeMapped = challengesFiltered.map(
       (challenge: { challenge: { result: any[] | any } }) => {
         return challenge.challenge.result.map((deck: { deck: any }) => ({
+          id: deck.deck.id,
           name: deck.deck.name,
           icons: deck.deck.icons,
+          card: deck.deck?.card,
         }))
       }
     )
@@ -161,7 +167,22 @@ export const MainPage = () => {
     return 'purple'
   }
 
-  if (!challenges.length) {
+  const decksWithCards = async () => {
+    const decksWithScore = calculateScore(challenges)
+    const promises = decksWithScore?.map((deck: any) => getDeckById(deck.id))
+    const allDecks = await axios.all<Deck>(promises)
+
+    const newDecks = decksWithScore
+      .map((deck: any) => ({
+        ...deck,
+        card: allDecks.find((d: any) => d.id === deck.id)?.card
+      }))
+    setDecks(newDecks)
+  }
+
+  decksWithCards()
+
+  if (!decks.length) {
     return (
       <WebPageTemplate>
         <div
@@ -203,23 +224,25 @@ export const MainPage = () => {
       <br />
 
       <DeckScoreContainer>
-        {calculateScore(challenges)
-          .sort(
+        {decks
+          ?.sort(
             (acc: { score: number }, cur: { score: number }) =>
               cur.score - acc.score
           )
-          .map(
+          ?.map(
             (
               deck: {
                 icons: any[]
                 name: string
                 score: number
+                card: string
               },
               index: Key | null | undefined
             ) => (
               <PokemonCard
                 key={index}
-                fadeIn={fadeIn}>
+                fadeIn={fadeIn}
+                card={deck.card}>
                 <DeckRankingContainer>
                   <DeckIconContainer>
                     {deck.icons.map((icon, i) => (

@@ -1,9 +1,8 @@
-import React from "react";
 import { Card, CardContent, Box } from "@mui/material";
 
-const PokemonCard = ({ children, fadeIn, key }: any) => {
+const PokemonCard = ({ children, fadeIn, key, card }: any) => {
 
-  const image = "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/OBF/OBF_125_R_PT.png"
+  const image = card || "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/OBF/OBF_125_R_PT.png"
   return (
     <Box
       key={key}

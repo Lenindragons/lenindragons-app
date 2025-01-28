@@ -9,15 +9,17 @@ import {
   DialogActions,
   MenuItem,
   Select,
-  InputLabel,
+  InputLabel
 } from '@mui/material'
 import useDeckStore, { PokemonIcon } from '@/services/decks/useDeckStore'
 import { PokemonSelect } from '@/components/commons/pokemon-select/PokemonSelect'
+import { CardSelector } from '../components/cards-selector'
 
 interface FormValues {
   name: string
   type: string
   icons: PokemonIcon[]
+  card: string
 }
 
 export const CreateDeck: React.FC = () => {
@@ -25,7 +27,7 @@ export const CreateDeck: React.FC = () => {
   const { control, handleSubmit, reset } = useForm<FormValues>()
 
   const onSubmit = async (data: FormValues) => {
-    await createDeck(data.name, data.icons, data.type)
+    await createDeck(data.name, data.icons, data.type, data.card)
     reset()
   }
 
@@ -64,6 +66,7 @@ export const CreateDeck: React.FC = () => {
           />
         </FormControl>
         <PokemonSelect name="icons" control={control} defaultValue={[]} />
+        <CardSelector name="card" control={control} />
       </DialogContent>
       <DialogActions>
         <Button type="submit" variant="contained" color="primary">

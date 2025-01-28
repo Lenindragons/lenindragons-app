@@ -28,12 +28,14 @@ import useDeckStore, { Deck, PokemonIcon } from '@/services/decks/useDeckStore'
 import { PokemonSelect } from '@/components/commons/pokemon-select/PokemonSelect'
 import { Pokemon } from '@/pages/challenge/hooks/player-list/types'
 import { useAuth } from '@/context/AuthContext'
+import { CardSelector } from '../cards-selector'
 
 type DeckValues = {
   id: string
   name: string
   icons: Pokemon[]
   type: string
+  card: string
 }
 
 export const DeckTable: React.FC = () => {
@@ -46,6 +48,7 @@ export const DeckTable: React.FC = () => {
     name: '',
     icons: [],
     type: '',
+    card: ''
   })
   const [name, setName] = useState('')
   const [icons, setIcons] = useState([{}] as PokemonIcon[])
@@ -66,15 +69,16 @@ export const DeckTable: React.FC = () => {
   }
 
   const handleUpdate: SubmitHandler<DeckValues> = async (updatedValue: any) => {
-    const { name, icons, type } = updatedValue
+    const { name, icons, type, card } = updatedValue
     const newValue = {
       id: currentDeck?.id ?? '',
       name: name || currentDeck?.name,
       icons: icons || currentDeck?.icons,
       type: type || currentDeck?.type,
+      card: card || currentDeck?.card,
     }
 
-    await updateDeck(newValue.id, newValue.name, newValue.icons, newValue.type)
+    await updateDeck(newValue.id, newValue.name, newValue.icons, newValue.type, newValue.card)
     setEditDialogOpen(false)
     setCurrentDeck(null)
     setName('')
@@ -177,6 +181,7 @@ export const DeckTable: React.FC = () => {
               control={control}
               defaultValue={icons}
             />
+            <CardSelector name="card" control={control} />
           </DialogContent>
           <DialogActions>
             <Button
