@@ -58,7 +58,10 @@ export const ReportDetailPage = () => {
       )
 
     setFrenquency(players)
-    setRankedPlayers(getRanking(mappedChallengeById?.challenges || [], firebasePlayers))
+    const fetchRankingPlayers = async () => {
+      setRankedPlayers(await getRanking(mappedChallengeById?.challenges || [], firebasePlayers))
+    }
+    fetchRankingPlayers()
   }, [mappedChallengeById, firebasePlayers])
 
   const seasonValues = mappedChallengeById?.seasonChallengeValues || null
