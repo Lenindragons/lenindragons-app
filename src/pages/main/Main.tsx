@@ -26,13 +26,13 @@ const fadeIn = keyframes`
 
 const DeckRankingContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 5px;
   margin-bottom: 10px;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
-    'icon name name percentage'
-    'progress progress progress percentage';
+    'icon name name '
+    'progress progress progress';
   width: 100%;
   padding: 10px;
 `
@@ -248,7 +248,7 @@ export const MainPage = () => {
                 card={deck.card}>
                 <DeckRankingContainer>
                   <DeckIconContainer>
-                    {deck.icons.map((icon, i) => (
+                    {deck.icons.splice(0, 2).map((icon, i) => (
                       <img key={i} src={icon.url} alt="icon" height={60} />
                     ))}
                   </DeckIconContainer>
@@ -257,16 +257,15 @@ export const MainPage = () => {
                   </DeckNameContainer>
                   <DeckProgressContainer>
                     <ProgressBar
-                      hideText
                       score={deck?.score}
                       progressColor={getRandomColor(deck?.score)}
                     />
                   </DeckProgressContainer>
-                  <DeckPercentageContainer>
-                    <Typography variant="h4">
+                  {/* <DeckPercentageContainer>
+                    <Typography variant="h6">
                       {deck.score.toFixed(1)}%
                     </Typography>
-                  </DeckPercentageContainer>
+                  </DeckPercentageContainer> */}
                 </DeckRankingContainer>
               </PokemonCard>
             )

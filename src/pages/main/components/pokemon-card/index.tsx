@@ -37,7 +37,7 @@ const PokemonCard = ({ children, fadeIn, index, card }: any) => {
             boxShadow: 2,
           }}
         >
-          <CardContent>
+          <CardContent sx={{ width: "100%" }}>
             {children}
           </CardContent>
         </Card>
