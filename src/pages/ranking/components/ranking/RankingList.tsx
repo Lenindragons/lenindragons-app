@@ -108,9 +108,12 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
   ])
 
   useEffect(() => {
-    if (challenges.length) {
-      setRows(getRanking(challenges || [], players))
+    const getRowsWithRankingList = async () => {
+      if (challenges.length) {
+        setRows(await getRanking(challenges || [], players))
+      }
     }
+    getRowsWithRankingList()
   }, [challenges, players])
 
   const handleChange = (_e: React.SyntheticEvent, newValue: number) => {

@@ -1,5 +1,4 @@
 /* eslint-disable no-alert */
-import { Timestamp } from 'firebase/firestore'
 import { Link } from 'react-router-dom'
 import {
   Table,
@@ -25,6 +24,7 @@ import plIcon from '@/assets/pokemon-league-min.png'
 import limitless from '@/assets/limitless.png'
 import others from '@/assets/others.webp'
 import { useAuth } from '@/context/AuthContext'
+import { getChallengeStatus } from '@/utils/getChallengeStatus'
 
 export const EventList = ({ status }: { status: string }) => {
   const { user } = useAuth()
@@ -56,21 +56,6 @@ export const EventList = ({ status }: { status: string }) => {
     }
   }
 
-  const getStatus = (startDate: Timestamp, endDate: Timestamp) => {
-    const now = new Date()
-    const eventEndDate = endDate.toDate()
-    const eventStartDate = startDate.toDate()
-    if (eventEndDate < now) {
-      return 'Encerrado'
-    }
-
-    if (eventStartDate > now) {
-      return 'Agendado'
-    }
-
-    return 'Em andamento'
-  }
-
   const color: { [key: string]: 'error' | 'warning' | 'success' } = {
     Encerrado: 'error',
     Agendado: 'warning',
@@ -94,7 +79,7 @@ export const EventList = ({ status }: { status: string }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {events.filter((event: any) => getStatus(
+          {events.filter((event: any) => getChallengeStatus(
             event.dates[0].startDate,
             event.dates[0].endDate
           ).toLocaleLowerCase() === status).map((event: any) => (
@@ -142,14 +127,14 @@ export const EventList = ({ status }: { status: string }) => {
               </TableCell>
               <TableCell style={{ textAlign: 'center' }}>
                 <Chip
-                  label={getStatus(
+                  label={getChallengeStatus(
                     event.dates[0].startDate,
                     event.dates[0].endDate
                   )}
                   variant="outlined"
                   color={
                     color[
-                    getStatus(
+                    getChallengeStatus(
                       event.dates[0].startDate,
                       event.dates[0].endDate
                     )

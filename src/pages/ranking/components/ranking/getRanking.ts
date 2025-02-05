@@ -1,4 +1,5 @@
 import { formatDate } from "@/helpers/format-date"
+import { getAllChallenge } from "@/services/challenge"
 
 const isPenalized = (player: any) =>
   player.deck.name.toLowerCase().includes('não compareceu')
@@ -30,29 +31,41 @@ const applyAchievements = (achievements: any[], points: number) => {
   let totalPoints = 0
   achievements.forEach((achievement: any) => {
     if (achievement.type === 'multiply') {
-      totalPoints = points * parseInt(achievement?.points)
+      totalPoints += points * parseInt(achievement?.points)
     }
 
     if (achievement.type === 'add') {
-      totalPoints = points + parseInt(achievement?.points)
+      totalPoints += points + parseInt(achievement?.points)
     }
 
     if (achievement.type === 'remove') {
-      totalPoints = points - parseInt(achievement?.points)
+      totalPoints += points - parseInt(achievement?.points)
     }
   })
 
   return totalPoints
 }
 
-export const getRanking = (challenges: any[], firebasePlayers: any[]) => {
-  const filtered = challenges.filter(
+export const getRanking = async (challenges: any[], firebasePlayers: any[]) => {
+
+  const seasonId = challenges[0]?.seasonId
+  const allChallenges = await getAllChallenge() || []
+
+  const offMetaWithSettings = allChallenges?.filter(
+    (challenge: any) => challenge?.settings?.challenges?.includes(seasonId)
+  )
+
+  const newChallenges = [...challenges, ...offMetaWithSettings]
+
+  const filtered = newChallenges.filter(
     (challenge: { challenge: any }) => challenge.challenge
   )
   if (!filtered.length) return []
 
+  const allPlayersWithAchievements = firebasePlayers?.filter(player => player?.achievements?.length > 0)
+
   const players = filtered.reduce(
-    (acc: any[], challenge: { challenge: { result: any[] }, dates: any, type: string }) => {
+    (acc: any[], challenge: { challenge: { result: any[] }, settings: any, dates: any, type: string, seasonId: string }) => {
       challenge.challenge.result.forEach(
         (player: { name: any; place: any; id: string }, foreachIndex: any) => {
           const index = acc.findIndex(
@@ -60,13 +73,18 @@ export const getRanking = (challenges: any[], firebasePlayers: any[]) => {
           )
 
           const challengeDate = formatDate(challenge?.dates[0].startDate.toDate())
-          const achievements = firebasePlayers.find(fbPlayer => fbPlayer.id === player.id)?.achievements || []
+          const achievements = allPlayersWithAchievements.find(fbPlayer => fbPlayer.id === player.id)?.achievements || []
           const playerAchievements = achievements.filter((c: any) => {
             return formatDate(c?.achievementDate.toDate()) === challengeDate
           })
 
-          const dayPoints = getPoints(player, challenge?.type || '')
-          const total = applyAchievements(playerAchievements, dayPoints)
+          const hasRankingPoints = challenge.seasonId === seasonId || challenge.settings?.resultPoints
+          const hasAchievementsPoints = challenge.seasonId === seasonId || challenge.settings?.achievementsPoints
+
+
+          const dayPoints = hasRankingPoints ? getPoints(player, challenge?.type || '') : 0
+          const total = hasAchievementsPoints ? applyAchievements(playerAchievements, dayPoints) : 0
+
 
           if (index === -1) {
             acc.push({

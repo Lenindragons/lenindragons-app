@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, Tab, Tabs } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { usePage } from '@/context/PageContext'
 import { EventList } from '@/components/list/list'
 import { TabPanel } from '@/components/tab-panel'
+import { EventStatus } from '@/utils/getChallengeStatus'
 
 export const Box = styled.section`
   padding: 16px;
@@ -16,17 +16,12 @@ const Header = styled.header`
 `
 
 export const SeasonsPage = () => {
-  const { setTitle } = usePage()
   const navigate = useNavigate()
   const [value, setValue] = useState(0)
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
-
-  useEffect(() => {
-    setTitle('Temporadas')
-  }, [setTitle])
 
   return (
     <Box>
@@ -37,9 +32,9 @@ export const SeasonsPage = () => {
       </Header>
 
       <Tabs value={value} onChange={handleChange}>
-        <Tab label="Em Andamento" />
-        <Tab label="Agendado" />
-        <Tab label="Encerrado" />
+        <Tab label={EventStatus.IN_PROGRESS} />
+        <Tab label={EventStatus.SCHEDULED} />
+        <Tab label={EventStatus.FINISHED} />
       </Tabs>
 
       <TabPanel value={value} index={0} sx={{ pt: 1 }}>

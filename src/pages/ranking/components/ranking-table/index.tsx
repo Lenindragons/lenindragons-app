@@ -46,7 +46,7 @@ export const RankingTable = ({ rows }: { rows: RankedPlayer[], players: any[] })
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((player: any, index: number) => (
+          {rows?.map((player: any, index: number) => (
             <TableRow
               key={player.id}
               sx={{

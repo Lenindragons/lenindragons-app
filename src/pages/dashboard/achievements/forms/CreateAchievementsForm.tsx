@@ -1,6 +1,13 @@
 import { useForm, Controller } from "react-hook-form";
-import { TextField, Button, Box, Select, MenuItem, FormControl, FormHelperText } from "@mui/material";
+import { TextField, Button, Box, Select, MenuItem, FormControl, FormHelperText, InputLabel } from "@mui/material";
 import DateRange from "@/components/commons/date-range/Daterage";
+import { useEvents } from "@/context/EventContext";
+import { EventStatus, getChallengeStatus } from "@/utils/getChallengeStatus";
+
+interface Season {
+  name: string;
+  id: string;
+}
 
 interface FormData {
   name: string;
@@ -8,9 +15,11 @@ interface FormData {
   description: string;
   dates: Date | null;
   type: string;
+  season: Season;
 }
 
 const CreateAchievementsForm = ({ values, callback }: any) => {
+  const { events } = useEvents()
   const { handleSubmit, control, reset } = useForm<FormData>({
     defaultValues: values || {
       name: "",
@@ -18,8 +27,14 @@ const CreateAchievementsForm = ({ values, callback }: any) => {
       points: 0,
       description: "",
       dates: [{ startDate: "", endDate: "" }],
+      season: { name: "", id: "" }
     },
   });
+
+  const actualEvents = events.filter((events: any) => getChallengeStatus(
+    events?.dates[0]?.startDate, events?.dates[0]?.endDate
+  ) === EventStatus.IN_PROGRESS)
+
 
   const onSubmit = (data: FormData) => {
     callback(data);
@@ -59,9 +74,11 @@ const CreateAchievementsForm = ({ values, callback }: any) => {
         rules={{ required: "O tipo é obrigatório" }}
         render={({ field, fieldState }) => (
           <FormControl>
+            <InputLabel id="type-label">Tipo de operação</InputLabel>
             <Select
               {...field}
-              label="Tipo"
+              labelId="type-label"
+              label="Tipo de operação"
               variant="outlined"
               error={!!fieldState.error}
               fullWidth
@@ -76,6 +93,31 @@ const CreateAchievementsForm = ({ values, callback }: any) => {
           </FormControl>
         )}
       />
+
+      <Controller
+        name="season"
+        control={control}
+        rules={{ required: "A temporada é obrigatória" }}
+        render={({ field, fieldState }) => (
+          <FormControl>
+            <InputLabel id="season-label">Temporada</InputLabel>
+            <Select
+              {...field}
+              labelId="season-label"
+              label="Temporada"
+              variant="outlined"
+              error={!!fieldState.error}
+              fullWidth
+            >
+              {actualEvents.map((event: any) => (
+                <MenuItem key={event.id} value={event.id}>
+                  {event.name}
+                </MenuItem>
+              ))}
+            </Select>
+            <FormHelperText>{fieldState.error?.message}</FormHelperText>
+          </FormControl>
+        )} />
 
       <DateRange name="dates" control={control} />
 

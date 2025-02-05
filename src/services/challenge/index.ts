@@ -19,6 +19,20 @@ const getChallengeCollection = () => {
   return collection(db, 'challenges')
 }
 
+
+export const getAllChallenge = async () => {
+  try {
+    const challengesRef = getChallengeCollection()
+    const challengesQuery = query(challengesRef, orderBy('created'))
+    const querySnapshot = await getDocs(challengesQuery)
+    return querySnapshot.docs.map((doc) => doc.data()) || []
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+
+}
+
 export const createChallenge = async (data: Challenge): Promise<void> => {
   try {
     const content = {
