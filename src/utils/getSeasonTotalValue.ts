@@ -24,7 +24,7 @@ export const getSeasonResume = async (seasonId: string, players: any[]) => {
     ).length,
   }))
 
-  const ranking = getRanking(season, players)
+  const ranking = await getRanking(season, players)
   const totalPlayers = mappedSeason.reduce(
     (acc, cur) => acc + cur.totalPlayers,
     0
@@ -50,7 +50,7 @@ export const getSeasonResume = async (seasonId: string, players: any[]) => {
   return {
     total,
     season: season[0].season,
-    ranking: ranking.map((player: any) => {
+    ranking: ranking?.map((player: any) => {
       if (player.id < topPlayers) {
         const score = total * percentage[topPlayers][player.place]
         return {
