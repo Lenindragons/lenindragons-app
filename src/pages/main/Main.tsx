@@ -62,13 +62,6 @@ const DeckScoreContainer = styled.div`
   }
 `
 
-const DeckPercentageContainer = styled.div`
-  grid-area: percentage;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 const DeckProgressContainer = styled.div`
   grid-area: progress;
   display: flex;
