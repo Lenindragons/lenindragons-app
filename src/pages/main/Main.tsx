@@ -250,7 +250,7 @@ export const MainPage = () => {
                   </DeckNameContainer>
                   <DeckProgressContainer>
                     <ProgressBar
-                      score={deck?.score}
+                      score={deck?.score.toFixed(2)}
                       progressColor={getRandomColor(deck?.score)}
                     />
                   </DeckProgressContainer>
