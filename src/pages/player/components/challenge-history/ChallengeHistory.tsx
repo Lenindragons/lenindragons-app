@@ -1,6 +1,7 @@
 import { formatDate } from "@/helpers/format-date"
 import { getPlaceBall } from "@/utils/getPlaceBall"
 import { Link } from "react-router-dom"
+import { PaginateItems } from "../paginate-items"
 
 const ChallengeHistory = ({ challenges = [], playerId }: any) => {
 
@@ -29,9 +30,9 @@ const ChallengeHistory = ({ challenges = [], playerId }: any) => {
       }
     })
 
-  return <>{challengesHistoryMapped?.map((playerHistory: { date: string, place: number, id: string, name: string }) => (
+  const challengesHistoryItems = challengesHistoryMapped?.map((playerHistory: { date: string, place: number, id: string, name: string }) => (
 
-    <div style={{ display: 'flex', marginBottom: '10px' }}>
+    <div style={{ display: 'flex', marginBottom: '10px', width: '100%', height: '50px' }}>
       <div style={{
         padding: '10px',
         border: '1px solid #ccc',
@@ -58,8 +59,11 @@ const ChallengeHistory = ({ challenges = [], playerId }: any) => {
       }}> {getPlaceBall(playerHistory.place.toString())} <strong>{playerHistory.place}º lugar (em {playerHistory?.name})</strong></div>
     </div >
   )
-  )}
-  </>
+  )
+
+  return (
+    <PaginateItems items={challengesHistoryItems} itemsPerPage={5} />
+  )
 
 }
 

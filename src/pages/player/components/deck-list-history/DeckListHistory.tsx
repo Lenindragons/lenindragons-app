@@ -1,3 +1,5 @@
+import { PaginateItems } from "../paginate-items"
+
 const DeckListHistory = ({ challenges = [], playerId }: any) => {
 
   if (!challenges.length) {
@@ -15,11 +17,11 @@ const DeckListHistory = ({ challenges = [], playerId }: any) => {
     }
   })
 
-  return <>{
+  const deckItems =
     challengesHistoryMapped
       ?.sort((a: any, b: any) => b.date - a.date)
       ?.map((history: any) => (
-        <div style={{ display: 'flex', marginBottom: '10px' }}>
+        <div style={{ display: 'flex', marginBottom: '10px', width: '100%' }}>
           <div style={{
             padding: '10px',
             border: '1px solid #ccc',
@@ -48,7 +50,10 @@ const DeckListHistory = ({ challenges = [], playerId }: any) => {
           </div>
         </div >
       ))
-  }</>
+
+  return (
+    <PaginateItems items={deckItems} itemsPerPage={5} />
+  )
 }
 
 export default DeckListHistory
