@@ -4,6 +4,8 @@ import {
   getAuth,
   signInWithPopup,
   signOut,
+  setPersistence,
+  browserSessionPersistence,
 } from 'firebase/auth'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +15,8 @@ import { ContextProps } from './ContextProps'
 import { useErrorHandling } from './ErrorContext'
 import { formatUserMetadata } from '../helpers/format-date'
 import { UserType } from '../types/Player'
+import { set } from 'date-fns'
+import { time } from 'framer-motion'
 
 const provider = new GoogleAuthProvider()
 
@@ -35,6 +39,7 @@ const AuthProvider = ({ children }: ContextProps) => {
   const { alertError } = useErrorHandling()
 
   const auth = getAuth(app)
+  setPersistence(auth, browserSessionPersistence)
 
   const getUserInfo = async (userInfo: UserInfoAuth): Promise<User | null> => {
     const userDoc = doc(db, 'players', userInfo.uid)
@@ -67,6 +72,26 @@ const AuthProvider = ({ children }: ContextProps) => {
 
     return () => unsubscribe()
   }, [auth, navigate])
+
+  useEffect(() => {
+    const unsubscribe = auth.onIdTokenChanged(async (userInfo) => {
+      if (userInfo) {
+        const token = await userInfo.getIdTokenResult()
+        const expiratoinTime = new Date(token.expirationTime).getTime()
+        const currentTime = Date.now()
+        const timeUntilExpiration = expiratoinTime - currentTime
+
+        if (timeUntilExpiration <= 0) {
+          await signOut(auth)
+          setUser(null)
+          navigate('/')
+        } else {
+          setTimeout(() => signOut(auth), timeUntilExpiration)
+        }
+      }
+    })
+    return () => unsubscribe()
+  }, [])
 
   const logout = async () => {
     await signOut(auth)
