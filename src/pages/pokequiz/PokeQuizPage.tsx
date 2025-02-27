@@ -55,16 +55,14 @@ export const PokeQuizPage = () => {
     translate.engine = 'google';
     const text = await translate(actualText, { from: 'en', to: 'pt' });
     const habitat = await translate(speciesData.habitat.name, { from: 'en', to: 'pt' });
-    const type1 = await translate(response.types[0].type.name, { from: 'en', to: 'pt' });
-    const type2 = response.types[1] ? await translate(response.types[1].type.name, { from: 'en', to: 'pt' }) : null;
     const color = await translate(speciesData.color.name, { from: 'en', to: 'pt' });
     const result = {
       name: response.name,
       weight: response.weight / 100,
       number: response.order,
       image: response.sprites.other['official-artwork'].front_default,
-      type1,
-      type2,
+      type1: response.types[0].type.name,
+      type2: response.types[1]?.type.name || '-',
       height: response.height / 100,
       habitat,
       color,
@@ -148,6 +146,28 @@ export const PokeQuizPage = () => {
     return {}
   }
 
+  const getBackgroundBG = (actualValue: number, key: string) => {
+    if (actualValue > pokemon[key]) {
+      return {
+        fontWeight: 'bold',
+        color: 'red',
+        backgroundColor: 'red',
+        marginBottom: '25px',
+      }
+    }
+
+    if (actualValue < pokemon[key]) {
+      return {
+        fontWeight: 'bold',
+        color: 'red',
+        backgroundColor: 'red',
+        marginTop: '25px',
+      }
+    }
+
+    return {}
+  }
+
   return (
     <WebPageTemplate>
       <h1 style={{ marginTop: '20px', marginBottom: '20px' }}>PokeQuiz</h1>
@@ -163,13 +183,13 @@ export const PokeQuizPage = () => {
               ...styleGridItem,
               backgroundImage: getBackgroundIcon(poke.height, 'height'),
               backgroundSize: 'cover',
-              backgroundColor: getBackgroundIcon(poke.height, 'height') ? 'red' : 'green'
+              backgroundColor: getBackgroundBG(poke.height, 'height').backgroundColor ? getBackgroundBG(poke.height, 'height').backgroundColor : 'green'
             }}><span style={getBackgroundSpan(poke.height, 'height')}>{poke.height}m</span></div>
             <div style={{
               ...styleGridItem,
               backgroundImage: getBackgroundIcon(poke.weight, 'weight'),
               backgroundSize: 'cover',
-              backgroundColor: getBackgroundIcon(poke.weight, 'weight') ? 'red' : 'green'
+              backgroundColor: getBackgroundBG(poke.weight, 'weight').backgroundColor ? getBackgroundBG(poke.height, 'height').backgroundColor : 'green'
             }}><span style={getBackgroundSpan(poke.weight, 'weight')}>{poke.weight}kg</span></div>
           </li>
         ))}
