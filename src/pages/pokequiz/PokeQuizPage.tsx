@@ -154,7 +154,7 @@ export const PokeQuizPage = () => {
       <ul style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {pokemons.map((poke: any) => (
           <li key={poke.name} style={gridContainerStyle}>
-            <div style={styleGridItem}><img src={poke.sprite} /></div>
+            <div style={{ ...styleGridItem, backgroundColor: 'white' }}><img src={poke.sprite} /></div>
             <div style={{ ...styleGridItem, textTransform: 'uppercase', backgroundColor: getBackgroundColor(poke.type1, 'type1') }}>{poke.type1}</div>
             <div style={{ ...styleGridItem, textTransform: 'uppercase', backgroundColor: getBackgroundColor(poke.type2, 'type2') }}>{poke.type2 || '-'}</div>
             <div style={{ ...styleGridItem, backgroundColor: getBackgroundColor(poke.habitat, 'habitat') }}>{poke.habitat}</div>
