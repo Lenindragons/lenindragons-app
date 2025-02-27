@@ -127,6 +127,9 @@ export const MainMenu = ({ children }: MainMenuProps) => {
           <li>
             <Link to="/tools/timer">Cronometro</Link>
           </li>
+          <li>
+            <Link to="/tools/pokequiz">PokeQuiz</Link>
+          </li>
         </ul>
       </li>
       {children}

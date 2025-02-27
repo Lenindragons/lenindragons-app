@@ -28,6 +28,7 @@ import { AchievementsDetailPage } from './pages/achievements/AchievementsDetailP
 import { PlayerDetailsPage } from './pages/dashboard/players/PlayerDetailsPage'
 import { BanListPage } from './pages/banlist/BanList'
 import { TimerPage } from './pages/timer'
+import { PokeQuizPage } from './pages/pokequiz/PokeQuizPage'
 
 const allowedAll = ['admin', 'organizer', 'judge', 'player']
 const allowedAdmin = ['admin', 'organizer', 'judge']
@@ -50,6 +51,7 @@ export const App = () => {
                   <Route path="/ranking" element={<RankingPage />} />
                   <Route path="/off-meta/banlist" element={<BanListPage />} />
                   <Route path='/tools/timer' element={<TimerPage />} />
+                  <Route path="/tools/pokequiz" element={<PokeQuizPage />} />
                   <Route path="/achievements" element={<AchievementsDetailPage />} />
                   <Route path="/profile/player/:id" element={<PlayerPage />} />
                   <Route

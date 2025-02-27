@@ -15,9 +15,6 @@ import { ContextProps } from './ContextProps'
 import { useErrorHandling } from './ErrorContext'
 import { formatUserMetadata } from '../helpers/format-date'
 import { UserType } from '../types/Player'
-import { set } from 'date-fns'
-import { time } from 'framer-motion'
-
 const provider = new GoogleAuthProvider()
 
 const AuthContext = createContext({})
