@@ -111,6 +111,24 @@ export const MainMenu = ({ children }: MainMenuProps) => {
       <li className="menu-item">
         <Link to="/rules">Regras Gerais</Link>
       </li>
+      <li className="menu-item">
+        <Link
+          to="#"
+          style={{
+            display: 'flex',
+            justifyItems: 'center',
+            alignItems: 'center',
+          }}
+        >
+          Ferramentas <ArrowDropDownIcon />
+        </Link>
+
+        <ul className="menu-item-dropdown">
+          <li>
+            <Link to="/tools/timer">Cronometro</Link>
+          </li>
+        </ul>
+      </li>
       {children}
     </MenuContainer>
   )

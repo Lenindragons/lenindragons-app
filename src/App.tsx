@@ -27,6 +27,7 @@ import { AchievementsPage } from './pages/dashboard/achievements/AchievementsPag
 import { AchievementsDetailPage } from './pages/achievements/AchievementsDetailPage'
 import { PlayerDetailsPage } from './pages/dashboard/players/PlayerDetailsPage'
 import { BanListPage } from './pages/banlist/BanList'
+import { TimerPage } from './pages/timer'
 
 const allowedAll = ['admin', 'organizer', 'judge', 'player']
 const allowedAdmin = ['admin', 'organizer', 'judge']
@@ -48,6 +49,7 @@ export const App = () => {
                   <Route path="/" element={<MainPage />} />
                   <Route path="/ranking" element={<RankingPage />} />
                   <Route path="/off-meta/banlist" element={<BanListPage />} />
+                  <Route path='/tools/timer' element={<TimerPage />} />
                   <Route path="/achievements" element={<AchievementsDetailPage />} />
                   <Route path="/profile/player/:id" element={<PlayerPage />} />
                   <Route
