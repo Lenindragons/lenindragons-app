@@ -46,7 +46,7 @@ export const PokeQuizPage = () => {
 
   const scrollToBottom = () => {
     if (inputRef.current) {
-      inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
     }
   }
 
