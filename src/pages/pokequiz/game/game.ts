@@ -94,6 +94,7 @@ export const getPokemonData = async (name = null) => {
     name: response.name,
     weight: response.weight / 10,
     number: response.order,
+    cry: response.cries.latest,
     image: response.sprites.other['official-artwork'].front_default,
     type1: response.types[0].type.name,
     type2: response.types[1]?.type.name || '-',
