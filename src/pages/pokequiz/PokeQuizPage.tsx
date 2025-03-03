@@ -21,21 +21,27 @@ export const PokeQuizPage = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    getPokemonData().then((data) => setPokemon(data))
+    const catchPokemon = async () => {
+      const catched = await getPokemonData()
+      setPokemon(catched)
+    }
+    catchPokemon()
   }, [])
 
   const handleClick = async (event: any) => {
     event.preventDefault()
     scrollToBottom()
-    if (actualPokemon === pokemon.name) {
+    if (actualPokemon.toLowerCase() === pokemon.name) {
       setTimeout(() => {
         scrollToTop()
         setIsWinner(true)
         uhull()
       }, 2000)
     }
-    const newPokemon = await getPokemonData(actualPokemon)
-    setPokemons([...pokemons, newPokemon])
+    const newPokemon = await getPokemonData(actualPokemon.toLowerCase())
+    if (newPokemon) {
+      setPokemons([...pokemons, newPokemon])
+    }
   }
 
   const scrollToTop = () => {
@@ -111,8 +117,7 @@ export const PokeQuizPage = () => {
           <PokemonCryButton actualItem={pokemon} />
         </div>
       )}
-
-      <div style={{ display: 'flex', gap: 10, marginTop: "15px" }}>
+      {pokemon && <div style={{ display: 'flex', gap: 10, marginTop: "15px" }}>
         <AwesomeButton disabled={isRevealed} type="primary" onPress={handleClick}>Buscar Pokemon</AwesomeButton>
         <AwesomeButton type="secondary" onPress={() => {
           setActiveTips(true)
@@ -122,7 +127,7 @@ export const PokeQuizPage = () => {
           setIsWinner(true)
           setPokemons([...pokemons, pokemon])
         }}>Revelar</AwesomeButton>
-      </div>
+      </div>}
     </WebPageTemplate>
   )
 }

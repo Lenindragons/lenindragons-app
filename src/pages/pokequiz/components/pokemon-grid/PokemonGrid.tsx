@@ -8,6 +8,7 @@ import {
   Square
 } from "../../game/styles";
 import { PokemonStats } from "../../game/constants/enum";
+import { HabitatDictionary, PokemonColors } from "../../game/constants/constants";
 
 export const PokemonGrid = (
   { actualItem, labels = [], items = [] }: GridTesteProps
@@ -58,10 +59,10 @@ export const PokemonGrid = (
             {getPortugueseType(item.type2) || '-'}
           </Square>
           <Square {...getResult(item.habitat, PokemonStats.HABITAT)}>
-            {item.habitat}
+            {HabitatDictionary[item.habitat] || item.habitat}
           </Square>
           <Square {...getResult(item.color, PokemonStats.COLOR)}>
-            {item.color}
+            {PokemonColors[item.color] || item.color}
           </Square>
           <Square {...getResult(item.height, PokemonStats.HEIGHT)}>
             <span>{item.height}m</span>

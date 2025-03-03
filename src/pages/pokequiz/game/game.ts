@@ -2,8 +2,7 @@ import arrowDown from '@/assets/arrow-down.png'
 import arrowUp from '@/assets/arrow-up.png'
 import { Pokemon } from './constants/interfaces'
 import { CurrentPokemonStats, PokemonType } from './constants/enum'
-import translate from "translate"
-import { HabitatDictionary } from './constants/constants'
+import { getDatabase, setDatabase } from '../utils/localstorage'
 
 export const isNumber = (value: any) => typeof value === 'number'
 
@@ -61,49 +60,97 @@ const randomPokemon = () => {
   return Math.floor(Math.random() * 151)
 }
 
-// retorna um pokemon da poke api
+const fetchPokemon = async (number: number) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${number}`);
+  const pokemonData = await response.json();
+
+  const speciesResponse = await fetch(pokemonData?.species?.url);
+  const speciesData = await speciesResponse.json();
+
+  const evolutionResponse = await fetch(speciesData?.evolution_chain?.url);
+  const evolutionData = await evolutionResponse.json();
+
+  return {
+    ...pokemonData,
+    species: {
+      ...speciesData,
+      evolution_chain: {
+        ...evolutionData
+      }
+    }
+  }
+}
+
+const fetchPokemons = async () => {
+  const numbers = Array.from({ length: 151 }, (_, i) => i + 1)
+
+  const fetchedPokemons = await Promise.all(
+    numbers.map((number) => fetchPokemon(number))
+  )
+
+  return fetchedPokemons
+}
+
+
+const getStage = (
+  evolutions: any,
+  name: any,
+  stage = 0): string | number | null => {
+
+  if (evolutions.species.name === name) {
+    return stage === 0 ? "Básico" : stage
+  }
+
+  for (const evolution of evolutions.evolves_to) {
+    const result: string | number | null = getStage(evolution, name, stage + 1)
+    if (result !== null) return result
+  }
+
+  return null
+}
+
+const mapping = (data: any) => {
+  return data.map((item: any) => {
+
+    const stage = getStage(item.species.evolution_chain.chain, item.name)
+
+    return {
+      name: item.name,
+      weight: item.weight / 10,
+      number: item.id,
+      cry: item.cries.latest,
+      image: item.sprites.other['official-artwork'].front_default,
+      type1: item.types[0].type.name,
+      type2: item.types[1]?.type.name || '-',
+      height: item.height / 10,
+      sprite: item?.sprites?.front_default,
+      habitat: item.species.habitat.name,
+      color: item.species.color.name,
+      stage,
+      text: item.species.flavor_text_entries[0].flavor_text
+    }
+  })
+}
+
+export const initApplication = async () => {
+  const database = getDatabase()
+  if (!database) {
+    const pokemons = await fetchPokemons()
+    setDatabase(mapping(pokemons))
+    return mapping(pokemons)
+  }
+  return database
+}
+
 const getPokemon = async (name: any) => {
   const value = name ? name : randomPokemon()
-  const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${value}`)
-  return pokemon.json()
+  const database = await initApplication()
+  return database.find(
+    (poke: any) =>
+      poke.number === parseInt(value)
+      || poke.name === value)
 }
 
 export const getPokemonData = async (name = null) => {
-  const response = await getPokemon(name)
-
-  const species = await fetch(response.species.url)
-  const speciesData = await species.json()
-
-  const actualText = speciesData.flavor_text_entries.filter(
-    (entry: any) =>
-      entry.language.name === 'en')[0].flavor_text.replace(/\n/g, ' ').replace(/\f/g, ' ')
-
-
-  translate.engine = 'google'
-  const text = await translate(actualText, { from: 'en', to: 'pt' })
-
-  const habitatName = HabitatDictionary[speciesData.habitat.name]
-
-  const habitat = habitatName
-    ? habitatName
-    : await translate(speciesData.habitat.name, { from: 'en', to: 'pt' })
-
-  const color = await translate(speciesData.color.name, { from: 'en', to: 'pt' })
-
-  const result = {
-    name: response.name,
-    weight: response.weight / 10,
-    number: response.order,
-    cry: response.cries.latest,
-    image: response.sprites.other['official-artwork'].front_default,
-    type1: response.types[0].type.name,
-    type2: response.types[1]?.type.name || '-',
-    height: response.height / 10,
-    habitat,
-    color,
-    sprite: response.sprites.front_default,
-    text
-  }
-
-  return result
+  return await getPokemon(name)
 }
