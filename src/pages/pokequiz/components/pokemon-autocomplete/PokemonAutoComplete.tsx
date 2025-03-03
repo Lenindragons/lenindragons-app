@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Autocomplete, TextField, Avatar } from "@mui/material";
 import { getDatabase } from "../../utils/localstorage";
 
-export const PokemonAutocomplete = ({ ref, onKeyDown, onChange }: any) => {
+export const PokemonAutocomplete = ({ onKeyDown, onChange }: any) => {
   const [pokemons, setPokemons] = useState<any>([])
   const [, setSelectedPokemon] = useState<any>(null);
 
@@ -16,7 +16,6 @@ export const PokemonAutocomplete = ({ ref, onKeyDown, onChange }: any) => {
 
   return (
     <Autocomplete
-      ref={ref}
       options={pokemons}
       sx={{ width: '100%' }}
       getOptionLabel={(option: any) => option?.name}

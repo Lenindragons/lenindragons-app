@@ -127,7 +127,8 @@ const mapping = (data: any) => {
       habitat: item.species.habitat.name,
       color: item.species.color.name,
       stage,
-      text: item.species.flavor_text_entries[0].flavor_text
+      text: item.species.flavor_text_entries
+        .find((entry: any) => entry.language.name === 'en')?.flavor_text
     }
   })
 }

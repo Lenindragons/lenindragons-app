@@ -8,6 +8,8 @@ import { getPokemonData } from "./game/game"
 import { PokemonGrid } from "./components/pokemon-grid/PokemonGrid"
 import { PokemonCryButton } from "./components/pokemon-cry-button/PokemonCryButton"
 import { PokemonAutocomplete } from "./components/pokemon-autocomplete/PokemonAutoComplete"
+import { Avatar } from "@mui/material"
+import pokemonDay from "@/assets/pokemon-day-2025.png"
 
 export const PokeQuizPage = () => {
 
@@ -17,8 +19,10 @@ export const PokeQuizPage = () => {
   const [isWinner, setIsWinner] = useState(false)
   const [isRevealed, setIsRevealed] = useState(false)
   const [isTipsActive, setActiveTips] = useState(false)
+  const [restarted, setRestarted] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const refLogo = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const catchPokemon = async () => {
@@ -26,7 +30,7 @@ export const PokeQuizPage = () => {
       setPokemon(catched)
     }
     catchPokemon()
-  }, [])
+  }, [restarted])
 
   const handleClick = async (event: any) => {
     event.preventDefault()
@@ -47,6 +51,12 @@ export const PokeQuizPage = () => {
   const scrollToTop = () => {
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth', })
+    }
+  }
+
+  const scrollToLogo = () => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
     }
   }
 
@@ -77,12 +87,19 @@ export const PokeQuizPage = () => {
 
   return (
     <WebPageTemplate>
-      <Title>PokeQuiz</Title>
+      <Title>PokéQuiz</Title>
+      <Avatar
+        ref={refLogo}
+        src={pokemonDay}
+        alt="Pokemon Day 2025"
+        sx={{
+          width: 100, height: 100, marginBottom: '35px'
+        }} />
+      {/* <PlayerTracking /> */}
       <div ref={ref}>{isWinner && <Result pokemon={pokemon} isRevealed={isRevealed} />}</div>
       <PokemonGrid actualItem={pokemon} labels={legends} items={pokemons} />
 
       {!isRevealed && <PokemonAutocomplete
-        ref={inputRef}
         onKeyDown={(e: any) => e.key === 'Enter' && handleClick(e)}
         onChange={handleChange}
       />}
@@ -92,16 +109,29 @@ export const PokeQuizPage = () => {
           <PokemonCryButton actualItem={pokemon} />
         </div>
       )}
-      {pokemon && <div style={{ display: 'flex', gap: 10, marginTop: "15px" }}>
-        <AwesomeButton disabled={isRevealed} type="primary" onPress={handleClick}>Buscar Pokemon</AwesomeButton>
-        <AwesomeButton type="secondary" onPress={() => {
+      {pokemon && <div ref={inputRef} style={{ display: 'flex', gap: 10, marginTop: "15px" }}>
+        <AwesomeButton
+          disabled={isRevealed}
+          type="primary"
+          onPress={handleClick}>Buscar Pokemon</AwesomeButton>
+        <AwesomeButton type="twitter" onPress={() => {
           setActiveTips(true)
         }}>Dicas</AwesomeButton>
         <AwesomeButton type="secondary" onPress={() => {
           setIsRevealed(true)
           setIsWinner(true)
           setPokemons([...pokemons, pokemon])
+          scrollToTop()
         }}>Revelar</AwesomeButton>
+        <AwesomeButton type="danger" onPress={() => {
+          setPokemons([])
+          setActualPokemon('')
+          setIsWinner(false)
+          setIsRevealed(false)
+          setActiveTips(false)
+          setRestarted(!restarted)
+          scrollToLogo()
+        }}>Reiniciar Jogo</AwesomeButton>
       </div>}
     </WebPageTemplate>
   )

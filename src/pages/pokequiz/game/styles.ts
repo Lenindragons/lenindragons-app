@@ -80,7 +80,7 @@ export const GridItem = styled.li`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ccc;
+    border: 5px solid #000;
     background-color: #eee;
     font-size: 20px;
     border-radius: 5px;
