@@ -64,6 +64,9 @@ export const PokemonGrid = (
           <Square {...getResult(item.color, PokemonStats.COLOR)}>
             {PokemonColors[item.color] || item.color}
           </Square>
+          <Square {...getResult(item.stage, PokemonStats.STAGE)}>
+            <span>{item.stage === 0 ? 'Básico' : item.stage}</span>
+          </Square>
           <Square {...getResult(item.height, PokemonStats.HEIGHT)}>
             <span>{item.height}m</span>
           </Square>

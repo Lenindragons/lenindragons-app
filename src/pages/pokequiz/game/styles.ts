@@ -41,7 +41,7 @@ export const Square = styled.div<SquareProps>`
 // Grid para os quadrados
 export const GridContainer = styled.li`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 10px;
   text-align: center;
   text-transform: uppercase;
@@ -72,7 +72,7 @@ export const Container = styled.ul`
 
 export const GridItem = styled.li`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 10px;
 
   div {

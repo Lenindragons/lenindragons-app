@@ -32,4 +32,5 @@ export enum PokemonStats {
   COLOR = 'color',
   HEIGHT = 'height',
   WEIGHT = 'weight',
+  STAGE = 'stage',
 }

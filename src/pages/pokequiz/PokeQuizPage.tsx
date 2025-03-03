@@ -1,5 +1,4 @@
 import { WebPageTemplate } from "@/templates/webpage/WebPageTools"
-import { TextField } from "@mui/material"
 import { useEffect, useRef, useState } from "react"
 import { uhull } from "./utils/confeti"
 import { Result } from "./components/result/Result"
@@ -8,6 +7,7 @@ import { AwesomeButton } from "react-awesome-button"
 import { getPokemonData } from "./game/game"
 import { PokemonGrid } from "./components/pokemon-grid/PokemonGrid"
 import { PokemonCryButton } from "./components/pokemon-cry-button/PokemonCryButton"
+import { PokemonAutocomplete } from "./components/pokemon-autocomplete/PokemonAutoComplete"
 
 export const PokeQuizPage = () => {
 
@@ -56,9 +56,7 @@ export const PokeQuizPage = () => {
     }
   }
 
-  const handleChange = (event: any) => {
-    event.preventDefault()
-    const { value } = event.target
+  const handleChange = (value: any) => {
     setActualPokemon(value)
   }
 
@@ -72,6 +70,7 @@ export const PokeQuizPage = () => {
     'Tipo 2',
     'Habitat',
     'Cor',
+    'Estágio',
     'Tamanho',
     'Peso',
   ]
@@ -82,35 +81,12 @@ export const PokeQuizPage = () => {
       <div ref={ref}>{isWinner ? <Result pokemon={pokemon} isRevealed={isRevealed} /> : <h2>Escolha o pokemon</h2>}</div>
       <PokemonGrid actualItem={pokemon} labels={legends} items={pokemons} />
 
-      {!isRevealed && <TextField
+      {!isRevealed && <PokemonAutocomplete
         ref={inputRef}
-        sx={
-          {
-            margin: '10px 0',
-            '& .MuiInputBase-input': {
-              fontSize: '40px',
-              fontWeight: 'bold',
-              outline: 'none',
-              textAlign: 'center'
-            },
-            "& .MuiOutlinedInput-root": {
-              "&.Mui-focused fieldset": {
-                border: "none"
-              }
-            },
-            outline: 'none',
-            border: '5px solid #eee',
-            borderRadius: '10px',
-            height: '100%',
-            width: '100%',
-          }
-        }
+        onKeyDown={(e: any) => e.key === 'Enter' && handleClick(e)}
         onChange={handleChange}
-        onKeyDown={(e) => e.key === 'Enter' && handleClick(e)}
-        placeholder="Digite o nome do Pokemon"
-        name="quiz"
-        autoComplete="off"
       />}
+
 
       {isTipsActive && (
         <div style={{ display: 'flex', gap: 10, margin: "15px 0" }}>

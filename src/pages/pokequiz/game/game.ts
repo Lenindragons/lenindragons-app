@@ -98,7 +98,7 @@ const getStage = (
   stage = 0): string | number | null => {
 
   if (evolutions.species.name === name) {
-    return stage === 0 ? "Básico" : stage
+    return stage === 0 ? 0 : stage
   }
 
   for (const evolution of evolutions.evolves_to) {
