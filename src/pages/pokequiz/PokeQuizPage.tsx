@@ -66,8 +66,8 @@ export const PokeQuizPage = () => {
 
   const legends = [
     'Pokemon',
-    'Tipo 1',
-    'Tipo 2',
+    '1º Tipo',
+    '2º Tipo',
     'Habitat',
     'Cor',
     'Estágio',
@@ -78,7 +78,7 @@ export const PokeQuizPage = () => {
   return (
     <WebPageTemplate>
       <Title>PokeQuiz</Title>
-      <div ref={ref}>{isWinner ? <Result pokemon={pokemon} isRevealed={isRevealed} /> : <h2>Escolha o pokemon</h2>}</div>
+      <div ref={ref}>{isWinner && <Result pokemon={pokemon} isRevealed={isRevealed} />}</div>
       <PokemonGrid actualItem={pokemon} labels={legends} items={pokemons} />
 
       {!isRevealed && <PokemonAutocomplete
@@ -86,7 +86,6 @@ export const PokeQuizPage = () => {
         onKeyDown={(e: any) => e.key === 'Enter' && handleClick(e)}
         onChange={handleChange}
       />}
-
 
       {isTipsActive && (
         <div style={{ display: 'flex', gap: 10, margin: "15px 0" }}>

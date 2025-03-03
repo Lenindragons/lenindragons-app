@@ -1,7 +1,7 @@
 export const HabitatDictionary = {
   'waters-edge': 'Beira da água',
   'rare': 'Raro',
-  'rough-terrain': 'Terreno acidentado',
+  'rough-terrain': 'Terreno rústico',
   'forest': 'Floresta',
   'urban': 'Urbano',
   'cave': 'Caverna',

@@ -18,7 +18,7 @@ export const PokemonAutocomplete = ({ ref, onKeyDown, onChange }: any) => {
     <Autocomplete
       ref={ref}
       options={pokemons}
-      sx={{ width: '100%', fontSize: '40px', fontWeight: 'bold' }}
+      sx={{ width: '100%' }}
       getOptionLabel={(option: any) => option?.name}
       renderOption={(props, option) => (
         <li {...props} key={option?.name} style={
@@ -56,7 +56,7 @@ export const PokemonAutocomplete = ({ ref, onKeyDown, onChange }: any) => {
               width: '100%',
             }
           }
-          {...params} label="Escolha um Pokémon" variant="outlined" />
+          {...params} placeholder="Escolha um Pokemon" />
       }
     />
   );
