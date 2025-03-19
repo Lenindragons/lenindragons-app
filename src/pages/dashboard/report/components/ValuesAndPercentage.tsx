@@ -28,25 +28,25 @@ export const ValuesAndPercentage = ({
   rankedPlayers,
 }: any) => {
   const getTopRanking = (value: number) => {
-    if (value < seasonValues.top4?.max) {
+    if (value >= seasonValues.top8?.min) {
       return {
-        name: SeasonRank.TOP_4,
-        percentages: seasonValues.top4?.percentByPosition,
-        slice: 4,
+        name: SeasonRank.TOP_8,
+        percentages: seasonValues.top8?.percentByPosition,
+        slice: 8,
       }
     }
-    if (value > seasonValues.top6?.min && value < seasonValues.top6?.max) {
+    if (value > seasonValues.top6?.min) {
       return {
         name: SeasonRank.TOP_6,
-        percentages: seasonValues.top4?.percentByPosition,
+        percentages: seasonValues.top6?.percentByPosition,
         slice: 6,
       }
     }
 
     return {
-      name: SeasonRank.TOP_8,
+      name: SeasonRank.TOP_4,
       percentages: seasonValues.top4?.percentByPosition,
-      slice: 8,
+      slice: 4,
     }
   }
 
