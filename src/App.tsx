@@ -29,11 +29,14 @@ import { PlayerDetailsPage } from './pages/dashboard/players/PlayerDetailsPage'
 import { BanListPage } from './pages/banlist/BanList'
 import { TimerPage } from './pages/timer'
 import { PokeQuizPage } from './pages/pokequiz/PokeQuizPage'
-
-const allowedAll = ['admin', 'organizer', 'judge', 'player']
-const allowedAdmin = ['admin', 'organizer', 'judge']
-const allowedAdminOrganizer = ['admin', 'organizer']
-const allowedAdminJudge = ['admin', 'judge']
+import { SettingsPage } from './pages/dashboard/settings/SettingsPage'
+import {
+  allowedAdmin,
+  allowedAdminJudge,
+  allowedAdminOrganizer,
+  allowedAdminOrganizerJudge,
+  allowedAll
+} from './helpers/permissions'
 
 export const App = () => {
   const { theme } = useDefaultTheme()
@@ -83,6 +86,12 @@ export const App = () => {
 
                   <Route
                     element={<PrivateRoutes allowedTypes={allowedAdmin} />}
+                  >
+                    <Route path="/settings" element={<SettingsPage />} />
+                  </Route>
+
+                  <Route
+                    element={<PrivateRoutes allowedTypes={allowedAdminOrganizerJudge} />}
                   >
                     <Route path="/seasons" element={<SeasonsPage />} />
                     <Route

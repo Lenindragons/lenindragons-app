@@ -33,9 +33,17 @@ import {
   Brightness7 as Brightness7Icon,
   BarChart as BarChartIcon,
   NoteAdd as NoteAddIcon,
+  Settings as SettingsIcon,
 } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
+import {
+  allowedAdmin,
+  allowedAdminJudge,
+  allowedAdminOrganizer,
+  allowedAdminOrganizerJudge,
+  allowedAll
+} from '@/helpers/permissions'
 
 const drawerWidth = 240
 
@@ -60,37 +68,43 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
       text: 'Perfil',
       icon: <AccountCircleIcon />,
       url: 'profile',
-      permission: ['player', 'admin', 'judge', 'organizer'],
+      permission: allowedAll,
     },
     {
       text: 'Relatório',
       icon: <BarChartIcon />,
       url: 'analytics-report',
-      permission: ['admin', 'organizer'],
+      permission: allowedAdminOrganizer,
     },
     {
       text: 'Torneios',
       icon: <EventNoteIcon />,
       url: 'seasons',
-      permission: ['admin', 'judge', 'organizer'],
+      permission: allowedAdminOrganizerJudge,
     },
     {
       text: 'Decks',
       icon: <StyleIcon />,
       url: 'decks',
-      permission: ['admin', 'judge'],
+      permission: allowedAdminJudge,
     },
     {
       text: 'Jogadores',
       icon: <CatchingPokemonIcon />,
       url: 'players',
-      permission: ['admin', 'judge'],
+      permission: allowedAdminJudge,
     },
     {
       text: 'Atividades',
       icon: <NoteAddIcon />,
       url: 'achievements-manager',
-      permission: ['admin', 'organizer'],
+      permission: allowedAdminOrganizer,
+    },
+    {
+      text: 'Configurações',
+      icon: <SettingsIcon />,
+      url: 'settings',
+      permission: allowedAdmin,
     },
   ]
 
