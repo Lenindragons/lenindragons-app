@@ -116,11 +116,11 @@ const MobileHeader = () => {
             <ListItemText primary="Torneios" />
           </Link>
         </ListItem>
-        <ListItem>
+        {!import.meta.env.VITE_GURIAS_TC && <ListItem>
           <Link to="/rules" style={{ color: 'white', textDecoration: 'none' }}>
             <ListItemText primary="Regras" />
           </Link>
-        </ListItem>
+        </ListItem>}
         <Divider />
         {user ? (
           <>

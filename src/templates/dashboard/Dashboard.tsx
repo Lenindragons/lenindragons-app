@@ -2,7 +2,7 @@
 import HeaderComponent from './components/header/Header'
 import { SideMenu } from '../../components/side-menu/side-menu'
 import { DashboardContainer, HomeContainer, SideBar } from './style'
-import logo from '../../assets/fantasia-logo.png'
+import logo from '../../assets/gurias-logo.png'
 import GearHammer from '../../assets/gear-hammer.svg'
 import Parchment from '../../assets/parchment.svg'
 import { UserType } from '../../types/Player'

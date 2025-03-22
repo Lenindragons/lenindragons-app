@@ -2,7 +2,7 @@
 /* eslint-disable react/require-default-props */
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import logo from '../../../../assets/fantasia-logo.png'
+import logo from '../../../../assets/gurias-logo.png'
 import bg from '../../../../assets/bg-plataform.webp'
 import { MainMenu } from '../../../../components/mainmenu/MainMenu'
 import Options from '../options'

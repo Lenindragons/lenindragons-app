@@ -15,6 +15,12 @@ const DefaultThemeProvider = ({ children }: ContextProps) => {
   }
 
   const createdTheme = createTheme({
+    palette: {
+      primary: { main: light.colors.primary },
+      secondary: { main: light.colors.secondary },
+      background: { default: light.colors.background },
+      text: { primary: light.colors.text },
+    },
     components: {
       MuiUseMediaQuery: {
         defaultProps: {

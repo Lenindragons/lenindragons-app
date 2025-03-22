@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import backgroundSlide from "../../assets/pokemon/background-slide.jpg";
-import roaringMoon from "../../assets/pokemon/roaring-moon.png";
+import backgroundSlide from "../../assets/pokemon/background-slide-3.jpg";
+import pokemon from "../../assets/pokemon/sylveon.png";
 import { Box, Grid, Typography } from "@mui/material";
 
 export const MainSlide = () => {
@@ -35,19 +35,19 @@ export const MainSlide = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(160, 116, 148, 0.5)",
             height: "450px"
           }}
         >
-          <Box textAlign="center" px={4} color="white">
+          <Box textAlign="center" px={4} color="#395083">
             <Typography variant="h2" fontWeight="bold" gutterBottom>
-              Temporada Lua Estrondo
+              Liga Pokémon das Gurias
             </Typography>
-            <Typography variant="h5" gutterBottom>
-              de 01 Janeiro à 31 Março
+            <Typography variant="h3" gutterBottom>
+              de 01 Abril à 31 Julho
             </Typography>
-            <Typography variant="h5">
-              Todas as Terças e Quinta as 19h
+            <Typography variant="h4">
+              Todos os meses um desafio!
             </Typography>
           </Box>
         </Grid>
@@ -64,7 +64,7 @@ export const MainSlide = () => {
           }}
         >
           <motion.img
-            src={roaringMoon}
+            src={pokemon}
             alt="Lua Estrondo"
             style={{
               width: "100%",

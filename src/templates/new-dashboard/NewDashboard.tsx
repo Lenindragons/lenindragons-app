@@ -119,9 +119,21 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
       background: {
         default: '#f1f1f1',
       },
+      primary: {
+        main: '#d097c1',
+      },
+      secondary: {
+        main: '#395184',
+      },
+      error: {
+        main: '#e6125d',
+      },
       text: {
         primary: '#000',
       },
+      success: {
+        main: '#a07494',
+      }
     },
   })
 
@@ -132,7 +144,7 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
         primary: '#f5f5f5',
       },
       primary: {
-        main: '#1976d2',
+        main: '#d097c1',
       },
     },
   })

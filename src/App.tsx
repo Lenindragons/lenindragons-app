@@ -61,7 +61,7 @@ export const App = () => {
                     path="/league-challenge"
                     element={<LeagueChallengePage />}
                   />
-                  <Route path="/rules" element={<RulesPage />} />
+                  {import.meta.env.VITE_GURIAS_TCG && <Route path="/rules" element={<RulesPage />} />}
                   <Route path="/challenges" element={<ChallengeListPage />} />
                   <Route
                     path="/challenge/:id"

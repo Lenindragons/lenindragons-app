@@ -108,9 +108,9 @@ export const MainMenu = ({ children }: MainMenuProps) => {
       <li className="menu-item">
         <Link to="/achievements">Atividades</Link>
       </li>
-      <li className="menu-item">
+      {import.meta.env.VITE_GURIAS_TCG && <li className="menu-item">
         <Link to="/rules">Regras Gerais</Link>
-      </li>
+      </li>}
       <li className="menu-item">
         <Link
           to="#"
