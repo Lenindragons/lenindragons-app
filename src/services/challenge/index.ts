@@ -62,7 +62,7 @@ export const getChallenges = async (callback: any, id: string) => {
       challengesRef,
       where('seasonId', '==', id),
       orderBy('created'),
-      limit(20)
+      limit(30)
     )
     return onSnapshot(challengesQuery, (challengesSnapshot) => {
       callback(

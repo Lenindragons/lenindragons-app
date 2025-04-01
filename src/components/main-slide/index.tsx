@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import backgroundSlide from "../../assets/pokemon/background-slide.jpg";
-import roaringMoon from "../../assets/pokemon/roaring-moon.png";
+import pokemon from "../../assets/pokemon/zoroark.png";
 import { Box, Grid, Typography } from "@mui/material";
 
 export const MainSlide = () => {
@@ -41,10 +41,10 @@ export const MainSlide = () => {
         >
           <Box textAlign="center" px={4} color="white">
             <Typography variant="h2" fontWeight="bold" gutterBottom>
-              Temporada Lua Estrondo
+              Temporada Zoroark
             </Typography>
             <Typography variant="h5" gutterBottom>
-              de 01 Janeiro à 31 Março
+              de 01 Abril à 30 Junho
             </Typography>
             <Typography variant="h5">
               Todas as Terças e Quinta as 19h
@@ -64,7 +64,7 @@ export const MainSlide = () => {
           }}
         >
           <motion.img
-            src={roaringMoon}
+            src={pokemon}
             alt="Lua Estrondo"
             style={{
               width: "100%",
