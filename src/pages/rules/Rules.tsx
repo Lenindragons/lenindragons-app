@@ -64,7 +64,7 @@ export const RulesPage = () => {
                   <TableCell>STANDARD</TableCell>
                   <TableCell>45 min/Rodada</TableCell>
                   <TableCell>Suíço md3 (md1 por votação)</TableCell>
-                  <TableCell>F, G e H</TableCell>
+                  <TableCell>G, H e I</TableCell>
                   <TableCell>Português, Espanhol e Inglês</TableCell>
                 </TableRow>
                 <TableRow>
@@ -81,7 +81,7 @@ export const RulesPage = () => {
                   <TableCell>45 min/Rodada</TableCell>
                   <TableCell>Suíço md3</TableCell>
                   <TableCell>
-                    F, G e H , respeitando a <Link to="/off-meta/banlist">lista de cartas banidas</Link>
+                    G, H e I , respeitando a <Link to="/off-meta/banlist">lista de cartas banidas</Link>
                   </TableCell>
                   <TableCell>Português, Espanhol e Inglês</TableCell>
                 </TableRow>
@@ -90,7 +90,7 @@ export const RulesPage = () => {
                   <TableCell>45 min/Rodada</TableCell>
                   <TableCell>Suíço md3</TableCell>
                   <TableCell>
-                    F, G e H , permitido apenas cartas sem caixa de regras
+                    G, H e I , permitido apenas cartas sem caixa de regras
                   </TableCell>
                   <TableCell>Português, Espanhol e Inglês</TableCell>
                 </TableRow>
