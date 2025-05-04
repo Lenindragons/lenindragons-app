@@ -97,14 +97,14 @@ const CreateAchievementsForm = ({ values, callback }: any) => {
       <Controller
         name="season"
         control={control}
-        rules={{ required: "A temporada é obrigatória" }}
+        rules={{ required: "A tircuito é obrigatória" }}
         render={({ field, fieldState }) => (
           <FormControl>
-            <InputLabel id="season-label">Temporada</InputLabel>
+            <InputLabel id="season-label">Circuito</InputLabel>
             <Select
               {...field}
               labelId="season-label"
-              label="Temporada"
+              label="Circuito"
               variant="outlined"
               error={!!fieldState.error}
               fullWidth

@@ -111,7 +111,7 @@ export const ResultsList = ({ type = 'season' }: { type: string }) => {
                         Tempo de Rodada
                       </TableCell>
                       <TableCell style={tableHeadStyle}>Rodadas</TableCell>
-                      <TableCell style={tableHeadStyle}>Jogadores</TableCell>
+                      <TableCell style={tableHeadStyle}>Jogadoras</TableCell>
                     </>
                   )}
                   <TableCell style={tableHeadStyle}>Vencedor</TableCell>

@@ -33,14 +33,14 @@ export const Dashboard = ({ children }: any) => {
             {
               id: 'side-menu-2',
               path: '/seasons',
-              label: 'Temporadas',
+              label: 'Circuitos',
               permission: [UserType.ADMIN],
               icon: Parchment,
             },
             {
               id: 'side-menu-3',
               path: '/players',
-              label: 'Jogadores',
+              label: 'Jogadoras',
               permission: [UserType.ADMIN],
               icon: Parchment,
             },

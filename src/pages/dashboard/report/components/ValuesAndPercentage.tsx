@@ -144,7 +144,7 @@ export const ValuesAndPercentage = ({
         </>
       ) : (
         <Alert severity="warning" variant="outlined" icon={<WarningAmber />}>
-          Não foram definidos valores para essa temporada
+          Não foram definidos valores para essa tircuito
         </Alert>
       )}
     </>

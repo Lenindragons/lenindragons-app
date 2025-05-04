@@ -21,7 +21,7 @@ type PlayerListProps = {
 }
 
 export const PlayerList = ({ players, getNextPlayer, addPoints }: PlayerListProps) => {
-  // Inicializa a lista de jogadores com 0 pontos e ordena alfabeticamente
+  // Inicializa a lista de jogadoras com 0 pontos e ordena alfabeticamente
   const [playerList, setPlayerList] = useState<Player[]>(
     players.sort((a, b) => a.localeCompare(b)).map(name => ({ name, points: 0 }))
   )
@@ -44,7 +44,7 @@ export const PlayerList = ({ players, getNextPlayer, addPoints }: PlayerListProp
   return (
     <Box>
       <Typography variant="h6" gutterBottom align="center" color="primary">
-        Lista de Jogadores
+        Lista de Jogadoras
       </Typography>
       <div style={{ overflow: 'auto', height: '200px' }}>
         <Table>

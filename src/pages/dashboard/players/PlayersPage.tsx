@@ -18,7 +18,7 @@ export const PlayersPage = () => {
   }
 
   useEffect(() => {
-    setTitle('Jogadores')
+    setTitle('Jogadoras')
   }, [setTitle])
 
   useEffect(() => {

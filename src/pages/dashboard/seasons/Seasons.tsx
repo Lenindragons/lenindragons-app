@@ -27,7 +27,7 @@ export const SeasonsPage = () => {
     <Box>
       <Header>
         <Button variant="contained" onClick={() => navigate('/seasons/create')}>
-          Criar Temporada
+          Criar Circuito
         </Button>
       </Header>
 

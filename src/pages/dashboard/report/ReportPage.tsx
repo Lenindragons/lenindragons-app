@@ -13,7 +13,7 @@ export const ReportPage = () => {
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" mb={2}>
-        Relatório de Temporadas
+        Relatório de Circuitos
       </Typography>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 15 }}>
         {mappedChallenges.map((season: any) => (
@@ -62,7 +62,7 @@ export const ReportPage = () => {
                   component="span"
                   sx={{ fontWeight: 'bold' }}
                 >
-                  Média de Jogadores por torneio:{' '}
+                  Média de Jogadoras por torneio:{' '}
                 </Typography>
                 <Typography variant="body1" component="span">
                   {getMediaPlayers(season.count, season.totalPlayers).toFixed(
@@ -92,7 +92,7 @@ export const ReportPage = () => {
                   component="span"
                   sx={{ fontWeight: 'bold' }}
                 >
-                  Quantidade de Torneios na temporada:{' '}
+                  Quantidade de Torneios na tircuito:{' '}
                 </Typography>
                 <Typography variant="body1" component="span">
                   {season.count}

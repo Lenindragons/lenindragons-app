@@ -89,7 +89,7 @@ const NewDashboard: React.FC<NewDashboardProps> = ({ children }) => {
       permission: allowedAdminJudge,
     },
     {
-      text: 'Jogadores',
+      text: 'Jogadoras',
       icon: <CatchingPokemonIcon />,
       url: 'players',
       permission: allowedAdminJudge,

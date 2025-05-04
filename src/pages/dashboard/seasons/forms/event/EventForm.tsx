@@ -64,7 +64,7 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
         <div style={{ display: 'flex', flexDirection: 'row', gap: 20 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <TextField
-              label="Nome da Temporada:"
+              label="Nome da Circuito:"
               variant="outlined"
               {...register('name', { required: true })}
             />
@@ -96,7 +96,7 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Icone da Temporada:"
+                      label="Icone da Circuito:"
                       variant="outlined"
                     />
                   )}
@@ -111,7 +111,7 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
                 defaultValue=""
                 render={({ field }) => (
                   <Select labelId="type-label" label="Tipo:" {...field}>
-                    <MenuItem value="season">Temporada</MenuItem>
+                    <MenuItem value="season">Circuito</MenuItem>
                     <MenuItem value="league_challenge">
                       League Challenge
                     </MenuItem>
@@ -150,7 +150,7 @@ export const EventForm = ({ callback, data }: EventFormProps) => {
             />
           </div>
         </div>
-        <Button>Cadastrar Temporada</Button>
+        <Button>Cadastrar Circuito</Button>
       </FormControl>
     </EventFormContainer>
   )

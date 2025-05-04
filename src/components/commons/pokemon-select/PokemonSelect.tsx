@@ -58,7 +58,7 @@ export const PokemonSelect = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Icone da Temporada:"
+              label="Icone da Circuito:"
               variant="outlined"
               fullWidth
             />

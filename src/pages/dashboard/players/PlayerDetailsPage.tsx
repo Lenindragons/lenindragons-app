@@ -112,7 +112,7 @@ export const PlayerDetailsPage = () => {
           </div>
         </FormControl>
 
-        <Typography variant="h6">Lista de atividades concluidas ou em andamento de jogadores:</Typography>
+        <Typography variant="h6">Lista de atividades concluidas ou em andamento de jogadoras:</Typography>
         <TableContainer component={Paper} sx={{ mt: 2 }}>
           <Table>
             <TableHead>

@@ -32,7 +32,7 @@ export const EventList = ({ status }: { status: string }) => {
 
   const handleDelete = async (id: string) => {
     const confirmed = window.confirm(
-      'Você tem certeza que quer deletar esse temporada?'
+      'Você tem certeza que quer deletar esse tircuito?'
     )
     if (confirmed) {
       removeEvent(id)

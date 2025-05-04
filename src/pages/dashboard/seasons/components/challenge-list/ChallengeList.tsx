@@ -50,7 +50,7 @@ export const ChallengeList = ({ seasonId, challengeType }: { seasonId: string, c
             <TableCell>Data</TableCell>
             <TableCell>Rodadas</TableCell>
             <TableCell>Tempo da Rodada</TableCell>
-            <TableCell>Temporada</TableCell>
+            <TableCell>Circuito</TableCell>
             <TableCell>Ações</TableCell>
           </TableRow>
         </TableHead>

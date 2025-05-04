@@ -12,7 +12,7 @@ export const ChallengeListPage = () => {
   return (
     <WebPageTemplate>
       <header style={{ marginBottom: '20px', width: '100%' }}>
-        <h2>Torneios por Temporadas</h2>
+        <h2>Torneios por Circuitos</h2>
       </header>
       <ResultsList type="season" />
       <FigureContainer>

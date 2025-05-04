@@ -159,7 +159,7 @@ export const SeasonCreatePage = () => {
           alignItems: 'center',
         }}
       >
-        <Typography variant="h4">Configurações para nova temporada</Typography>
+        <Typography variant="h4">Configurações para nova tircuito</Typography>
         <Button
           type="submit"
           sx={{ padding: '10px 20px' }}
@@ -167,7 +167,7 @@ export const SeasonCreatePage = () => {
           disabled={!isAllFieldsFilled(formValues)}
           onClick={handleSubmit(onSubmit)}
         >
-          Cadastrar Temporada
+          Cadastrar Circuito
         </Button>
       </Box>
 
@@ -187,7 +187,7 @@ export const SeasonCreatePage = () => {
               }}
             >
               <TextField
-                label="Nome da Temporada:"
+                label="Nome da Circuito:"
                 sx={{ width: '100%', gridColumn: 'name' }}
                 variant="outlined"
                 {...register('name', { required: true })}
@@ -236,7 +236,7 @@ export const SeasonCreatePage = () => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label="Icone da Temporada:"
+                        label="Icone da Circuito:"
                         variant="outlined"
                       />
                     )}
@@ -253,7 +253,7 @@ export const SeasonCreatePage = () => {
                 defaultValue=""
                 render={({ field }) => (
                   <Select labelId="type-label" label="Tipo:" {...field}>
-                    <MenuItem value="season">Temporada</MenuItem>
+                    <MenuItem value="season">Circuito</MenuItem>
                     <MenuItem value="league_challenge">
                       League Challenge
                     </MenuItem>
@@ -270,7 +270,7 @@ export const SeasonCreatePage = () => {
 
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Regras da Temporada</Typography>
+            <Typography>Regras do Circuito</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Box mb={2}>
@@ -279,7 +279,7 @@ export const SeasonCreatePage = () => {
                 control={control}
                 rules={{
                   required:
-                    'Por favor escreva uma descrição para as regras dessa temporada.',
+                    'Por favor escreva uma descrição para as regras dessa tircuito.',
                 }}
                 render={({ field }) => (
                   <ReactQuill

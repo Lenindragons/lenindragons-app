@@ -33,7 +33,7 @@ export const SideMenu = () => {
           <SendIcon />
         </ListItemIcon>
         <ListItemText>
-          <Link to="/seasons">Temporada</Link>
+          <Link to="/seasons">Circuito</Link>
         </ListItemText>
       </ListItemButton>
       <ListItemButton>

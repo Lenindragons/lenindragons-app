@@ -90,7 +90,7 @@ export const SeasonDetailPage = () => {
         <Grid item xs={12}>
           <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
             <Typography variant="h5" gutterBottom>
-              Torneios da Temporada
+              Torneios da Circuito
             </Typography>
             <BasicModal label="Adicionar torneio">
               <ChallengeForm callback={createChallenge} data={{ event }} challengeType={event?.type} />

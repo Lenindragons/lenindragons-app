@@ -154,7 +154,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
 
         <Box component={Paper} style={{ padding: 10, marginBottom: 10 }}>
           <Typography variant="h6">
-            REGRAS DA TEMPORADA
+            REGRAS DO CIRCUITO
             <IconButton onClick={handleCollapseToggle}>
               <ExpandMoreIcon />
             </IconButton>

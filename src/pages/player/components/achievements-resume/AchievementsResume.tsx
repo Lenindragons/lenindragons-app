@@ -104,7 +104,7 @@ const AchievementsResume = ({
                             </Grid>
                             <Grid xs={6}>
                               <ProgressBar
-                                label={`Total de partidas na temporada: ${getMatchesWithPlayerId(challenges, player.id, id || '').length}`}
+                                label={`Total de partidas na tircuito: ${getMatchesWithPlayerId(challenges, player.id, id || '').length}`}
                                 score={calculatePerformance({
                                   losses: getResult(challenges, player, id || '', (m: any) => m.result?.name === player.name),
                                   ties: getResult(challenges, player, id || '', (m: any) => m.result === "tie"),
