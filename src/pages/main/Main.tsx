@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
 import { ProgressBar } from 'react-progressbar-fancy'
-import { Box, Divider, keyframes, Paper, Typography } from '@mui/material'
+import { Alert, Box, Divider, keyframes, Paper, Typography } from '@mui/material'
 import styled from 'styled-components'
 import { Key, useEffect, useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
@@ -188,7 +188,16 @@ export const MainPage = () => {
             justifyContent: 'center',
           }}
         >
-          <Loading />
+          {/* <Loading /> */}
+          <Alert
+            severity="warning"
+            style={{
+              width: '100%',
+              marginBottom: '15px',
+              border: '1px solid orange',
+            }}>
+            <strong>Atenção</strong> Ainda não há decks registrados. Aguardando Torneio mensal.
+          </Alert>
         </div>
       </WebPageTemplate>
     )
@@ -211,8 +220,8 @@ export const MainPage = () => {
       </Box>
 
       <Typography variant="body1">
-        Nas ultimas <strong>duas semanas</strong> os <strong>10 decks</strong>{' '}
-        mais jogados na loja foram:
+        Os ultimos <strong>10 decks</strong>{' '}
+        mais jogados foram:
       </Typography>
 
       <Divider />
