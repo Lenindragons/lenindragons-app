@@ -35,16 +35,16 @@ export const MainSlide = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "rgba(160, 116, 148, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
             height: "450px"
           }}
         >
-          <Box textAlign="center" px={4} color="#395083">
+          <Box textAlign="center" px={4} color="#FFF">
             <Typography variant="h2" fontWeight="bold" gutterBottom>
-              Liga Pokémon das Gurias
+              Circuito: Liga das Gurias
             </Typography>
             <Typography variant="h3" gutterBottom>
-              de 01 Abril à 31 Julho
+              de Maio à Agosto
             </Typography>
             <Typography variant="h4">
               Todos os meses um desafio!
@@ -71,7 +71,6 @@ export const MainSlide = () => {
               height: "450px",
               objectFit: "contain",
               borderRadius: "8px",
-              boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
             }}
             whileHover={{ rotateY: 15, rotateX: -15 }}
             transition={{ type: "spring", stiffness: 50, damping: 10 }}

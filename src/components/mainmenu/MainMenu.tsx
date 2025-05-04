@@ -95,10 +95,10 @@ export const MainMenu = ({ children }: MainMenuProps) => {
 
         <ul className="menu-item-dropdown">
           <li>
-            <Link to="/challenges">Liga Pokemon</Link>
+            <Link to="/challenges">Liga das Gurias</Link>
           </li>
           <li>
-            <Link to="/league-challenge">League Challenge</Link>
+            <Link to="/league-challenge">Gurias Cup</Link>
           </li>
           {/* <li>
             <Link to="/league-cup">League cup</Link>

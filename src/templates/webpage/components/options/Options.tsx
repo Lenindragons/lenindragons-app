@@ -7,7 +7,7 @@ const Login = () => {
   const { signInGoogle } = useAuth()
   return (
     <a href="#" onClick={signInGoogle}>
-      Login
+      Cadastre-se
     </a>
   )
 }
@@ -71,7 +71,7 @@ const Options = () => {
           </>
         ) : (
           <>
-            <ListItemBlack>Cadastre-se</ListItemBlack>
+            {/* <ListItemBlack>Clique aqui:</ListItemBlack> */}
             <ListItemWhite>
               <Login />
             </ListItemWhite>

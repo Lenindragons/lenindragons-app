@@ -49,7 +49,7 @@ const Login = () => {
         onClick={signInGoogle}
         style={{ color: 'white', textDecoration: 'none' }}
       >
-        Login
+        Cadastre-se
       </a>
     </ListItem>
   )
@@ -136,7 +136,7 @@ const MobileHeader = () => {
           </>
         ) : (
           <>
-            <ListItem>Cadastre-se</ListItem>
+            {/* <ListItem>Clique aqui:</ListItem> */}
             <Login />
           </>
         )}
