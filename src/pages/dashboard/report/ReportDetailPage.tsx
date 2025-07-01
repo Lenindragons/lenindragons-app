@@ -119,7 +119,7 @@ export const ReportDetailPage = () => {
               <Typography variant="h5" mb={2}>
                 Ranking Geral
               </Typography>
-              <RankingTable rows={rankedPlayers?.slice(0, 8)} players={firebasePlayers} />
+              <RankingTable rows={rankedPlayers?.slice(0, 8)} />
             </Grid>
             <Grid item>
               <Typography variant="h5" mb={2}>
