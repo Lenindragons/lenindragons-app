@@ -7,11 +7,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DOMPurify from 'dompurify'
 import styled from 'styled-components'
 import { getEventsByType } from '@/services/events'
-import { getChallengeBySeasonId } from '@/services/challenge'
-import { getRanking } from './getRanking'
+import { getRankingBySeason } from './getRanking'
 import { RankingTable } from '../ranking-table'
 import { Loading } from '@/components/commons/loading/Loading'
-import { getPlayers } from '@/services/players';
 
 const RulesBox = styled.div`
   marginTop: 20px;
@@ -67,10 +65,8 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
     id: string
   }[]>([])
   const [seasonSelected, setSeasonSelected] = useState('')
-  const [challenges, setChallenges] = useState([])
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState<any>([])
   const [value, setValue] = useState(0)
-  const [players, setPlayers] = useState<any>([])
   const [collapseOpen, setCollapseOpen] = useState(false)
 
   useEffect(() => {
@@ -87,34 +83,14 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
   }, [seasons])
 
   useEffect(() => {
-    const fetchPlayers = async () => {
-      const storedPlayers = await getPlayers()
-      setPlayers(storedPlayers)
-    }
-
-    fetchPlayers()
-  }, [])
-
-  const fetchChallenges = (seasonId: string) => {
-    getChallengeBySeasonId(seasonId, setChallenges)
-  }
-
-  useEffect(() => {
-    if (seasonSelected) {
-      fetchChallenges(seasonSelected)
-    }
-  }, [
-    seasonSelected
-  ])
-
-  useEffect(() => {
     const getRowsWithRankingList = async () => {
-      if (challenges.length) {
-        setRows(await getRanking(challenges || [], players))
-      }
+      if (!seasonSelected) return
+      const ranking = await getRankingBySeason(seasonSelected)
+      setRows(ranking)
     }
+
     getRowsWithRankingList()
-  }, [challenges, players])
+  }, [seasonSelected])
 
   const handleChange = (_e: React.SyntheticEvent, newValue: number) => {
     setSeasonSelected(seasons[newValue]?.id)
@@ -179,7 +155,7 @@ export const RankingList = ({ type = 'season' }: { type: string }) => {
               <Tab label={season.name} style={{ padding: 10 }} key={season.id} />
             ))}
           </Tabs>
-          <RankingTable rows={rows} players={players} />
+          <RankingTable rows={rows} />
         </Grid>
       </Grid>
     </Box>

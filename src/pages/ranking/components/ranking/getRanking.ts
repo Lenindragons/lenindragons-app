@@ -1,5 +1,6 @@
 import { formatDate } from "@/helpers/format-date"
 import { getAllChallenge } from "@/services/challenge"
+import { getPlayers } from "@/services/players"
 
 const isPenalized = (player: any) =>
   player.deck.name.toLowerCase().includes('não compareceu')
@@ -129,4 +130,75 @@ export const getRanking = async (challenges: any[], firebasePlayers: any[]) => {
         playerId: player.playerId,
       })
     )
+}
+
+const getPointsByResult = (player: any) => {
+  switch (player.place) {
+    case '1':
+      return 5
+    case '2':
+      return 4
+    case '3':
+      return 3
+    case '4':
+      return 2
+    default:
+      return 1
+  }
+}
+
+export const getRankingBySeason = async (seasonId: string) => {
+  const challenges = await getAllChallenge()
+  console.log('Challenges:', challenges)
+  const players = await getPlayers()
+  const challengesBySeasonId = challenges.filter((challenge: any) => challenge.seasonId === seasonId)
+
+  const playersWithPoints = players.map((player: any) => {
+    const playersChallenge = challengesBySeasonId.filter((challenge: any) => {
+      return challenge.challenge.result.some((result: any) => result.id === player.id)
+    }).map((challenge: any) => {
+      return challenge.challenge.result.find((result: any) => result.id === player.id)
+    })
+
+    const challengesPoint = playersChallenge
+      .map(result => getPointsByResult(result))
+      .reduce((acc: number, cur: number) => acc + cur, 0) || 0
+
+    const achievementsPoints = player?.achievements
+      ?.filter((achievement: any) => achievement.season === seasonId)
+      ?.map((achievement: any) => parseInt(achievement.points))
+      ?.reduce((acc: number, cur: number) => acc + cur, 0) || 0
+
+    return {
+      points: challengesPoint + achievementsPoints,
+      ...player
+    }
+  }).filter((player: any) => player.points > 0)
+
+  return playersWithPoints
+    .sort(
+      (
+        a: { points: number; name: string },
+        b: { points: number; name: string }
+      ) => b.points - a.points || a.name.localeCompare(b.name)
+    )
+    .map(
+      (
+        player: {
+          id: string
+          name: any
+          points: any
+          email: string
+          playerId: string
+        },
+        i: number
+      ) => ({
+        id: i,
+        place: i + 1,
+        name: player.name,
+        email: player.email,
+        points: player.points,
+        playerId: player.id,
+      })
+    ) || []
 }
