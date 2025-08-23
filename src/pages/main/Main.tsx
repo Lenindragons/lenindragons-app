@@ -102,7 +102,7 @@ export const MainPage = () => {
       return []
     }
 
-    const initialTimestamp = getTimestampByWeek(2)
+    const initialTimestamp = getTimestampByWeek(12)
 
     const challengesFiltered = challenges
       .filter((challenge: any) => challenge.challenge)

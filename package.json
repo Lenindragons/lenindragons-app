@@ -24,7 +24,7 @@
     "@types/dompurify": "^3.0.5",
     "@types/react-color": "^3.0.13",
     "@vitejs/plugin-react-swc": "^3.3.2",
-    "axios": "^1.7.2",
+    "axios": "^1.11.0",
     "canvas-confetti": "^1.9.3",
     "date-fns": "^2.30.0",
     "dompurify": "^3.1.6",
