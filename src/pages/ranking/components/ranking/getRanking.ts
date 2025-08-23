@@ -149,7 +149,6 @@ const getPointsByResult = (player: any) => {
 
 export const getRankingBySeason = async (seasonId: string) => {
   const challenges = await getAllChallenge()
-  console.log('Challenges:', challenges)
   const players = await getPlayers()
   const challengesBySeasonId = challenges.filter((challenge: any) => challenge.seasonId === seasonId)
 
@@ -161,13 +160,17 @@ export const getRankingBySeason = async (seasonId: string) => {
     })
 
     const challengesPoint = playersChallenge
-      .map(result => getPointsByResult(result))
+      .map((result: any) => getPointsByResult(result))
       .reduce((acc: number, cur: number) => acc + cur, 0) || 0
+
+    console.log({ playersChallenge, challengesPoint, player })
 
     const achievementsPoints = player?.achievements
       ?.filter((achievement: any) => achievement.season === seasonId)
       ?.map((achievement: any) => parseInt(achievement.points))
       ?.reduce((acc: number, cur: number) => acc + cur, 0) || 0
+
+    console.log({ challengesPoint, achievementsPoints, player })
 
     return {
       points: challengesPoint + achievementsPoints,
